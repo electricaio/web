@@ -14,6 +14,9 @@ const config = {
         "trailingComma": "all"
       }
     ],
+    "no-console": "off",
+    "react/no-array-index-key": "off",
+    "react/prop-types": "off",
     "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
     "react/jsx-filename-extension": "off",
     "react/jsx-wrap-multilines": "off",
