@@ -1,8 +1,21 @@
+### How to setup
 
-### How to get going
+1. Run: nvm install | nvm use
+1. Run: npm i to install the dependencies
+1. Run: npm run start to run start the application. The browser should automatically open at http://localhost:3000
+1. Start coding!
 
-1.  Clone this repository `git clone git@github.com:electricaio/web-react-test.git`
-1.  Run: `nvm install | nvm use`
-1.  Run: `npm i` to install the dependencies
-1.  Run: `npm run start` to run start the application
-1.  The browser should automatically open at `http://localhost:3000`
+### Directory Structure
+
+Components - Reusable, simple, generic components (e.g buttons, fonts, and basic layout containers)
+Modules - Specific implementations of generic components. Includes container components, redux actions/reducers.
+Pages - Where all your pages go. Pages should be very plain and only contain a few sub-components including layouts
+
+### Component Library
+
+Ant Design (https://ant.design/docs/react/introduce) is used to build the UI components. Ant design has a large set of high-quality React components out of the box.
+
+
+### How to build
+
+1.  Run: `npm run build` to build website into `/public` folder

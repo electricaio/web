@@ -1,18 +1,25 @@
 {
     "env": {
-        "development": {
-            "presets": ["babel-preset-env", "react"]
-        },
-        "production": {
-            "presets": ["babel-preset-env", "react"],
-            "plugins": [
-                [
-                    "transform-react-remove-prop-types",
-                    {
-                        "mode": "wrap"
-                    }
-                ]
-            ]
-        }
+      "plugins": [
+        [
+          "import",
+          { "libraryName": "antd", "libraryDirectory": "es", "style": "css" }
+        ]
+      ],
+      "development": {
+        "presets": ["babel-preset-env", "react"]
+      },
+      "production": {
+        "presets": ["babel-preset-env", "react"],
+        "plugins": [
+          [
+            "transform-react-remove-prop-types",
+            {
+              "mode": "wrap"
+            }
+          ]
+        ]
+      }
     }
-}
+  }
+  

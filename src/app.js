@@ -1,11 +1,24 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { HashRouter as Router, Route, Switch } from 'react-router-dom';
+import './theme.less';
+import './overrides.scss';
 
-function App() {
-  return (
-    <div>
-      <p>Welcome to Electrica!!!</p>
-    </div>
-  );
-}
+import { store } from './modules';
+import apiKeys from './pages/api-keys';
 
-export default App;
+ReactDOM.render(
+  <Provider store={store}>
+    <Router>
+      <Switch>
+        <Route path="/" exact component={apiKeys} />
+        <Route path="/api-keys" />
+        <Route path="/stl" />
+        <Route path="/monitor" />
+        <Route path="/notifications" />
+      </Switch>
+    </Router>
+  </Provider>,
+  document.getElementById('root'),
+);
