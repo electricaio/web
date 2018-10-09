@@ -6,8 +6,8 @@
     "build": "webpack --config webpack.prod.js",
     "start": "webpack-dev-server --open --config webpack.dev.js",
     "watch": "webpack-dev-server --open --config webpack.dev.js",
-    "test": "NODE_ENV=test jest --coverage",
-    "coverage": "jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
+    "test": "jest",
+    "test:coverage": "jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
     "test:watch": "NODE_ENV=test jest --watchAll",
     "lint": "eslint -c ./.eslintrc.js src",
     "format": "prettier-eslint --write \"src/**/*.js\" \"webpack*.js\" && npm run lint"
@@ -23,6 +23,8 @@
     "clean-webpack-plugin": "^0.1.17",
     "coveralls": "^3.0.2",
     "css-loader": "^1.0.0",
+    "enzyme-adapter-react-15": "^1.1.1",
+    "enzyme-adapter-react-16": "^1.6.0",
     "eslint": "^5.6.1",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-airbnb-base": "^13.1.0",
@@ -57,6 +59,7 @@
   },
   "dependencies": {
     "antd": "^3.10.0",
+    "enzyme": "^3.7.0",
     "grommet": "^1.11.0",
     "immutable": "^3.8.2",
     "prop-types": "^15.6.2",
@@ -69,5 +72,8 @@
     "redux-promise": "^0.6.0",
     "redux-thunk": "^2.3.0",
     "styled-components": "^3.4.9"
+  },
+  "jest": {
+    "setupFiles": ["./test/jestSetup.js"]
   }
 }

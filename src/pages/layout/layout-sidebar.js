@@ -5,7 +5,7 @@ import Navigation from '../../components/navigation';
 
 import { NavigationText, StyledLink } from './layout-sidebar.css';
 
-const { Header, Footer, Sider, Content } = Layout;
+const { Header, Sider, Content } = Layout;
 
 export default class MainLayout extends Component {
   headerNavigationItems() {
@@ -43,7 +43,6 @@ export default class MainLayout extends Component {
 
           <Content>{children}</Content>
         </Layout>
-        <Footer>Footer</Footer>
       </Layout>
     );
   }

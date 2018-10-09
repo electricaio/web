@@ -37,7 +37,11 @@ const config = {
   },
   "globals": {
     "document": 1,
-    "window": 1
+    "window": 1,
+    "describe": 1,
+    "it": 1,
+    "expect": 1,
+    "beforeEach": 1,
   }
 }
 module.exports = config; 

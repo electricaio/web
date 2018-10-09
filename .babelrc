@@ -6,6 +6,9 @@
           { "libraryName": "antd", "libraryDirectory": "es", "style": "css" }
         ]
       ],
+      "test": {
+        "presets": ["babel-preset-env", "react"]
+      },
       "development": {
         "presets": ["babel-preset-env", "react"]
       },
