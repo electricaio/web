@@ -67,5 +67,5 @@ ehthumbs_vista.db
 # Folder config file
 Desktop.ini
 
-#coveralls
-/coverage    
+## Coverage directory
+coverage    
