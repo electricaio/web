@@ -1,3 +1,5 @@
+# Electrica Web &middot; [![Build Status](https://travis-ci.com/electricaio/web.svg?token=FMUmapqayPyMpo7S8j31&branch=master)](https://travis-ci.com/electricaio/web) [![Coverage Status](https://coveralls.io/repos/github/electricaio/web/badge.svg?branch=travis&t=PqO7AE)](https://coveralls.io/github/electricaio/web?branch=travis)
+
 ### How to setup
 
 1. Run: nvm install | nvm use
@@ -19,7 +21,3 @@ Ant Design (https://ant.design/docs/react/introduce) is used to build the UI com
 ### How to build
 
 1.  Run: `npm run build` to build website into `/public` folder
-
-
-[![Build Status](https://travis-ci.com/electricaio/web.svg?token=FMUmapqayPyMpo7S8j31&branch=master)](https://travis-ci.com/electricaio/web)
-[![Coverage Status](https://coveralls.io/repos/github/electricaio/web/badge.svg?branch=travis&t=PqO7AE)](https://coveralls.io/github/electricaio/web?branch=travis)
