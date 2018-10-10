@@ -74,8 +74,6 @@
     "styled-components": "^3.4.9"
   },
   "jest": {
-    "setupFiles": [
-      "./test/jestSetup.js"
-    ]
+    "setupTestFrameworkScriptFile": "./testUtils/jestSetup.js"
   }
 }
