@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import { Layout } from 'antd';
-import Navigation from '../../../components/navigation';
+import Navigation from '../../../components/navigation/index';
 
 import LayoutSidebar from '../layout-sidebar';
 

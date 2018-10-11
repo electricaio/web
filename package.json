@@ -4,15 +4,24 @@
   "main": "webpack.config.js",
   "scripts": {
     "build": "webpack --config webpack.prod.js",
-    "start": "webpack-dev-server --open --config webpack.dev.js",
+    "start": "webpack-dev-server --config webpack.dev.js",
     "watch": "webpack-dev-server --open --config webpack.dev.js",
     "test": "jest",
     "test:coverage": "jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
     "test:watch": "NODE_ENV=test jest --watchAll",
     "lint": "eslint -c ./.eslintrc.js src",
-    "format": "prettier-eslint --write \"src/**/*.js\" \"webpack*.js\" && npm run lint"
+    "format": "prettier-eslint --write \"src/**/*.js\" \"webpack*.js\" && npm run lint",
+    "reinstall": "rm -rf node_modules && npm i"
   },
   "devDependencies": {
+    "@types/antd": "^1.0.0",
+    "@types/react": "^16.4.16",
+    "@types/react-dom": "^16.0.9",
+    "@types/react-redux": "^6.0.9",
+    "@types/react-router-dom": "^4.3.1",
+    "@types/redux-actions": "^2.3.1",
+    "@types/styled-components": "^4.0.1",
+    "awesome-typescript-loader": "^5.2.1",
     "babel-core": "^6.26.3",
     "babel-eslint": "^10.0.1",
     "babel-loader": "^7.1.4",
@@ -50,6 +59,9 @@
     "redux-devtools": "^3.4.1",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.0",
+    "ts-loader": "^5.2.1",
+    "typelevel-ts": "^0.3.2",
+    "typescript": "^3.1.2",
     "uglifyjs-webpack-plugin": "^2.0.1",
     "webpack": "^4.20.2",
     "webpack-cli": "^3.1.2",
@@ -57,8 +69,10 @@
     "webpack-merge": "^4.1.1"
   },
   "dependencies": {
+    "@types/redux-promise": "^0.5.28",
     "antd": "^3.10.0",
     "enzyme": "^3.7.0",
+    "fp-ts": "^1.9.0",
     "grommet": "^1.11.0",
     "immutable": "^3.8.2",
     "prop-types": "^15.6.2",
