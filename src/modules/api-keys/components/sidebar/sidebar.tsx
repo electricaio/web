@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { SFC } from "react";
-import { Navigation } from "../../../../components/navigation";
-import { NavItem } from "./theme/sidebar.css";
+import { SFC } from 'react';
+import { Navigation } from '../../../../components/navigation';
+import { NavItem } from './theme/sidebar.css';
 
 const items = [
   {

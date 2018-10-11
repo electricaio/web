@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { Component } from "react";
+import { Component } from 'react';
 import { Layout } from 'antd';
 import { NavigationText, StyledLink } from './layout-sidebar.css';
-import { Navigation } from "../../components/navigation";
+import { Navigation } from '../../components/navigation';
 const { Header, Sider, Content } = Layout;
 
 export type TMainLayoutProps = {
@@ -10,7 +10,6 @@ export type TMainLayoutProps = {
 };
 
 export class MainLayout extends Component<TMainLayoutProps> {
-
   render() {
     const { children, sidebar } = this.props;
 

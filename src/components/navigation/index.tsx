@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Menu, Icon } from 'antd';
 import { NavContainer, TextIcon } from './navigation.css';
-import { MenuMode } from "antd/lib/menu";
-import { Component } from "react";
+import { MenuMode } from 'antd/lib/menu';
+import { Component } from 'react';
 
 export type TItem = {
   action: JSX.Element | string;
@@ -10,16 +10,15 @@ export type TItem = {
 };
 
 export type TNavProps = {
-  items: TItem[],
-  mode?: MenuMode
-}
+  items: TItem[];
+  mode?: MenuMode;
+};
 
 export class Navigation extends Component<TNavProps> {
-
   render() {
-    const { items, mode = 'horizontal'} = this.props;
+    const { items, mode = 'horizontal' } = this.props;
 
-    return(
+    return (
       <NavContainer mode={mode} style={{ lineHeight: '64px' }}>
         {items.map((item, index) => (
           <Menu.Item key={index}>

@@ -1,13 +1,14 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import { Component } from 'react';
 import { Provider } from 'react-redux';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
-import { store } from "./redux/store";
-import { ApiKeysLayout } from "./pages/api-keys";
+import { store } from './redux/store';
+import { ApiKeysLayout } from './pages/api-keys';
 import './theme.less';
 import './overrides.scss';
 
-class App extends React.Component {
+class App extends Component {
   render() {
     return (
       <Provider store={store}>
@@ -25,7 +26,4 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(
-  <App />,
-  document.getElementById('root'),
-);
+ReactDOM.render(<App />, document.getElementById('root'));
