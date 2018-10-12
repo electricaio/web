@@ -10,19 +10,28 @@
     "test:coverage": "jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
     "test:watch": "NODE_ENV=test jest --watchAll",
     "eslint": "eslint -c ./.eslintrc.js src",
-    "lint": "tslint -c ./tslint.json \"src/**/*.tsx\" --project tsconfig.json",
-    "format": "prettier-eslint --write \"src/**/*.js\" \"webpack*.js\" && npm run lint",
-    "format1": "prettier --write \"src/**/*.tsx\" && npm run tslint",
-    "reinstall": "rm -rf node_modules && npm i"
+    "tslint": "tslint -c ./tslint.json \"src/**/*.tsx\" --project tsconfig.json",
+    "format": "prettier --write \"src/**/*.tsx\" && npm run tslint",
+    "format:js": "prettier-eslint --write \"src/**/*.js\" \"webpack*.js\" && npm run lint",
+    "reinstall": "rm -rf node_modules && npm i",
+    "precommit": "npm run tslint && npm run test:coverage",
+    "storybook": "start-storybook -p 9001 -c .storybook"
   },
   "devDependencies": {
+    "@storybook/addon-actions": "^3.4.11",
+    "@storybook/react": "^3.4.11",
     "@types/antd": "^1.0.0",
     "@types/enzyme": "^3.1.14",
+    "@types/immutable": "^3.8.7",
     "@types/jest": "^23.3.5",
     "@types/react": "^16.4.16",
     "@types/react-dom": "^16.0.9",
     "@types/react-redux": "^6.0.9",
     "@types/react-router-dom": "^4.3.1",
+    "@types/redux-promise": "^0.5.28",
+    "@types/redux-thunk": "^2.1.0",
+    "@types/storybook__addon-actions": "^3.4.1",
+    "@types/storybook__react": "^3.0.9",
     "@types/styled-components": "^4.0.1",
     "awesome-typescript-loader": "^5.2.1",
     "babel-core": "^6.26.3",
@@ -59,13 +68,13 @@
     "prettier": "1.14.3",
     "prettier-eslint-cli": "^4.7.1",
     "redux-devtools": "^3.4.1",
+    "resolve-url-loader": "^3.0.0",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.0",
     "ts-jest": "^23.10.4",
     "tslint": "^5.11.0",
     "tslint-config-airbnb": "^5.11.0",
     "tslint-config-airbnb-base": "^0.2.0",
-    "typelevel-ts": "^0.3.2",
     "typescript": "^3.1.2",
     "uglifyjs-webpack-plugin": "^2.0.1",
     "webpack": "^4.20.2",
@@ -74,13 +83,10 @@
     "webpack-merge": "^4.1.1"
   },
   "dependencies": {
-    "@types/redux-promise": "^0.5.28",
     "antd": "^3.10.0",
     "enzyme": "^3.7.0",
     "fp-ts": "^1.9.0",
-    "grommet": "^1.11.0",
     "immutable": "^3.8.2",
-    "prop-types": "^15.6.2",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-redux": "^5.0.7",
@@ -88,7 +94,8 @@
     "redux": "^4.0.0",
     "redux-promise": "^0.6.0",
     "redux-thunk": "^2.3.0",
-    "styled-components": "^3.4.9"
+    "styled-components": "^3.4.9",
+    "typelevel-ts": "^0.3.2"
   },
   "jest": {
     "transform": {
@@ -102,6 +109,6 @@
     "testMatch": [
       "**/__tests__/**/*.ts?(x)"
     ],
-    "setupTestFrameworkScriptFile": "./testUtils/jestSetup.js"
+    "setupTestFrameworkScriptFile": "./config/jestSetup.js"
   }
 }

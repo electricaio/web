@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { SFC } from 'react';
-import { ElectricaLayout } from './layout/electrica-layout';
+import { ElectricaLayout } from '../modules/shared-components/layout/electrica-layout';
 import { SidebarNavigation } from '../modules/api-keys/components/sidebar/sidebar';
 import { ApiKeys } from '../modules/api-keys/components/api-keys/api-keys';
 

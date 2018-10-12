@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Layout } from 'antd';
 import { shallow } from 'enzyme';
-import { Navigation } from '../../../components/navigation';
+import { Navigation } from '../../navigation/index';
 import { ElectricaLayout } from '../electrica-layout';
 const { Header, Sider, Content } = Layout;
 
