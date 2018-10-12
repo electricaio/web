@@ -9,14 +9,16 @@
     "test": "jest",
     "test:coverage": "jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
     "test:watch": "NODE_ENV=test jest --watchAll",
-    "lint": "eslint -c ./.eslintrc.js src",
-    "tslint": "tslint -c ./tslint.json \"src/**/*.tsx\" --project tsconfig.json",
+    "eslint": "eslint -c ./.eslintrc.js src",
+    "lint": "tslint -c ./tslint.json \"src/**/*.tsx\" --project tsconfig.json",
     "format": "prettier-eslint --write \"src/**/*.js\" \"webpack*.js\" && npm run lint",
     "format1": "prettier --write \"src/**/*.tsx\" && npm run tslint",
     "reinstall": "rm -rf node_modules && npm i"
   },
   "devDependencies": {
     "@types/antd": "^1.0.0",
+    "@types/enzyme": "^3.1.14",
+    "@types/jest": "^23.3.5",
     "@types/react": "^16.4.16",
     "@types/react-dom": "^16.0.9",
     "@types/react-redux": "^6.0.9",
@@ -59,6 +61,7 @@
     "redux-devtools": "^3.4.1",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.0",
+    "ts-jest": "^23.10.4",
     "tslint": "^5.11.0",
     "tslint-config-airbnb": "^5.11.0",
     "tslint-config-airbnb-base": "^0.2.0",
@@ -88,6 +91,17 @@
     "styled-components": "^3.4.9"
   },
   "jest": {
+    "transform": {
+      ".*.tsx?$": "ts-jest"
+    },
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "testMatch": [
+      "**/__tests__/**/*.ts?(x)"
+    ],
     "setupTestFrameworkScriptFile": "./testUtils/jestSetup.js"
   }
 }

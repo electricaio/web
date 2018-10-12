@@ -1,15 +1,15 @@
 import * as React from 'react';
 import { Component } from 'react';
 import { Layout } from 'antd';
-import { NavigationText, StyledLink } from './layout-sidebar.css';
+import { NavigationText, StyledLink } from './electrica-layout.css';
 import { Navigation } from '../../components/navigation';
 const { Header, Sider, Content } = Layout;
 
-export type TMainLayoutProps = {
+export type TElectriceLayoutProps = {
   sidebar: JSX.Element;
 };
 
-export class MainLayout extends Component<TMainLayoutProps> {
+export class ElectricaLayout extends Component<TElectriceLayoutProps> {
   render() {
     const { children, sidebar } = this.props;
 

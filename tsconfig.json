@@ -2,6 +2,7 @@
   "compilerOptions": {
     "outDir": "./dist/",
     "sourceMap": true,
+    "skipLibCheck": true,
     "noImplicitAny": true,
     "module": "commonjs",
     "target": "es5",
@@ -9,5 +10,8 @@
   },
   "include": [
     "./src/**/*"
+  ],
+  "exclude": [
+    "node_modules"
   ]
 }
