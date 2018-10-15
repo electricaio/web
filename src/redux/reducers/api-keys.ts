@@ -3,12 +3,10 @@ import { Reducer } from 'redux';
 import { TAction } from '../actions';
 import { COMMIT_KEY, REFRESH_KEY, REMOVE_KEY } from '../actions/api-keys';
 import { API_KEYS_TABLE_DATA } from '../../fixtures/api-keys-table-data';
-import { identity } from 'fp-ts/lib/function';
 
-const generateKey = identity;
 const refreshKey = (el: TApiKeyTableEntity) => ({
   ...el,
-  key: generateKey(el.key),
+  key: `${el.key}_new`,
 });
 
 export const keyReducer: Reducer<TApiKeyTableEntity[], TAction> = (
@@ -20,10 +18,10 @@ export const keyReducer: Reducer<TApiKeyTableEntity[], TAction> = (
       return [...state, action.payload.entity];
 
     case REMOVE_KEY:
-      return state.filter(el => el.key !== action.payload.key);
+      return state.filter(el => el.id !== action.payload.id);
 
     case REFRESH_KEY:
-      return state.map(el => (el.key === action.payload.key ? refreshKey(el) : el));
+      return state.map(el => (el.id === action.payload.id ? refreshKey(el) : el));
 
     default:
       return state;

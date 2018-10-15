@@ -15,21 +15,21 @@ export type TCommitKey = {
 export type TRemoveKey = {
   type: typeof REMOVE_KEY;
   payload: {
-    key: string;
+    id: string;
   };
 };
 
 export type TRefreshKey = {
   type: typeof REFRESH_KEY;
   payload: {
-    key: string;
+    id: string;
   };
 };
 
 // action creators types
 export type TCommitKeyAC = (entity: TApiKeyTableEntity) => TCommitKey;
-export type TRemoveKeyAC = (key: string) => TRemoveKey;
-export type TRefreshKeyAC = (key: string) => TRefreshKey;
+export type TRemoveKeyAC = (id: string) => TRemoveKey;
+export type TRefreshKeyAC = (id: string) => TRefreshKey;
 
 // action creators
 export const commitKeyAC: TCommitKeyAC = entity => ({
@@ -39,17 +39,17 @@ export const commitKeyAC: TCommitKeyAC = entity => ({
   },
 });
 
-export const removeKeyAC: TRemoveKeyAC = key => ({
+export const removeKeyAC: TRemoveKeyAC = id => ({
   type: REMOVE_KEY,
   payload: {
-    key,
+    id,
   },
 });
 
-export const refreshKeyAC: TRefreshKeyAC = key => ({
+export const refreshKeyAC: TRefreshKeyAC = id => ({
   type: REFRESH_KEY,
   payload: {
-    key,
+    id,
   },
 });
 

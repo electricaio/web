@@ -1,5 +1,6 @@
 export type TApiKeyTableEntity = {
+  id: string;
   name: string;
   key: string;
-  date: Date;
+  created: Date;
 };
