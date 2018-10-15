@@ -1,4 +1,6 @@
+const cssnext = require('postcss-cssnext');
+const nested = require('postcss-nested');
+
 module.exports = {
-    plugins: [require("postcss-cssnext"), require("postcss-nested")]
-  };
-  
+  plugins: [cssnext, nested],
+};

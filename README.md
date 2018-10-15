@@ -7,6 +7,8 @@
 1. Run: npm run start to run start the application. The browser should automatically open at http://localhost:3000
 1. Start coding!
 
+**Note:** use `npm run precommit` before committing any changes. 
+
 ### Directory Structure
 
 Components - Reusable, simple, generic components (e.g buttons, fonts, and basic layout containers)

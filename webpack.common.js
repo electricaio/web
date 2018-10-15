@@ -4,7 +4,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
   entry: {
-    app: './src/app.js',
+    app: './src/app.tsx',
     vendor: ['react', 'react-dom'],
   },
   optimization: {
@@ -31,20 +31,19 @@ module.exports = {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
   },
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js'],
+  },
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
+        test: /\.(js|jsx|ts|tsx)$/,
         include: [path.resolve(__dirname, 'src')],
         use: [
           {
-            loader: 'babel-loader',
-          },
-          {
-            loader: 'eslint-loader',
+            loader: 'awesome-typescript-loader',
             options: {
-              failOnWarning: true,
-              failOnError: true,
+              declaration: false,
             },
           },
         ],
