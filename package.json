@@ -16,12 +16,9 @@
     "format:ts": "prettier --write \"src/**/*.tsx\" \"src/**/*.ts\" && npm run tslint",
     "format:js": "prettier --write \"src/**/*.js\" \"/*.js\" \"webpack*.js\" && npm run eslint",
     "reinstall": "rm -rf node_modules && npm i",
-    "precommit": "npm run format && npm run lint && npm run test:coverage",
-    "storybook": "start-storybook -p 9001 -c .storybook"
+    "precommit": "npm run format && npm run lint && npm run test:coverage"
   },
   "devDependencies": {
-    "@storybook/addon-actions": "^3.4.11",
-    "@storybook/react": "^3.4.11",
     "@types/enzyme": "^3.1.14",
     "@types/jest": "^23.3.5",
     "@types/react": "^16.4.16",
@@ -29,8 +26,6 @@
     "@types/react-redux": "^6.0.9",
     "@types/react-router-dom": "^4.3.1",
     "@types/redux-promise": "^0.5.28",
-    "@types/storybook__addon-actions": "^3.4.1",
-    "@types/storybook__react": "^3.0.9",
     "@types/styled-components": "^4.0.1",
     "awesome-typescript-loader": "^5.2.1",
     "babel-core": "^6.26.3",

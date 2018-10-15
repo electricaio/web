@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { TApiKeyTableEntity } from '../../../../models/ApiKeyTableEntity';
-import { StyledCard } from './theme/api-keys.css';
+import { StyledCard } from './api-keys.css';
 import { ApiKeysTable } from '../table/table';
 import { Component, Fragment } from 'react';
 

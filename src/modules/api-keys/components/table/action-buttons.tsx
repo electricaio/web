@@ -2,7 +2,7 @@ import { Divider } from 'antd';
 import * as React from 'react';
 import { SFC } from 'react';
 import { TApiKeyTableEntity } from '../../../../models/ApiKeyTableEntity';
-import { DeleteButton, RefreshButton } from './theme/action-buttons.css';
+import { DeleteButton, RefreshButton } from './action-buttons.css';
 
 export type TActionButtons = {
   entity: TApiKeyTableEntity;

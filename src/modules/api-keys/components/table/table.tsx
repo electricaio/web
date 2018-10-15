@@ -3,7 +3,7 @@ import { Component, Fragment, SFC } from 'react';
 import { Button, Table } from 'antd';
 import { TApiKeyTableEntity } from '../../../../models/ApiKeyTableEntity';
 import { ActionButtons } from './action-buttons';
-import { PullRight } from './theme/table.css';
+import { PullRight } from './table.css';
 import { format } from 'date-fns';
 
 type TDateProps = {
