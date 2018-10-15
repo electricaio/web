@@ -1,4 +1,4 @@
-import { TApiKeyTableEntity } from "../models/ApiKeyTableEntity";
+import { TApiKeyTableEntity } from '../models/ApiKeyTableEntity';
 
 export const API_KEYS_TABLE_DATA: TApiKeyTableEntity[] = [
   {

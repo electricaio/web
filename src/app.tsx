@@ -14,7 +14,7 @@ class App extends Component {
       <Provider store={store}>
         <Router>
           <Switch>
-            <Route path="/" exact component={ApiKeysLayout} />
+            <Route path="/" exact={true} component={ApiKeysLayout} />
             <Route path="/api-keys" />
             <Route path="/stl" />
             <Route path="/monitor" />

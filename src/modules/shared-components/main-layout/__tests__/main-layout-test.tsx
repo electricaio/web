@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Layout } from 'antd';
 import { shallow } from 'enzyme';
-import { Navigation } from '../../navigation/index';
-import { ElectricaLayout } from '../electrica-layout';
+import { Navigation } from '../../navigation';
+import { MainLayout } from '../main-layout';
 const { Header, Sider, Content } = Layout;
 
 describe('Layout with Sidebar', () => {
@@ -11,9 +11,9 @@ describe('Layout with Sidebar', () => {
 
   beforeEach(() => {
     this.layoutSidebar = shallow(
-      <ElectricaLayout sidebar={<TestSidebarComponent />}>
+      <MainLayout sidebar={<TestSidebarComponent />}>
         <TestContentComponent />
-      </ElectricaLayout>
+      </MainLayout>
     );
   });
 
