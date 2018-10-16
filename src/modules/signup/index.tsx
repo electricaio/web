@@ -39,7 +39,7 @@ class SignupForm extends Component<TSignupProps, TSignupFormState> {
   }));
   };
 
-  compareToFirstPassword = (rule?: any, value?: any, callback?: any) => {
+  compareToFirstPassword = (rule?: string, value?: string, callback?: Function) => {
     const { form } = this.props;
     if (value && value !== form.getFieldValue('password')) {
       callback('Two passwords that you entered is inconsistent!');
@@ -48,7 +48,7 @@ class SignupForm extends Component<TSignupProps, TSignupFormState> {
     }
   };
 
-  validateToNextPassword = (rule?: any, value?: any, callback?: any) => {
+  validateToNextPassword = (rule?: string, value?: string, callback?: Function) => {
     const { form } = this.props;
     const { confirmDirty } = this.state;
     if (value && confirmDirty) {
