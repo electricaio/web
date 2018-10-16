@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Component } from 'react';
 import { Layout } from 'antd';
 import { NavigationText, StyledLink } from './main-layout.css';
-import { Navigation } from '../navigation/navigation';
+import { Navigation } from '../../navigation';
 const { Header, Sider, Content } = Layout;
 
 export type TMainLayoutProps = {

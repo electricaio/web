@@ -10,8 +10,7 @@ export type TAppState = {
 };
 
 export function configureStore(initialState: Partial<TAppState> = {}) {
-  // TODO: fix {} {} below
-  return createStore<TAppState, TAction, {}, {}>(
+  return createStore<TAppState, TAction, any, any>(
     rootReducer,
     initialState,
     applyMiddleware(thunk, promiseMiddleware())
