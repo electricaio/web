@@ -94,7 +94,8 @@
   },
   "jest": {
     "transform": {
-      ".*.tsx?$": "ts-jest"
+      ".*.tsx?$": "ts-jest",
+      ".*.svg": "<rootDir>/config/svgTransform.js"
     },
     "moduleFileExtensions": [
       "ts",

@@ -2,8 +2,10 @@ import * as React from 'react';
 import { Layout } from 'antd';
 import { shallow } from 'enzyme';
 import { Navigation } from '../../navigation/navigation';
+import { Logo } from '../logo';
 import { MainLayout } from '../main-layout';
-const { Header, Sider, Content } = Layout;
+import { Header } from '../main-layout.css';
+const { Content, Sider } = Layout;
 
 describe('Layout with Sidebar', () => {
   const TestContentComponent = () => <div>content</div>;
@@ -11,7 +13,7 @@ describe('Layout with Sidebar', () => {
 
   beforeEach(() => {
     this.layoutSidebar = shallow(
-      <MainLayout sidebar={<TestSidebarComponent />}>
+      <MainLayout sidebar={<TestSidebarComponent />} matchUrl={'/'}>
         <TestContentComponent />
       </MainLayout>
     );
@@ -43,12 +45,11 @@ describe('Layout with Sidebar', () => {
     });
 
     it('contains a list of navigation items to render', () => {
-      const header = this.layoutSidebar.find(Header).find(Navigation);
-      expect(header.prop('items').length).toBeGreaterThan(0);
+      expect(this.layoutSidebar.find(Header).find(Navigation)).toHaveLength(1);
     });
 
     it('contains the logo', () => {
-      expect(this.layoutSidebar.find(Header).find('.logo')).toHaveLength(1);
+      expect(this.layoutSidebar.find(Header).find(Logo)).toHaveLength(1);
     });
   });
 });

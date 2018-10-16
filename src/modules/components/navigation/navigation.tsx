@@ -1,33 +1,42 @@
+import { SFC } from 'react';
 import * as React from 'react';
-import { Menu, Icon } from 'antd';
-import { NavContainer, TextIcon } from './navigation.css';
-import { MenuMode } from 'antd/lib/menu';
-import { Component } from 'react';
+import { Container, Li, Link } from './navigation.css';
 
-export type TItem = {
-  action: JSX.Element | string;
-  icon?: string;
+export type TMenuItemProps = {
+  to: string;
+  isActive?: boolean;
 };
 
-export type TNavProps = {
-  items: TItem[];
-  mode?: MenuMode;
+export const MenuItem: SFC<TMenuItemProps> = ({ to, children, isActive }) => (
+  <Li isActive={isActive}>
+    <Link href={`#${to}`} isActive={isActive}>
+      {children}
+    </Link>
+  </Li>
+);
+
+export type TNavigationProps = {
+  matchUrl: string;
 };
 
-export class Navigation extends Component<TNavProps> {
-  render() {
-    const { items, mode = 'horizontal' } = this.props;
-
-    return (
-      <NavContainer mode={mode} style={{ lineHeight: '64px' }}>
-        {items.map((item, index) => (
-          <Menu.Item key={index}>
-            <TextIcon>
-              {item.icon && <Icon type={item.icon} />} {item.action}
-            </TextIcon>
-          </Menu.Item>
-        ))}
-      </NavContainer>
-    );
-  }
-}
+export const Navigation: SFC<TNavigationProps> = ({ matchUrl }) => {
+  return (
+    <Container>
+      <MenuItem to={'/'} isActive={matchUrl === '/'}>
+        Home
+      </MenuItem>
+      <MenuItem to={'/api-keys'} isActive={matchUrl === '/api-keys'}>
+        Api Keys
+      </MenuItem>
+      <MenuItem to={'/stl-hub'} isActive={matchUrl === '/stl-hub'}>
+        STL Hub
+      </MenuItem>
+      <MenuItem to={'/monitor'} isActive={matchUrl === '/monitor'}>
+        Monitor
+      </MenuItem>
+      <MenuItem to={'/notifications'} isActive={matchUrl === '/notifications'}>
+        Notifications
+      </MenuItem>
+    </Container>
+  );
+};

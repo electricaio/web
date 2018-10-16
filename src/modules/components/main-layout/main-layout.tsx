@@ -1,51 +1,36 @@
 import * as React from 'react';
 import { Component } from 'react';
 import { Layout } from 'antd';
-import { NavigationText, StyledLink } from './main-layout.css';
 import { Navigation } from '../navigation/navigation';
-const { Header, Sider, Content } = Layout;
+import { Header, StyledLayout } from './main-layout.css';
+import { Logo } from './logo';
+import * as logo from './../../../assets/logo.svg';
+import * as avatar from './../../../assets/matt-avatar.svg';
+import { UserProfile } from './user-profile';
+
+const { Sider, Content } = Layout;
 
 export type TMainLayoutProps = {
   sidebar: JSX.Element;
+  matchUrl: string;
 };
 
 export class MainLayout extends Component<TMainLayoutProps> {
   render() {
-    const { children, sidebar } = this.props;
+    const { children, sidebar, matchUrl } = this.props;
 
     return (
-      <Layout className="layout">
+      <StyledLayout className="layout">
         <Header>
-          <div className="logo">electrica.io</div>
-          <NavigationText>
-            <Navigation items={headerNavigationItems()} />
-          </NavigationText>
+          <Logo src={logo} />
+          <Navigation matchUrl={matchUrl} />
+          <UserProfile name={'Eric'} src={avatar} />
         </Header>
-        <Layout>
+        <StyledLayout>
           <Sider>{sidebar}</Sider>
           <Content>{children}</Content>
-        </Layout>
-      </Layout>
+        </StyledLayout>
+      </StyledLayout>
     );
   }
-}
-
-export function headerNavigationItems() {
-  return [
-    {
-      action: <StyledLink to="/">home</StyledLink>,
-    },
-    {
-      action: <StyledLink to="/api-keys">api keys</StyledLink>,
-    },
-    {
-      action: <StyledLink to="/stl-hub">stl hub</StyledLink>,
-    },
-    {
-      action: <StyledLink to="/monitor">monitor</StyledLink>,
-    },
-    {
-      action: <StyledLink to="/notification">notification</StyledLink>,
-    },
-  ];
 }
