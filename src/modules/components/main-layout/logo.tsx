@@ -7,7 +7,7 @@ export type TLogoProps = {
 };
 
 export const Logo: SFC<TLogoProps> = ({ src }) => (
-  <LogoContainer>
+  <LogoContainer href="#/">
     <Icon src={src} />
     <CompanyName>electrica.io</CompanyName>
   </LogoContainer>

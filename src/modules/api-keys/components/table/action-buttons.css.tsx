@@ -1,9 +1,23 @@
+import * as React from 'react';
 import styled from 'styled-components';
 
-export const RefreshButton = styled.button`
-  color: #88d2b0;
+export const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
-export const DeleteButton = styled.button`
-  color: #abd1ec;
+export const BaseButton = styled.button`
+  border-radius: 5px;
+  height: 30px;
+  outline: none;
+  font-size: 13px;
+`;
+export const RefreshButton = styled(BaseButton)`
+  margin-right: 10px;
+  background-color: #dafaf3;
+`;
+
+export const RemoveButton = styled(BaseButton)`
+  background-color: #e8e7ff;
 `;

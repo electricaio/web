@@ -1,10 +1,23 @@
 import styled from 'styled-components';
 
-export const LogoContainer = styled.div`
+export const LogoContainer = styled.a`
   display: flex;
   align-items: center;
-  margin-right: 100px;
-  pointer: default;
+  margin-right: 70px;
+  cursor: default;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: none;
+  }
+
+  &:focus {
+    text-decoration: none;
+  }
+
+  &:active {
+    text-decoration: none;
+  }
 `;
 
 export const Icon = styled.img`
