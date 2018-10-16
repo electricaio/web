@@ -7,10 +7,9 @@ import Signup from '../index';
 import Header from '../../../components/header';
 
 describe('Signup', () => {
-  let signupComponent: any;
 
   beforeEach(() => {
-    signupComponent = mount(
+    this.signupComponent = mount(
       <MemoryRouter>
         <Signup />
       </MemoryRouter>
@@ -18,14 +17,14 @@ describe('Signup', () => {
   });
 
   it('should contain a header with a title', () => {
-    const header = signupComponent.find(Header);
+    const header = this.signupComponent.find(Header);
     expect(header.prop('title')).toBeTruthy();
   });
 
   it('should contain sign ups', () => {
     const components = ['email', 'firstname', 'lastname', 'company', 'password', 'confirm'];
     components.forEach(name => {
-      const comp = signupComponent.find(`input#${name}`);
+      const comp = this.signupComponent.find(`input#${name}`);
       expect(comp).toHaveLength(1);
     });
   });
@@ -33,25 +32,25 @@ describe('Signup', () => {
   it('should not show validation error alert when required components have values', () => {
     const components = ['email', 'firstname', 'lastname', 'password', 'confirm'];
     components.forEach(componentName => {
-      const component = signupComponent.find(`input#${componentName}`);
+      const component = this.signupComponent.find(`input#${componentName}`);
       component.simulate('change', { target: { value: 'testing' } });
     });
-    const form = signupComponent.find(Form);
+    const form = this.signupComponent.find(Form);
     form.simulate('submit');
-    const validations = signupComponent.find('.ant-form-explain');
+    const validations = this.signupComponent.find('.ant-form-explain');
     expect(validations).toHaveLength(0);
   });
 
   it('should fail validation if the passwords do not match', () => {
-    const password = signupComponent.find('input#password');
-    const passwordConfirm = signupComponent.find('input#confirm');
+    const password = this.signupComponent.find('input#password');
+    const passwordConfirm = this.signupComponent.find('input#confirm');
 
     password.simulate('change', { target: { value: 'password' } });
     passwordConfirm.simulate('change', { target: { value: 'wrong' } });
 
-    const form = signupComponent.find(Form);
+    const form = this.signupComponent.find(Form);
     form.simulate('submit');
-    const validations = signupComponent.find('.ant-form-explain');
+    const validations = this.signupComponent.find('.ant-form-explain');
     expect(
       validations.findWhere(
         (value: any) => value.text() === 'Two passwords that you entered is inconsistent!'

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Logo from '../../images/electrica-logo.svg';
+import Logo from '../../assets/electrica-logo.svg';
 
 export const Header = styled.div`
   text-align: center;

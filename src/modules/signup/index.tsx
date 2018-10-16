@@ -1,27 +1,28 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component, Fragment, FormEvent } from 'react';
 import { Form, Icon } from 'antd';
 import { Link } from 'react-router-dom';
 
 import Header from '../../components/header';
 
 import { StyledFormItem, StyledForm } from './signup.css';
-import { StyledButton } from '../../components/button';
-import { StyledInput } from '../../components/input';
+import { StyledButton } from '../ui-kit/button';
+import { StyledInput } from '../ui-kit/input';
+import { WrappedFormUtils } from 'antd/lib/form/Form';
 
 export type TSignupProps = {
-  form: any;
+  form: WrappedFormUtils;
 };
 
-interface State {
-  readonly confirmDirty: boolean;
-}
+type State = {
+  confirmDirty: boolean;
+};
 
 class SignupForm extends Component<TSignupProps> {
   readonly state: State = {
     confirmDirty: false,
   };
 
-  handleSubmit = (e: React.FormEvent) => {
+  handleSubmit = (e: FormEvent) => {
     const { form } = this.props;
     e.preventDefault();
     form.validateFields((err: string, values: object) => {
@@ -31,10 +32,11 @@ class SignupForm extends Component<TSignupProps> {
     });
   };
 
-  handleConfirmBlur = (e: React.FormEvent) => {
-    const { confirmDirty } = this.state;
+  handleConfirmBlur = (e: FormEvent) => {
     const { value } = e.target as HTMLInputElement;
-    this.setState({ confirmDirty: confirmDirty || !!value });
+    this.setState((prev: State) => ({
+      confirmDirty: prev.confirmDirty || !!value,
+  }));
   };
 
   compareToFirstPassword = (rule?: any, value?: any, callback?: any) => {

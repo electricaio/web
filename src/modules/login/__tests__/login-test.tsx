@@ -7,10 +7,9 @@ import Login from '../index';
 import Header from '../../../components/header';
 
 describe('Login', () => {
-  let loginComponent: any;
 
   beforeEach(() => {
-    loginComponent = mount(
+    this.loginComponent = mount(
       <MemoryRouter>
         <Login />
       </MemoryRouter>
@@ -18,31 +17,31 @@ describe('Login', () => {
   });
 
   it('should contain a header with a title', () => {
-    const header = loginComponent.find(Header);
+    const header = this.loginComponent.find(Header);
     expect(header.prop('title')).toBeTruthy();
   });
 
   it('should call a handle submit function when form is submitted', () => {});
 
   it('should have a username input', () => {
-    const username = loginComponent.find('input#username');
+    const username = this.loginComponent.find('input#username');
     expect(username).toHaveLength(1);
   });
 
   it('should have a password input', () => {
-    const password = loginComponent.find('input#password');
+    const password = this.loginComponent.find('input#password');
     expect(password).toHaveLength(1);
   });
 
-  function populateInputsAndSubmit(inputsToPopulate: string[] = []) {
+  const populateInputsAndSubmit = (inputsToPopulate: string[] = []) => {
     inputsToPopulate.forEach(componentName => {
-      const component = loginComponent.find(componentName);
+      const component = this.loginComponent.find(componentName);
       component.simulate('change', { target: { value: 'testing' } });
     });
-    const form = loginComponent.find(Form);
+    const form = this.loginComponent.find(Form);
     form.simulate('submit');
-    return loginComponent.find('.ant-form-explain');
-  }
+    return this.loginComponent.find('.ant-form-explain');
+  };
 
   it('should not fail if username and password fields are completed', () => {
     expect(populateInputsAndSubmit(['input#password', 'input#username'])).toHaveLength(0);

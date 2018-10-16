@@ -4,13 +4,12 @@ import { shallow } from 'enzyme';
 import Header from '../index';
 
 describe('Layout with Skewed Background', () => {
-  let headerLayout: any;
   const title = 'Hello!';
 
   const TestContentComponent: SFC = () => <div>content</div>;
 
   beforeEach(() => {
-    headerLayout = shallow(
+    this.headerLayout = shallow(
       <Header title={title}>
         <TestContentComponent />
       </Header>
@@ -18,11 +17,11 @@ describe('Layout with Skewed Background', () => {
   });
 
   it('contains a header tag with the title', () => {
-    expect(headerLayout.find('h1')).toHaveLength(1);
-    expect(headerLayout.find('h1').text()).toEqual(title);
+    expect(this.headerLayout.find('h1')).toHaveLength(1);
+    expect(this.headerLayout.find('h1').text()).toEqual(title);
   });
 
   it('children property sets content', () => {
-    expect(headerLayout.find(TestContentComponent)).toHaveLength(1);
+    expect(this.headerLayout.find(TestContentComponent)).toHaveLength(1);
   });
 });

@@ -1,17 +1,18 @@
 import React, { Component, Fragment } from 'react';
 
 import { Form, Icon, Checkbox } from 'antd';
+import { WrappedFormUtils } from 'antd/lib/form/Form';
 import { Link } from 'react-router-dom';
 
 import { ForgotPassword } from './login.css';
-import { StyledButton } from '../../components/button';
-import { StyledInput } from '../../components/input';
+import { StyledButton } from '../ui-kit/button';
+import { StyledInput } from '../ui-kit/input';
 import Header from '../../components/header';
 
 const FormItem = Form.Item;
 
 export type TLoginProps = {
-  form: any;
+  form: WrappedFormUtils;
 };
 
 class LoginForm extends Component<TLoginProps> {

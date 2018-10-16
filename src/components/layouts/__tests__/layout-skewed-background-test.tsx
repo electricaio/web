@@ -9,12 +9,11 @@ import LayoutWithBG from '../layout-skewed-background';
 const { Content } = Layout;
 
 describe('Layout with Skewed Background', () => {
-  let layoutSidebar: any;
 
   const TestContentComponent: SFC = () => <div>content</div>;
 
   beforeEach(() => {
-    layoutSidebar = shallow(
+    this.layoutSidebar = shallow(
       <LayoutWithBG>
         <TestContentComponent />
       </LayoutWithBG>
@@ -22,14 +21,14 @@ describe('Layout with Skewed Background', () => {
   });
 
   it('contains a background', () => {
-    expect(layoutSidebar.find(Background)).toHaveLength(1);
+    expect(this.layoutSidebar.find(Background)).toHaveLength(1);
   });
 
   it('contains a Content component', () => {
-    expect(layoutSidebar.find(Content)).toHaveLength(1);
+    expect(this.layoutSidebar.find(Content)).toHaveLength(1);
   });
 
   it('contains a Content component with the children prop', () => {
-    expect(layoutSidebar.find(Content).find(TestContentComponent)).toHaveLength(1);
+    expect(this.layoutSidebar.find(Content).find(TestContentComponent)).toHaveLength(1);
   });
 });
