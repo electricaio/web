@@ -11,7 +11,7 @@ const { Content } = Layout;
 describe('Layout with Skewed Background', () => {
   let layoutSidebar: any;
 
- const TestContentComponent: SFC = () => <div>content</div>;
+  const TestContentComponent: SFC = () => <div>content</div>;
 
   beforeEach(() => {
     layoutSidebar = shallow(

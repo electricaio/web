@@ -32,21 +32,21 @@ export type TRemoveKeyAC = (id: string) => TRemoveKey;
 export type TRefreshKeyAC = (id: string) => TRefreshKey;
 
 // action creators
-export const commitKeyAC: TCommitKeyAC = (entity) => ({
+export const commitKeyAC: TCommitKeyAC = entity => ({
   type: COMMIT_KEY,
   payload: {
     entity,
   },
 });
 
-export const removeKeyAC: TRemoveKeyAC = (id) => ({
+export const removeKeyAC: TRemoveKeyAC = id => ({
   type: REMOVE_KEY,
   payload: {
     id,
   },
 });
 
-export const refreshKeyAC: TRefreshKeyAC = (id) => ({
+export const refreshKeyAC: TRefreshKeyAC = id => ({
   type: REFRESH_KEY,
   payload: {
     id,

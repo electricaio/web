@@ -18,10 +18,10 @@ export const keyReducer: Reducer<TApiKeyTableEntity[], TAction> = (
       return [...state, action.payload.entity];
 
     case REMOVE_KEY:
-      return state.filter((el) => el.id !== action.payload.id);
+      return state.filter(el => el.id !== action.payload.id);
 
     case REFRESH_KEY:
-      return state.map((el) => (el.id === action.payload.id ? refreshKey(el) : el));
+      return state.map(el => (el.id === action.payload.id ? refreshKey(el) : el));
 
     default:
       return state;

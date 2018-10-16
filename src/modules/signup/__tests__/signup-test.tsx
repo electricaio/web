@@ -24,7 +24,7 @@ describe('Signup', () => {
 
   it('should contain sign ups', () => {
     const components = ['email', 'firstname', 'lastname', 'company', 'password', 'confirm'];
-    components.forEach((name) => {
+    components.forEach(name => {
       const comp = signupComponent.find(`input#${name}`);
       expect(comp).toHaveLength(1);
     });
@@ -32,7 +32,7 @@ describe('Signup', () => {
 
   it('should not show validation error alert when required components have values', () => {
     const components = ['email', 'firstname', 'lastname', 'password', 'confirm'];
-    components.forEach((componentName) => {
+    components.forEach(componentName => {
       const component = signupComponent.find(`input#${componentName}`);
       component.simulate('change', { target: { value: 'testing' } });
     });

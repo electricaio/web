@@ -35,7 +35,7 @@ describe('Login', () => {
   });
 
   function populateInputsAndSubmit(inputsToPopulate: string[] = []) {
-    inputsToPopulate.forEach((componentName) => {
+    inputsToPopulate.forEach(componentName => {
       const component = loginComponent.find(componentName);
       component.simulate('change', { target: { value: 'testing' } });
     });
