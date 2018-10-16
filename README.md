@@ -1,4 +1,4 @@
-# Electrica Web &middot; [![Build Status](https://travis-ci.com/electricaio/web.svg?token=FMUmapqayPyMpo7S8j31&branch=master)](https://travis-ci.com/electricaio/web) [![Coverage Status](https://coveralls.io/repos/github/electricaio/web/badge.svg?branch=travis&t=PqO7AE)](https://coveralls.io/github/electricaio/web?branch=travis)
+# Electrica Web &middot; [![Build Status](https://travis-ci.com/electricaio/web.svg?token=FMUmapqayPyMpo7S8j31&branch=master)](https://travis-ci.com/electricaio/web) [![Coverage Status](https://coveralls.io/repos/github/electricaio/web/badge.svg?branch=master&t=PqO7AE)](https://coveralls.io/github/electricaio/web?branch=master)
 
 ### How to setup
 
