@@ -13,12 +13,12 @@ export type TSignupProps = {
   form: WrappedFormUtils;
 };
 
-type State = {
+type TSignupFormState = {
   confirmDirty: boolean;
 };
 
-class SignupForm extends Component<TSignupProps> {
-  readonly state: State = {
+class SignupForm extends Component<TSignupProps, TSignupFormState> {
+  readonly state: TSignupFormState = {
     confirmDirty: false,
   };
 
@@ -34,7 +34,7 @@ class SignupForm extends Component<TSignupProps> {
 
   handleConfirmBlur = (e: FormEvent) => {
     const { value } = e.target as HTMLInputElement;
-    this.setState((prev: State) => ({
+    this.setState((prev: TSignupFormState) => ({
       confirmDirty: prev.confirmDirty || !!value,
   }));
   };
