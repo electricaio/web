@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { SFC } from 'react';
-import { Navigation } from '../../../components/navigation/navigation';
+import { Navigation } from '../../../../components/navigation';
 import { NavItem } from './sidebar.css';
 
 const items = [

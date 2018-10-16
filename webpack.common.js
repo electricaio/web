@@ -33,6 +33,10 @@ module.exports = {
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
+    alias: {
+      '~components': path.join(__dirname, './src/components'),
+      '~images': path.join(__dirname, './src/images'),
+    },
   },
   module: {
     rules: [
@@ -100,8 +104,22 @@ module.exports = {
         use: ['style-loader', 'css-loader'],
       },
       {
-        test: /\.(png|svg|jpg|gif)$/,
+        test: /\.(png|jpg|gif)$/,
         use: ['file-loader'],
+      },
+      {
+        test: /\.svg$/,
+        use: [
+          {
+            loader: 'babel-loader',
+          },
+          {
+            loader: 'react-svg-loader',
+            options: {
+              tsx: true,
+            },
+          },
+        ],
       },
     ],
   },

@@ -5,6 +5,9 @@ import { Provider } from 'react-redux';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import { store } from './redux/store';
 import { ApiKeysLayout } from './pages/api-keys';
+import login from './pages/login';
+import signup from './pages/signup';
+
 import './theme.less';
 import './overrides.scss';
 
@@ -14,11 +17,13 @@ class App extends Component {
       <Provider store={store}>
         <Router>
           <Switch>
-            <Route path="/" exact={true} component={ApiKeysLayout} />
+            <Route path="/" exact component={ApiKeysLayout} />
             <Route path="/api-keys" />
             <Route path="/stl" />
             <Route path="/monitor" />
             <Route path="/notifications" />
+            <Route path="/login" component={login} />
+            <Route path="/signup" component={signup} />
           </Switch>
         </Router>
       </Provider>

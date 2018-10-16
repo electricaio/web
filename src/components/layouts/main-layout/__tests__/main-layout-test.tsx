@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Layout } from 'antd';
 import { shallow } from 'enzyme';
-import { Navigation } from '../../navigation/navigation';
-import { MainLayout } from '../main-layout';
+import { Navigation } from '../../../navigation';
+import { MainLayout } from '..';
 const { Header, Sider, Content } = Layout;
 
 describe('Layout with Sidebar', () => {
