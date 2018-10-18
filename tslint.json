@@ -1,13 +1,20 @@
 {
     "defaultSeverity": "error",
     "extends": [
-        "tslint-config-airbnb"
+        "tslint-config-airbnb", "tslint-eslint-rules", "tslint-config-prettier"
     ],
     "jsRules": {},
     "rules": {
+      "class-name": true,
       "no-duplicate-imports": false,
       "import-name": false,
-      "variable-name" : [true, "ban-keywords"],
+      "variable-name": [
+        true,
+        "allow-leading-underscore",
+        "ban-keywords",
+        "check-format",
+        "allow-pascal-case"
+      ],
       "semicolon": [true, "always", "strict-bound-class-methods"],
       "trailing-comma": [
         true,

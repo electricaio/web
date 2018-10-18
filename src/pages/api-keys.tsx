@@ -2,7 +2,7 @@ import * as React from 'react';
 import { SFC } from 'react';
 import { match, Route, Switch } from 'react-router';
 import { ApiKeysContainer } from '../modules/api-keys/containers/api-keys/api-keys.container';
-import { MainLayout } from '../modules/components/main-layout/main-layout';
+import { MainLayout } from '../components/layouts/main-layout';
 import { SidebarNavigation } from '../modules/api-keys/components/sidebar/sidebar';
 
 type TApiKeysLayoutProps = {

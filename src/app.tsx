@@ -9,6 +9,9 @@ import { Notifications } from './modules/notifications/components/notifications/
 import { StlHub } from './modules/stl-hub/components/stl-hub/stl-hub';
 import { store } from './redux/store';
 import { ApiKeysLayout } from './pages/api-keys';
+import { LoginPage } from './pages/login';
+import { SignupPage } from './pages/signup';
+
 import './theme.less';
 import './overrides.scss';
 
@@ -23,6 +26,8 @@ class App extends Component {
             <Route path="/stl-hub" component={StlHub} />
             <Route path="/monitor" component={Monitor} />
             <Route path="/notifications" component={Notifications} />
+            <Route path="/login" component={LoginPage} />
+            <Route path="/signup" component={SignupPage} />
             <Route component={() => <div>No Match</div>} />
           </Switch>
         </Router>

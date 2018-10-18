@@ -33,6 +33,10 @@ module.exports = {
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
+    alias: {
+      '~components': path.join(__dirname, './src/components'),
+      '~images': path.join(__dirname, './src/images'),
+    },
   },
   module: {
     rules: [

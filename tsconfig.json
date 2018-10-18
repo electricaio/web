@@ -6,10 +6,14 @@
     "noImplicitAny": true,
     "module": "commonjs",
     "target": "es5",
-    "jsx": "react"
+    "jsx": "react",
+    "allowSyntheticDefaultImports": false,
+    "esModuleInterop": false
   },
+
   "include": [
-    "./src/**/*"
+    "./src/**/*",
+    "./typings/*"
   ],
   "exclude": [
     "node_modules"
