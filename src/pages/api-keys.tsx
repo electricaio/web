@@ -1,3 +1,4 @@
+import { Location } from 'history';
 import React, { SFC } from 'react';
 import { match, Route, Switch } from 'react-router';
 import { ApiKeysContainer } from '../modules/api-keys/containers/api-keys/api-keys.container';

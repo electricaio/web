@@ -1,3 +1,4 @@
+import { Location } from 'history';
 import React, { SFC } from 'react';
 import { match } from 'react-router';
 import { Li, Ul, StyledIcon, Link } from './sidebar.css';
