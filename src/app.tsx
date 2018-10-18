@@ -7,6 +7,7 @@ import { store } from './redux/store';
 import { ApiKeysLayout } from './pages/api-keys';
 import login from './pages/login';
 import signup from './pages/signup';
+import {StlHubLayout} from './pages/stl-hub';
 
 import './theme.less';
 import './overrides.scss';
@@ -18,8 +19,8 @@ class App extends Component {
         <Router>
           <Switch>
             <Route path="/" exact component={ApiKeysLayout} />
-            <Route path="/api-keys" />
-            <Route path="/stl" />
+            <Route path="/api-keys"/>
+            <Route path="/stl-hub" component={StlHubLayout}/>
             <Route path="/monitor" />
             <Route path="/notifications" />
             <Route path="/login" component={login} />
