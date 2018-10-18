@@ -1,12 +1,11 @@
-import * as React from 'react';
-import { Component } from 'react';
+import React, { Component } from 'react';
 import { Layout } from 'antd';
 import { Logo } from './logo';
 import { UserProfile } from './user-profile';
 import { Navigation } from '../../navigation';
 import { Header, StyledLayout } from './main-layout.css';
-import * as logo from './../../../assets/logo.svg';
-import * as avatar from './../../../assets/matt-avatar.svg';
+import logo from './../../../assets/logo.svg';
+import avatar from './../../../assets/matt-avatar.svg';
 
 const { Sider, Content } = Layout;
 

@@ -1,7 +1,6 @@
-import * as React from 'react';
-import { SFC } from 'react';
+import React, { SFC } from 'react';
 import { StyledHeader, StyledLogo } from './header.css';
-import * as logo from './../../assets/electrica-logo.svg';
+import logo from './../../assets/electrica-logo.svg';
 
 export type THeaderProps = {
   title: string;

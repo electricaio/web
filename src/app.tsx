@@ -1,6 +1,5 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import { Component } from 'react';
+import ReactDOM from 'react-dom';
+import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import { Home } from './modules/home/components/home/home';

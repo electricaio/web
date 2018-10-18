@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { SFC } from 'react';
+import React, { SFC } from 'react';
 import { shallow } from 'enzyme';
 import { Layout } from 'antd';
 import { Background } from '../layout-skewed-background/layout-skewed-background.css';

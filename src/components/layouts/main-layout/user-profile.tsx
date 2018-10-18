@@ -1,5 +1,4 @@
-import { SFC } from 'react';
-import * as React from 'react';
+import React, { SFC } from 'react';
 import { Avatar, Name, Profile, StyledIcon } from './user-profile.css';
 
 export type TUserProfileProps = {

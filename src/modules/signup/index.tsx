@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { Component, Fragment, FormEvent } from 'react';
+import React, { Component, Fragment, FormEvent } from 'react';
 import { Form, Icon } from 'antd';
 import { Link } from 'react-router-dom';
 import { Header } from '../../components/header';

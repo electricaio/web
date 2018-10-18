@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { SFC } from 'react';
+import React, { SFC } from 'react';
 import { match } from 'react-router';
 import { MainLayout } from '../../../../components/layouts/main-layout';
 

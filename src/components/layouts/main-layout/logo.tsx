@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { SFC } from 'react';
+import React, { SFC } from 'react';
 import { CompanyName, Icon, LogoContainer } from './logo.css';
 
 export type TLogoProps = {

@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { Component, SyntheticEvent } from 'react';
+import React, { Component, SyntheticEvent } from 'react';
 import { TApiKeyTableEntity } from '../../../../models/ApiKeyTableEntity';
 import { ActionButtons } from './action-buttons';
 import { RefreshButton } from './action-buttons.css';

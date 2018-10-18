@@ -1,9 +1,8 @@
-import * as React from 'react';
 import { TApiKeyTableEntity } from '../../../../models/ApiKeyTableEntity';
 import { Table } from '../table/table';
 import { StyledDiv, NewButton, Card, Icon } from './api-keys.css';
-import { Component, Fragment } from 'react';
-import * as logo from '../../../../assets/api.svg';
+import React, { Component, Fragment } from 'react';
+import logo from '../../../../assets/api.svg';
 
 export type TApiKeysProps = {
   data: TApiKeyTableEntity[];

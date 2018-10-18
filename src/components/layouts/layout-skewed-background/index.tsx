@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { Fragment, SFC } from 'react';
+import React, { Fragment, SFC } from 'react';
 import { Layout } from 'antd';
 import { Background } from './layout-skewed-background.css';
 

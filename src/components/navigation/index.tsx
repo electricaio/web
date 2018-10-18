@@ -1,5 +1,4 @@
-import { SFC } from 'react';
-import * as React from 'react';
+import React, { SFC } from 'react';
 import { Container, Li, Link } from './navigation.css';
 
 export type TMenuItemProps = {

@@ -6,7 +6,7 @@
     "jsRules": {},
     "rules": {
       "class-name": true,
-      "no-duplicate-imports": false,
+      "no-duplicate-imports": true,
       "import-name": false,
       "variable-name": [
         true,

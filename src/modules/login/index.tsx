@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { Component, Fragment } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Form, Icon, Checkbox } from 'antd';
 import { WrappedFormUtils } from 'antd/lib/form/Form';
 import { Link } from 'react-router-dom';
