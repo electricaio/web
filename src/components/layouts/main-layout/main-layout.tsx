@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import { Layout } from 'antd';
 import { Logo } from './logo';
 import { UserProfile } from './user-profile';
-import { Navigation } from '../../navigation';
+import { Navigation } from '../../navigation/navigation';
 import { Header, StyledLayout } from './main-layout.css';
-import logo from './../../../assets/logo.svg';
 import avatar from './../../../assets/matt-avatar.svg';
 
 const { Sider, Content } = Layout;
@@ -21,7 +20,7 @@ export class MainLayout extends Component<TMainLayoutProps> {
     return (
       <StyledLayout className="layout">
         <Header>
-          <Logo src={logo} />
+          <Logo />
           <Navigation matchUrl={matchUrl} />
           <UserProfile name={'Eric'} src={avatar} />
         </Header>

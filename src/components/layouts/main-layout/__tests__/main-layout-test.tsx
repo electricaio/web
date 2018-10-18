@@ -2,8 +2,8 @@ import React from 'react';
 import { Layout } from 'antd';
 import { shallow } from 'enzyme';
 import { Logo } from '../logo';
-import { Navigation } from '../../../navigation';
-import { MainLayout } from '..';
+import { Navigation } from '../../../navigation/navigation';
+import { MainLayout } from '../main-layout';
 import { Header } from '../main-layout.css';
 
 const { Content } = Layout;

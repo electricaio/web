@@ -1,6 +1,6 @@
 import React, { SFC } from 'react';
 import { match } from 'react-router';
-import { MainLayout } from '../../../../components/layouts/main-layout';
+import { MainLayout } from '../../../../components/layouts/main-layout/main-layout';
 
 type THomeProps = {
   match: match;
