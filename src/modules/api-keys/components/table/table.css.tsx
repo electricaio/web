@@ -46,10 +46,6 @@ export const Td = styled.td`
   border-collapse: collapse;
 `;
 
-export const EmptyCell = styled(Td)`
-  width: 20px;
-`;
-
 export const NameHeader = styled(Th)`
   min-width: 150px;
 `;
@@ -80,12 +76,12 @@ export const CreatedCell = styled(Td)`
 `;
 
 export const ActionHeader = styled(Th)`
-  min-width: 200px;
+  width: 150px;
   text-align: center;
 `;
 
 export const ActionCell = styled(Td)`
-  min-width: 150px;
+  width: 150px;
   text-align: center;
 `;
 
@@ -96,4 +92,17 @@ export const Input = styled.input`
   height: 30px;
   font-size: 14px;
   border-bottom: 1px solid #000;
+`;
+
+export type TFlexContainerProps = {
+  justify?: 'center' | 'flex-start';
+};
+
+export const FlexContainer = styled.div`
+  justify-content: ${(props: TFlexContainerProps) => props.justify || 'flex-start'}
+  display: flex;
+`;
+
+export const Padding = styled.div`
+  width: 20px;
 `;

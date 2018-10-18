@@ -1,4 +1,4 @@
-import React, { Component, SyntheticEvent } from 'react';
+import React, { Component, SFC, SyntheticEvent } from 'react';
 import { TApiKeyTableEntity } from '../../../../models/ApiKeyTableEntity';
 import { ActionButtons } from './action-buttons';
 import { RefreshButton } from './action-buttons.css';
@@ -8,11 +8,12 @@ import {
   Container,
   CreatedCell,
   CreatedHeader,
-  EmptyCell,
+  FlexContainer,
   Inner,
   Input,
   KeyCell,
   KeyHeader,
+  Padding,
   NameCell,
   NameHeader,
   StyledTable,
@@ -22,6 +23,46 @@ import {
 import format = require('date-fns/format');
 
 const generateId = () => Math.floor(Math.random() * 100000).toString();
+
+const ComposedNameCell: SFC = ({ children }) => (
+  <NameCell>
+    <FlexContainer>
+      <Padding />
+      {children}
+    </FlexContainer>
+  </NameCell>
+);
+
+const ComposedActionCell: SFC = ({ children }) => (
+  <ActionCell>
+    <FlexContainer>
+      {children}
+      <Padding />
+    </FlexContainer>
+  </ActionCell>
+);
+
+export const Thead: SFC = () => (
+  <thead>
+    <TrHead>
+      <NameHeader>
+        <FlexContainer>
+          <Padding />
+          Name
+        </FlexContainer>
+      </NameHeader>
+      <KeyHeader>Key</KeyHeader>
+      <CreatedHeader>Date Created</CreatedHeader>
+      <ActionHeader>
+        <FlexContainer justify={'center'}>
+          Action
+          <Padding />
+        </FlexContainer>
+      </ActionHeader>
+      <th />
+    </TrHead>
+  </thead>
+);
 
 export type TTableProps = {
   data: TApiKeyTableEntity[];
@@ -49,48 +90,34 @@ export class Table extends Component<TTableProps, TTableState> {
       <Container>
         <Inner>
           <StyledTable>
-            <thead>
-              <TrHead>
-                <EmptyCell />
-                <NameHeader>Name</NameHeader>
-                <KeyHeader>Key</KeyHeader>
-                <CreatedHeader>Date Created</CreatedHeader>
-                <ActionHeader>Action</ActionHeader>
-                <EmptyCell />
-                <th />
-              </TrHead>
-            </thead>
+            <Thead />
             <tbody>
               {data.map(el => (
                 <Tr key={el.id}>
-                  <EmptyCell />
-                  <NameCell>{el.name}</NameCell>
+                  <ComposedNameCell>{el.name}</ComposedNameCell>
                   <KeyCell>{el.key}</KeyCell>
                   <CreatedCell>{format(el.created, 'DD/MM/YY')}</CreatedCell>
-                  <ActionCell>
+                  <ComposedActionCell>
                     <ActionButtons
                       onRemove={this.handleRemove(el.id)}
                       onRefresh={this.handleRefresh(el.id)}
                     />
-                  </ActionCell>
-                  <EmptyCell />
+                  </ComposedActionCell>
                   <td />
                 </Tr>
               ))}
               {isNewEntity && (
                 <Tr>
-                  <EmptyCell />
-                  <NameCell>
+                  <ComposedNameCell>
                     <Input onBlur={this.handleNameUpdate} />
-                  </NameCell>
+                  </ComposedNameCell>
                   <KeyCell>
                     <Input onBlur={this.handleKeyUpdate} />
                   </KeyCell>
                   <CreatedCell>{format(new Date(), 'DD/MM/YY')}</CreatedCell>
-                  <ActionCell>
+                  <ComposedActionCell>
                     <RefreshButton onClick={this.handleCommitKey}>Add</RefreshButton>
-                  </ActionCell>
-                  <EmptyCell />
+                  </ComposedActionCell>
                   <td />
                 </Tr>
               )}
