@@ -27,6 +27,7 @@ describe('Components | navigation Component', () => {
         .prop('isActive')
     ).toEqual(true);
   });
+
   it('"STL Hub" is active', () => {
     expect(
       this.component
@@ -35,6 +36,7 @@ describe('Components | navigation Component', () => {
         .prop('isActive')
     ).toEqual(true);
   });
+
   it('"Monitor" is active', () => {
     expect(
       this.component
@@ -43,6 +45,7 @@ describe('Components | navigation Component', () => {
         .prop('isActive')
     ).toEqual(true);
   });
+
   it('"Notifications" is active', () => {
     expect(
       this.component

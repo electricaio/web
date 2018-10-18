@@ -1,10 +1,10 @@
 import React, { Component, Fragment, FormEvent } from 'react';
 import { Form, Icon } from 'antd';
 import { Link } from 'react-router-dom';
-import { Header } from '../../components/header';
+import { Header } from '../../components/header/header';
 import { StyledFormItem, StyledForm } from './signup.css';
-import { StyledButton } from '../ui-kit/button';
-import { StyledInput } from '../ui-kit/input';
+import { StyledButton } from '../ui-kit/button/button';
+import { StyledInput } from '../ui-kit/input/input';
 import { WrappedFormUtils } from 'antd/lib/form/Form';
 
 export type TSignupProps = {

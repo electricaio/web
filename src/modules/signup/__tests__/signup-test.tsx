@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import { Form } from 'antd';
 import { MemoryRouter } from 'react-router-dom';
 import { SignupFormComponent } from '../index';
-import { Header } from '../../../components/header';
+import { Header } from '../../../components/header/header';
 
 describe('Signup', () => {
   beforeEach(() => {

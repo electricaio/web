@@ -3,9 +3,9 @@ import { Form, Icon, Checkbox } from 'antd';
 import { WrappedFormUtils } from 'antd/lib/form/Form';
 import { Link } from 'react-router-dom';
 import { ForgotPassword } from './login.css';
-import { StyledButton } from '../ui-kit/button';
-import { StyledInput } from '../ui-kit/input';
-import { Header } from '../../components/header';
+import { StyledButton } from '../ui-kit/button/button';
+import { StyledInput } from '../ui-kit/input/input';
+import { Header } from '../../components/header/header';
 
 const FormItem = Form.Item;
 
