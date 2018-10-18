@@ -10,7 +10,6 @@
     "allowSyntheticDefaultImports": false,
     "esModuleInterop": false
   },
-
   "include": [
     "./src/**/*",
     "./typings/*"

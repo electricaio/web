@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Component } from 'react';
 import { Layout } from 'antd';
-import { Logo } from '../../../modules/components/main-layout/logo';
-import { UserProfile } from '../../../modules/components/main-layout/user-profile';
+import { Logo } from './logo';
+import { UserProfile } from './user-profile';
 import { Navigation } from '../../navigation';
 import { Header, StyledLayout } from './main-layout.css';
 import * as logo from './../../../assets/logo.svg';
