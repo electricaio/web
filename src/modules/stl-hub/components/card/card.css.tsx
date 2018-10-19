@@ -10,6 +10,7 @@ const imgMySql = require('../../../../assets/mysql.jpg');
 // @ts-ignore
 export const ButtonItem = styled(Button)`
   width: 100%;
+  font-size: 0.8vw !important;
 `;
 
 export const CardItem = styled(Card.Grid)`=
