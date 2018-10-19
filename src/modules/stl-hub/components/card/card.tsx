@@ -1,5 +1,5 @@
 import React, { SFC } from 'react';
-import { Affix, Row, Col } from 'antd';
+import { Affix, Row, Col, Icon } from 'antd';
 import { ButtonItem, CardItem, TypeItem, Logo, Title, KeyItem, RowItem, Description } from './card.css';
 
 const card = <CardItem ref={(node) => { this.container = node; }}>
@@ -19,18 +19,26 @@ const card = <CardItem ref={(node) => { this.container = node; }}>
   <Row>
     <RowItem gutter={16}>
       <Col span={12}>
-        <ButtonItem type="primary">Dev-Joe</ButtonItem>
+        <ButtonItem type="primary">
+          <Icon type="link" theme="outlined" /> Dev-Joe
+        </ButtonItem>
       </Col>
       <Col span={12}>
-        <ButtonItem type="primary">Dev-Joe</ButtonItem>
+        <ButtonItem type="primary">
+          <Icon type="link" theme="outlined" /> Dev-Joe
+        </ButtonItem>
       </Col>
     </RowItem>
     <RowItem gutter={16}>
       <Col span={12}>
-        <ButtonItem type="primary">Production</ButtonItem>
+        <ButtonItem type="primary">
+          <Icon type="link" theme="outlined" /> Production
+        </ButtonItem>
       </Col>
       <Col span={12}>
-        <ButtonItem type="primary">Test</ButtonItem>
+        <ButtonItem type="primary">
+          <Icon type="link" theme="outlined" /> Test
+        </ButtonItem>
       </Col>
     </RowItem>
   </Row>
