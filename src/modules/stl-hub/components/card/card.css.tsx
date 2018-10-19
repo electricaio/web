@@ -13,32 +13,14 @@ export const ButtonItem = styled(Button)`
   font-size: 0.8vw !important;
 `;
 
-export const CardItem = styled(Card.Grid)`=
+export const CardItem = styled(Card)`=
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 30px !important;
   position: relative;
-  
-  ${media.lessThan("medium")`
-    /* screen width is less than 768px (medium) */
-    width: 30% !important;
-    margin-left: 3%;
-  `}
-
-  ${media.between("medium", "large")`
-    /* screen width is between 768px (medium) and 1170px (large) */
-    width: 28% !important;
-    margin-left: 5%;
-  `}
-
-  ${media.greaterThan("large")`
-    /* screen width is greater than 1170px (large) */
-    width: 25% !important;
-    margin-left: 8%;
-  `}
 `;
 
 const SpanContainer = styled.span``;
