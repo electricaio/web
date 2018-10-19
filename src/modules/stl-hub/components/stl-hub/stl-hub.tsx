@@ -4,12 +4,12 @@ import { StlCard } from '../card/card';
 import { RowItem } from './stl-hub.css';
 
 const cardRow = <Row>
-  <RowItem gutter={16}>
+  <RowItem gutter={64}>
     <Col span={8}><StlCard /></Col>
     <Col span={8}><StlCard /></Col>
     <Col span={8}><StlCard /></Col>
   </RowItem>
-  <RowItem gutter={16}>
+  <RowItem gutter={64}>
     <Col span={8}><StlCard /></Col>
     <Col span={8}><StlCard /></Col>
     <Col span={8}><StlCard /></Col>
