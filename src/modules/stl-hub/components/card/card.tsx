@@ -2,7 +2,7 @@ import React, { SFC } from 'react';
 import { Affix, Row, Col } from 'antd';
 import { ButtonItem, CardItem, TypeItem, Logo, Title, KeyItem, RowItem, Description } from './card.css';
 
-const card = <CardItem bordered={false}>
+const card = <CardItem ref={(node) => { this.container = node; }}>
   <Affix target={() => this.container} style={{ position: 'absolute', top: 0, left: 0 }}>
     <TypeItem color='red'>CRM</TypeItem>
   </Affix>
@@ -12,10 +12,10 @@ const card = <CardItem bordered={false}>
     <span>ERN</span>
     <a>stl://salesforce:customer:2.0</a>
   </KeyItem>
-  <div style={{display: 'flex', justifyContent: 'space-between'}}>
+  <KeyItem>
     <span>AUTH</span>
     <a>stl://salesforce:customer:2.0</a>
-  </div>
+  </KeyItem>
   <Row>
     <RowItem gutter={16}>
       <Col span={12}>
