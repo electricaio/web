@@ -10,8 +10,7 @@ export const ButtonItem = styled(Button)`
   width: 100%;
 `;
 
-export const CardItem = styled(Card)`
-  width: 300px;
+export const CardItem = styled(Card)`=
   display: flex;
   justify-content: center;
   align-items: center;
