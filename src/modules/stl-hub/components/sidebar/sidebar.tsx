@@ -18,11 +18,7 @@ const items = [
     action: <CheckboxItem>Foundation</CheckboxItem>,
   },
   {
-    action: <Dropdown overlay={menu} trigger={['click']}>
-              <span style={{ userSelect: 'none' }}>
-                <Icon type="down" theme="outlined" /> Payment
-              </span>
-            </Dropdown>,
+    action: <CheckboxItem>Payment</CheckboxItem>,
   },
   {
     action: <CheckboxItem>CRM</CheckboxItem>,
