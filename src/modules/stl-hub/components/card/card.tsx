@@ -19,25 +19,25 @@ const card = <CardItem ref={(node) => { this.container = node; }}>
   <Row>
     <RowItem gutter={16}>
       <Col span={12}>
-        <ButtonItem type="primary">
-          <Icon type="link" theme="outlined" /> Dev-Joe
+        <ButtonItem type="primary" icon="link">
+          Dev-Joe
         </ButtonItem>
       </Col>
       <Col span={12}>
-        <ButtonItem type="primary">
-          <Icon type="link" theme="outlined" /> Dev-Joe
+        <ButtonItem type="primary" icon="link">
+          Dev-Joe
         </ButtonItem>
       </Col>
     </RowItem>
     <RowItem gutter={16}>
       <Col span={12}>
-        <ButtonItem type="primary">
-          <Icon type="link" theme="outlined" /> Production
+        <ButtonItem type="primary" icon="link">
+          Production
         </ButtonItem>
       </Col>
       <Col span={12}>
-        <ButtonItem type="primary">
-          <Icon type="link" theme="outlined" /> Test
+        <ButtonItem type="primary" icon="link">
+          Test
         </ButtonItem>
       </Col>
     </RowItem>
