@@ -8,14 +8,14 @@ export const StlPage: SFC = () => (
   <StlHubContainer>
       <SearchItem/>
       <Row gutter={24}>
-        <Col span={8}><StlCard /></Col>
-        <Col span={8}><StlCard /></Col>
-        <Col span={8}><StlCard /></Col>
-        <Col span={8}><StlCard /></Col>
-        <Col span={8}><StlCard /></Col>
-        <Col span={8}><StlCard /></Col>
-        <Col span={8}><StlCard /></Col>
-        <Col span={8}><StlCard /></Col>
+        <Col xs={24} sm={24} md={12} lg={8} xl={6}><StlCard /></Col>
+        <Col xs={24} sm={24} md={12} lg={8} xl={6}><StlCard /></Col>
+        <Col xs={24} sm={24} md={12} lg={8} xl={6}><StlCard /></Col>
+        <Col xs={24} sm={24} md={12} lg={8} xl={6}><StlCard /></Col>
+        <Col xs={24} sm={24} md={12} lg={8} xl={6}><StlCard /></Col>
+        <Col xs={24} sm={24} md={12} lg={8} xl={6}><StlCard /></Col>
+        <Col xs={24} sm={24} md={12} lg={8} xl={6}><StlCard /></Col>
+        <Col xs={24} sm={24} md={12} lg={8} xl={6}><StlCard /></Col>
       </Row>
   </StlHubContainer>
 );
