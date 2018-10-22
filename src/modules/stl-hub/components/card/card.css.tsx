@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { StyledFunction } from 'styled-components';
 // @ts-ignore
 import media from 'styled-media-query';
 import { Button, Card, Row } from 'antd';
@@ -7,10 +7,17 @@ import { Button, Card, Row } from 'antd';
 const imgSalesforce = require('../../../../assets/salesforce.png');
 const imgMySql = require('../../../../assets/mysql.jpg');
 
+interface ButtonItemProps {
+  color: string;
+}
+
 // @ts-ignore
-export const ButtonItem = styled(Button)`
+const button: StyledFunction<ButtonItemProps & React.HTMLProps<HTMLInputElement>> = styled(Button);
+
+export const ButtonItem = button`
   width: 100%;
   font-size: 0.8vw !important;
+  background-color: ${props => props.color} !important;
 `;
 
 export const CardItem = styled(Card)`=
