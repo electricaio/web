@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import { Checkbox, Switch } from 'antd';
 
 export const CheckboxItem = styled(Checkbox)`
-  font-size: 15px;
+  font-size: 15px !important;
+  color: white !important;
 `;
 
 // @ts-ignore

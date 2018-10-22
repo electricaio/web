@@ -10,3 +10,7 @@ export const TextIcon = styled.div`
   display: flex;
   align-items: center;
 `;
+
+export const MenuItem = styled(Menu.Item)`
+  background-color: transparent !important;
+`;
