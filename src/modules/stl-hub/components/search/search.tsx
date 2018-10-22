@@ -1,15 +1,26 @@
 import React, { SFC } from 'react';
-import { Input } from 'antd';
-import { SearchContainer } from './search.css';
+import { AutoComplete, Button, Icon } from 'antd';
+import { SearchContainer, SearchInput } from './search.css';
 
-const Search = Input.Search;
+const dataSource = ['Active', 'Primary', 'Test'];
 
 export const SearchItem: SFC = () => (
   <SearchContainer>
-    <Search
+    <AutoComplete
+      className="global-search"
+      size="large"
+      style={{ width: '100%' }}
+      dataSource={dataSource}
       placeholder="Type to search some info"
-      onSearch={value => console.log(value)}
-      enterButton
-    />
+      optionLabelProp="text"
+    >
+      <SearchInput
+        suffix={(
+          <Button className="search-btn" size="large" type="primary">
+            <Icon type="search" />
+          </Button>
+        )}
+      />
+    </AutoComplete>
   </SearchContainer>
 );
