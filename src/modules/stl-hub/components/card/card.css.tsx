@@ -17,6 +17,7 @@ const button: StyledFunction<ButtonItemProps & React.HTMLProps<HTMLInputElement>
 export const ButtonItem = button`
   width: 100%;
   font-size: 0.8vw !important;
+  color: white !important;
   background-color: ${props => props.color} !important;
 `;
 
