@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Component } from 'react';
 import { Layout } from 'antd';
-import { NavigationText, StyledLink, LayoutSider, LayoutHeader } from './main-layout.css';
+import { NavigationText, StyledLink, LayoutContainer, LayoutSider, LayoutHeader } from './main-layout.css';
 import { Navigation } from '../../navigation';
 const { Content } = Layout;
 
@@ -14,7 +14,7 @@ export class MainLayout extends Component<TMainLayoutProps> {
     const { children, sidebar } = this.props;
 
     return (
-      <Layout className="layout">
+      <LayoutContainer className="layout">
         <LayoutHeader>
           <div className="logo">electrica.io</div>
           <NavigationText>
@@ -25,7 +25,7 @@ export class MainLayout extends Component<TMainLayoutProps> {
           <LayoutSider>{sidebar}</LayoutSider>
           <Content>{children}</Content>
         </Layout>
-      </Layout>
+      </LayoutContainer>
     );
   }
 }

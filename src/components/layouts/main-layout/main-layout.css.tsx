@@ -12,6 +12,10 @@ export const StyledLink = styled(Link)`
   color: black;
 `;
 
+export const LayoutContainer = styled(Layout)`
+  min-height: 100vh !important;
+`;
+
 export const LayoutSider = styled(Sider)`
   background-color: #2b303f !important;
 `;
