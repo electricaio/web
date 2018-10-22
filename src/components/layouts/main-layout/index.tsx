@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Component } from 'react';
 import { Layout } from 'antd';
-import { NavigationText, StyledLink } from './main-layout.css';
+import { NavigationText, StyledLink, LayoutSider, LayoutHeader } from './main-layout.css';
 import { Navigation } from '../../navigation';
-const { Header, Sider, Content } = Layout;
+const { Content } = Layout;
 
 export type TMainLayoutProps = {
   sidebar: JSX.Element;
@@ -15,14 +15,14 @@ export class MainLayout extends Component<TMainLayoutProps> {
 
     return (
       <Layout className="layout">
-        <Header>
+        <LayoutHeader>
           <div className="logo">electrica.io</div>
           <NavigationText>
             <Navigation items={headerNavigationItems()} />
           </NavigationText>
-        </Header>
+        </LayoutHeader>
         <Layout>
-          <Sider>{sidebar}</Sider>
+          <LayoutSider>{sidebar}</LayoutSider>
           <Content>{children}</Content>
         </Layout>
       </Layout>
