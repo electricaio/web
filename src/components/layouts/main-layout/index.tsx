@@ -1,12 +1,16 @@
-import * as React from 'react';
-import { Component } from 'react';
+import React, { Component } from 'react';
 import { Layout } from 'antd';
-import { NavigationText, StyledLink } from './main-layout.css';
-import { Navigation } from '../../navigation';
-const { Header, Sider, Content } = Layout;
+import { Navigation } from './navigation';
+import { StyledLayout, Header, ContainerContent } from './main-layout.css';
+import logo from './../../../assets/logo.svg';
+import { Logo } from './logo';
+import { UserProfile } from './user-profile';
+
+const { Sider, Content } = Layout;
 
 export type TMainLayoutProps = {
-  sidebar: JSX.Element;
+  sidebar?: JSX.Element;
+  matchUrl: string;
 };
 
 export class MainLayout extends Component<TMainLayoutProps> {
@@ -14,38 +18,21 @@ export class MainLayout extends Component<TMainLayoutProps> {
     const { children, sidebar } = this.props;
 
     return (
-      <Layout className="layout">
+      <StyledLayout>
         <Header>
-          <div className="logo">electrica.io</div>
-          <NavigationText>
-            <Navigation items={headerNavigationItems()} />
-          </NavigationText>
+          <Navigation />
+          <Logo src={logo} />
+          <UserProfile src="" name="Chris" />
         </Header>
-        <Layout>
-          <Sider>{sidebar}</Sider>
-          <Content>{children}</Content>
-        </Layout>
-      </Layout>
+        <ContainerContent>
+          <StyledLayout>
+            <Layout>
+              {sidebar && <Sider width={300}>{sidebar}</Sider>}
+              <Content>{children}</Content>
+            </Layout>
+          </StyledLayout>
+        </ContainerContent>
+      </StyledLayout>
     );
   }
-}
-
-export function headerNavigationItems() {
-  return [
-    {
-      action: <StyledLink to="/">home</StyledLink>,
-    },
-    {
-      action: <StyledLink to="/api-keys">api keys</StyledLink>,
-    },
-    {
-      action: <StyledLink to="/stl-hub">stl hub</StyledLink>,
-    },
-    {
-      action: <StyledLink to="/monitor">monitor</StyledLink>,
-    },
-    {
-      action: <StyledLink to="/notification">notification</StyledLink>,
-    },
-  ];
 }

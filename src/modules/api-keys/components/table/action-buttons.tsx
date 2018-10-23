@@ -1,19 +1,26 @@
-import { Divider } from 'antd';
-import * as React from 'react';
-import { SFC } from 'react';
-import { TApiKeyTableEntity } from '../../../../models/ApiKeyTableEntity';
-import { DeleteButton, RefreshButton } from './action-buttons.css';
-
-export type TActionButtons = {
-  entity: TApiKeyTableEntity;
-  onRefresh: (id: string) => void;
-  onRemove: (id: string) => void;
+import React, { SFC } from 'react';
+import { Container, DeleteIcon } from './action-buttons.css';
+import { Icon, Popconfirm, Tooltip } from 'antd';
+export type TActionButtonsNewProps = {
+  onRemove: () => void;
+  onEdit: () => void;
+  name: string;
 };
 
-export const ActionButtons: SFC<TActionButtons> = ({ entity, onRefresh, onRemove }) => (
-  <div>
-    <RefreshButton onClick={() => onRefresh(entity.id)}>Refresh</RefreshButton>
-    <Divider type="vertical" />
-    <DeleteButton onClick={() => onRemove(entity.id)}>Delete</DeleteButton>
-  </div>
+export const ActionButtons: SFC<TActionButtonsNewProps> = ({ name, onEdit, onRemove }) => (
+  <Container>
+    <Tooltip placement="top" title="Edit">
+      <Icon type="edit" onClick={onEdit} />
+    </Tooltip>
+    <Popconfirm
+      icon={<DeleteIcon type="question-circle-o" />}
+      placement="top"
+      title={`Delete ${name} key?`}
+      onConfirm={onRemove}
+      okText="Yes"
+      cancelText="No"
+    >
+      <Icon type="delete" />
+    </Popconfirm>
+  </Container>
 );

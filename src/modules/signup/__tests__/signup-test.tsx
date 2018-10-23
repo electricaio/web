@@ -2,16 +2,14 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { Form } from 'antd';
 import { MemoryRouter } from 'react-router-dom';
-
-import Signup from '../index';
-import Header from '../../../components/header';
+import { SignupFormComponent } from '../index';
+import { Header } from '../../../components/header';
 
 describe('Signup', () => {
-
   beforeEach(() => {
     this.signupComponent = mount(
       <MemoryRouter>
-        <Signup />
+        <SignupFormComponent />
       </MemoryRouter>
     );
   });

@@ -2,12 +2,10 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { Form } from 'antd';
 import { MemoryRouter } from 'react-router-dom';
-
-import Login from '../index';
-import Header from '../../../components/header';
+import { LoginFormComponent as Login } from '../index';
+import { Header } from '../../../components/header';
 
 describe('Login', () => {
-
   beforeEach(() => {
     this.loginComponent = mount(
       <MemoryRouter>
@@ -20,8 +18,6 @@ describe('Login', () => {
     const header = this.loginComponent.find(Header);
     expect(header.prop('title')).toBeTruthy();
   });
-
-  it('should call a handle submit function when form is submitted', () => {});
 
   it('should have a username input', () => {
     const username = this.loginComponent.find('input#username');

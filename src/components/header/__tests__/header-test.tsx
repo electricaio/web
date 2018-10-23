@@ -1,7 +1,6 @@
 import React, { SFC } from 'react';
 import { shallow } from 'enzyme';
-
-import Header from '../index';
+import { Header } from '../index';
 
 describe('Layout with Skewed Background', () => {
   const title = 'Hello!';
