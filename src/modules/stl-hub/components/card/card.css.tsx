@@ -1,7 +1,5 @@
 import React from 'react';
 import styled, { StyledFunction } from 'styled-components';
-// @ts-ignore
-import media from 'styled-media-query';
 import { Button, Card, Row } from 'antd';
 
 const imgSalesforce = require('../../../../assets/salesforce.png');
