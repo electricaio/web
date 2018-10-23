@@ -14,7 +14,7 @@ describe('Layout with Sidebar', () => {
 
   beforeEach(() => {
     this.layoutSidebar = shallow(
-      <MainLayout matchUrl={''} sidebar={<TestSidebarComponent />}>
+      <MainLayout sidebar={<TestSidebarComponent />}>
         <TestContentComponent />
       </MainLayout>
     );

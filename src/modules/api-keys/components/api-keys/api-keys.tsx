@@ -7,7 +7,6 @@ import { NewKeyModal } from '../new-api-key-modal/new-key-modal';
 
 export type TApiKeysProps = {
   data: TApiKeyTableEntity[];
-  onEdit: (id: string) => void;
   onRemove: (id: string) => void;
   onCommit: (entity: TApiKeyTableEntity) => void;
 };

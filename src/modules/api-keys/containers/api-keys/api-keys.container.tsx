@@ -13,6 +13,7 @@ const mapDispatchToProps = (dispatch: Dispatch<TAction>) => ({
   onRemove: bindActionCreators(removeKeyAC, dispatch),
   onRefresh: bindActionCreators(refreshKeyAC, dispatch),
   onCommit: bindActionCreators(commitKeyAC, dispatch),
+  onEdit: bindActionCreators(commitKeyAC, dispatch),
 });
 
 export const ApiKeysContainer = connect(

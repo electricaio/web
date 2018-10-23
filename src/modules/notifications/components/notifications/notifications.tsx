@@ -7,7 +7,7 @@ type TNotificationsProps = {
 };
 
 export const Notifications: SFC<TNotificationsProps> = ({ match }) => (
-  <MainLayout matchUrl={match.url} sidebar={<div>sidebar</div>}>
+  <MainLayout sidebar={<div>sidebar</div>}>
     <div>Notifications Module</div>
   </MainLayout>
 );

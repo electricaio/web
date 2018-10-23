@@ -7,7 +7,7 @@ type TMonitorProps = {
 };
 
 export const Monitor: SFC<TMonitorProps> = ({ match }) => (
-  <MainLayout matchUrl={match.url} sidebar={<div>sidebar</div>}>
+  <MainLayout sidebar={<div>sidebar</div>}>
     <div>Monitor Module</div>
   </MainLayout>
 );

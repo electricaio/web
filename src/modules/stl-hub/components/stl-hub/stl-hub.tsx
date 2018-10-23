@@ -7,7 +7,7 @@ type TStlHubProps = {
 };
 
 export const StlHub: SFC<TStlHubProps> = ({ match }) => (
-  <MainLayout matchUrl={match.url} sidebar={<div>sidebar</div>}>
+  <MainLayout sidebar={<div>sidebar</div>}>
     <div>STL Hub Module</div>
   </MainLayout>
 );

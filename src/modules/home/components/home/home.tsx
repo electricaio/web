@@ -7,7 +7,7 @@ type THomeProps = {
 };
 
 export const Home: SFC<THomeProps> = ({ match }) => (
-  <MainLayout matchUrl={match.url} sidebar={<div>sidebar</div>}>
+  <MainLayout sidebar={<div>sidebar</div>}>
     <div>Home Module</div>
   </MainLayout>
 );

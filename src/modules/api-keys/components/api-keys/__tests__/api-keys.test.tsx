@@ -13,7 +13,6 @@ describe('ApiKeys | api-keys Component', () => {
     this.component = shallow(
       <ApiKeys
         data={API_KEYS_TABLE_DATA}
-        onEdit={() => {}}
         onRemove={onRemoveMock}
         onCommit={onCommitMock}
       />

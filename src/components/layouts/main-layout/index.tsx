@@ -10,7 +10,6 @@ const { Sider, Content } = Layout;
 
 export type TMainLayoutProps = {
   sidebar?: JSX.Element;
-  matchUrl: string;
 };
 
 export class MainLayout extends Component<TMainLayoutProps> {
