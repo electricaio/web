@@ -8,12 +8,12 @@
     "target": "es5",
     "jsx": "react",
     "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "noUnusedLocals": true
   },
-
   "include": [
     "./src/**/*",
-    "./typings/custom.d.ts",
+    "./typings/*"
   ],
   "exclude": [
     "node_modules"

@@ -1,14 +1,12 @@
 import React, { SFC } from 'react';
-import Layout from '../components/layouts/layout-skewed-background';
-import Signup from '../modules/signup';
+import { LayoutSkewedBackground } from '../components/layouts/layout-skewed-background';
+import { SignupFormComponent } from '../modules/signup';
 import { StyledHorizonalCenteredCard } from './pages.css';
 
-const SignupPage: SFC = () => (
-  <Layout>
-  <StyledHorizonalCenteredCard>
-    <Signup />
-  </StyledHorizonalCenteredCard>
-</Layout>
+export const SignupPage: SFC = () => (
+  <LayoutSkewedBackground>
+    <StyledHorizonalCenteredCard>
+      <SignupFormComponent />
+    </StyledHorizonalCenteredCard>
+  </LayoutSkewedBackground>
 );
-
-export default SignupPage;

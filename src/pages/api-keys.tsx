@@ -1,11 +1,11 @@
-import * as React from 'react';
-import { SFC } from 'react';
+import React, { SFC } from 'react';
 import { ApiKeysContainer } from '../modules/api-keys/containers/api-keys/api-keys.container';
 import { MainLayout } from '../components/layouts/main-layout';
-import { SidebarNavigation } from '../modules/api-keys/components/sidebar/sidebar';
 
-export const ApiKeysLayout: SFC = () => (
-  <MainLayout sidebar={<SidebarNavigation />}>
-    <ApiKeysContainer />
-  </MainLayout>
-);
+export const ApiKeysLayout: SFC = () => {
+  return (
+    <MainLayout>
+      <ApiKeysContainer />
+    </MainLayout>
+  );
+};

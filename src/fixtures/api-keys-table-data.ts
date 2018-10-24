@@ -4,19 +4,19 @@ export const API_KEYS_TABLE_DATA: TApiKeyTableEntity[] = [
   {
     id: 'asdasdsad',
     name: 'Development',
-    key: '92392',
+    key: '14f4a1c0-e3sd5-5842-c7b3-162db8b95wex',
     created: new Date('02/03/2018'),
   },
   {
     id: 'qweqwe',
     name: 'Staging',
-    key: '236232',
+    key: '14f4a1c0-e6csd-5842-c7b3-162db8b95cc3',
     created: new Date('01/02/2018'),
   },
   {
     id: 'zxczxc',
     name: 'Production',
-    key: '4368478',
+    key: '14s4a1c0-e365-5ds42-c7b3-162db8b95cc3',
     created: new Date('01/04/2018'),
   },
 ];

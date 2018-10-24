@@ -1,13 +1,11 @@
 import React, { Component, Fragment } from 'react';
-
 import { Form, Icon, Checkbox } from 'antd';
 import { WrappedFormUtils } from 'antd/lib/form/Form';
 import { Link } from 'react-router-dom';
-
 import { ForgotPassword } from './login.css';
 import { StyledButton } from '../ui-kit/button';
 import { StyledInput } from '../ui-kit/input';
-import Header from '../../components/header';
+import { Header } from '../../components/header';
 
 const FormItem = Form.Item;
 
@@ -74,4 +72,4 @@ class LoginForm extends Component<TLoginProps> {
   }
 }
 
-export default Form.create()(LoginForm);
+export const LoginFormComponent = Form.create()(LoginForm);

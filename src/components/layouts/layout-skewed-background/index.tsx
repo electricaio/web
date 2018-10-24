@@ -3,7 +3,8 @@ import { Layout } from 'antd';
 import { Background } from './layout-skewed-background.css';
 
 const { Content } = Layout;
-const LayoutSkewedBackground: SFC = ({ children }) => {
+
+export const LayoutSkewedBackground: SFC = ({ children }) => {
   return (
     <Fragment>
       <Background />
@@ -13,5 +14,3 @@ const LayoutSkewedBackground: SFC = ({ children }) => {
     </Fragment>
   );
 };
-
-export default LayoutSkewedBackground;

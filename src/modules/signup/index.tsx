@@ -1,9 +1,7 @@
 import React, { Component, Fragment, FormEvent } from 'react';
 import { Form, Icon } from 'antd';
 import { Link } from 'react-router-dom';
-
-import Header from '../../components/header';
-
+import { Header } from '../../components/header';
 import { StyledFormItem, StyledForm } from './signup.css';
 import { StyledButton } from '../ui-kit/button';
 import { StyledInput } from '../ui-kit/input';
@@ -36,7 +34,7 @@ class SignupForm extends Component<TSignupProps, TSignupFormState> {
     const { value } = e.target as HTMLInputElement;
     this.setState((prev: TSignupFormState) => ({
       confirmDirty: prev.confirmDirty || !!value,
-  }));
+    }));
   };
 
   compareToFirstPassword = (rule?: string, value?: string, callback?: Function) => {
@@ -150,4 +148,4 @@ class SignupForm extends Component<TSignupProps, TSignupFormState> {
   }
 }
 
-export default Form.create()(SignupForm);
+export const SignupFormComponent = Form.create()(SignupForm);

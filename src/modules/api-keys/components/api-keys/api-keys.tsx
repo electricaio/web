@@ -1,26 +1,45 @@
-import * as React from 'react';
 import { TApiKeyTableEntity } from '../../../../models/ApiKeyTableEntity';
-import { StyledCard } from './api-keys.css';
 import { ApiKeysTable } from '../table/table';
-import { Component, Fragment } from 'react';
+import { ApiIcon } from './api-keys.css';
+import { Header } from '../../../ui-kit/header';
+import React, { Component, Fragment } from 'react';
+import { ButtonActionModal } from '../modal-button-action/modal-button-action';
+import { NewApiButton } from '../modal-button-action/modal-button-action.css';
 
 export type TApiKeysProps = {
   data: TApiKeyTableEntity[];
-  onRefresh: (id: string) => void;
   onRemove: (id: string) => void;
+  onCommit: (entity: TApiKeyTableEntity) => void;
 };
 
 export class ApiKeys extends Component<TApiKeysProps> {
+  handleRemove = (id: string) => {
+    const { onRemove } = this.props;
+    onRemove(id);
+  };
+  handleCommit = (el: TApiKeyTableEntity) => {
+    const { onCommit } = this.props;
+    onCommit(el);
+  };
+
   render() {
-    const { data, onRefresh, onRemove } = this.props;
+    const { data } = this.props;
 
     return (
       <Fragment>
-        <StyledCard>
+        <Header>
+          <ApiIcon type="setting" theme="outlined" />
           These API Keys grant developers the ability to access electrica services in the Cloud.
-          Keep them confidential
-        </StyledCard>
-        <ApiKeysTable data={data} onRefresh={onRefresh} onRemove={onRemove} />
+          Keep them confidential.
+        </Header>
+        <ApiKeysTable data={data} onRemove={this.handleRemove} />
+        <ButtonActionModal
+          title="Generate New API Key"
+          submitText="Create"
+          onCommit={this.handleCommit}
+        >
+          <NewApiButton type="primary">Generate New API Key</NewApiButton>
+        </ButtonActionModal>
       </Fragment>
     );
   }

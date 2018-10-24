@@ -1,10 +1,20 @@
+import { Layout } from 'antd';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 
-export const NavigationText = styled.div`
-  text-transform: uppercase;
+export const StyledLayout = styled(Layout)`
+  height: 100%;
+`;
+export const ContainerContent = styled(Layout.Content)`
+  padding-top: 0px !important;
+  &.ant-layout-content {
+    margin: 0px 250px;
+  }
 `;
 
-export const StyledLink = styled(Link)`
-  color: black;
+export const Header = styled(Layout.Header)`
+  padding: 0 275px !important;
+
+  height: 70px;
+  background-color: #373c4c;
+  display: flex;
 `;

@@ -1,10 +1,9 @@
-import * as React from 'react';
-import { Component, Fragment, SFC } from 'react';
-import { Button, Table } from 'antd';
+import React, { Component, SFC } from 'react';
+import { Table } from 'antd';
 import { TApiKeyTableEntity } from '../../../../models/ApiKeyTableEntity';
 import { ActionButtons } from './action-buttons';
-import { PullRight } from './table.css';
 import { format } from 'date-fns';
+import { StyledEye, KeyContainer } from './table.css';
 
 type TDateProps = {
   date: Date;
@@ -12,71 +11,86 @@ type TDateProps = {
 
 const Date: SFC<TDateProps> = ({ date }) => <div>{format(date, 'DD.MM.YYYY')}</div>;
 
-//
-
-export type TApiKeysTableProps = {
-  data: TApiKeyTableEntity[];
-  onRemove: (id: string) => void;
-  onRefresh: (id: string) => void;
+type TKeyVisibilityProps = {
+  entity: TApiKeyTableEntity;
 };
-
-export type TApiKeysTableState = {
-  isNewEntity: boolean;
+type TKeyVisibilityState = {
+  showKey: boolean;
 };
+export class KeyVisibility extends Component<TKeyVisibilityProps, TKeyVisibilityState> {
+  readonly state: TKeyVisibilityState = {
+    showKey: false,
+  };
 
-export class ApiKeysTable extends Component<TApiKeysTableProps, TApiKeysTableState> {
-  readonly state: TApiKeysTableState = {
-    isNewEntity: false,
+  toggleKeyVisibility = () => {
+    this.setState({
+      showKey: !this.state.showKey,
+    });
   };
 
   render() {
-    const { data, onRemove, onRefresh } = this.props;
-    const columns = getColumns(onRefresh, onRemove);
-
+    const { entity } = this.props;
+    const regExp = new RegExp('.', 'g');
     return (
-      <Fragment>
-        <Table columns={columns} dataSource={data} />
-        <PullRight>
-          <Button type="primary" onClick={this.showNewEntityForm}>
-            New
-          </Button>
-        </PullRight>
-      </Fragment>
+      <KeyContainer>
+        {this.state.showKey ? entity.key : entity.key.replace(regExp, '*')}
+        <StyledEye onClick={this.toggleKeyVisibility} type="eye" />
+      </KeyContainer>
     );
   }
-
-  showNewEntityForm = () => {
-    const { isNewEntity } = this.state;
-
-    if (!isNewEntity) {
-      this.setState(() => ({ isNewEntity: true }));
-    }
-  };
 }
 
-function getColumns(handleRefresh: (id: string) => void, handleRemove: (id: string) => void) {
-  return [
-    {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
-    },
-    {
-      title: 'Key',
-      dataIndex: 'key',
-      key: 'key',
-    },
-    {
-      title: 'Data Created',
-      key: 'created',
-      render: (entity: TApiKeyTableEntity) => <Date date={entity.created} />,
-    },
-    {
-      title: 'Action',
-      key: 'action',
-      render: (entity: TApiKeyTableEntity) => (
-        <ActionButtons entity={entity} onRefresh={handleRefresh} onRemove={handleRemove} />
-      ),
-    },
-  ];
+export type TTableProps = {
+  data: TApiKeyTableEntity[];
+  onRemove: (id: string) => void;
+};
+
+export class ApiKeysTable extends Component<TTableProps> {
+  handleRemove = (id: string) => () => {
+    this.props.onRemove(id);
+  };
+
+  handleEdit = (id: string) => () => {
+    //  this.props.onEdit(id);
+  };
+
+  getColumns() {
+    return [
+      {
+        title: 'Name',
+        dataIndex: 'name',
+        key: 'name',
+      },
+      {
+        title: 'Key',
+        key: 'key',
+        width: '35%',
+        render: (entity: TApiKeyTableEntity) => <KeyVisibility entity={entity} />,
+      },
+      {
+        title: 'Date Created',
+        key: 'created',
+        render: (entity: TApiKeyTableEntity) => <Date date={entity.created} />,
+      },
+      {
+        title: 'Action',
+        key: 'action',
+        render: (entity: TApiKeyTableEntity) => (
+          <ActionButtons
+            apiKey={entity.key}
+            name={entity.name}
+            onRemove={this.handleRemove(entity.id)}
+            onEdit={this.handleEdit(entity.id)}
+          />
+        ),
+      },
+    ];
+  }
+
+  render() {
+    const { data } = this.props;
+    const columns = this.getColumns();
+
+    return <Table pagination={false} columns={columns} dataSource={data} />;
+  }
 }
