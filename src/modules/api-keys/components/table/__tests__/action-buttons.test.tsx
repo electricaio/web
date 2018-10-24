@@ -3,11 +3,18 @@ import React from 'react';
 import { Tooltip, Icon, Popconfirm } from 'antd';
 
 import { ActionButtons } from '../action-buttons';
+import { ButtonActionModal } from '../../modal-button-action/modal-button-action';
 
 describe('Action Buttons', () => {
   const onRemoveMock = jest.fn();
+  const onEditMock = jest.fn();
+  const name = 'test name';
+  const apiKey = 'test key';
+
   beforeEach(() => {
-    this.component = shallow(<ActionButtons name="" onEdit={() => {}} onRemove={onRemoveMock} />);
+    this.component = shallow(
+      <ActionButtons apiKey={apiKey} name={name} onEdit={onEditMock} onRemove={onRemoveMock} />
+    );
   });
 
   it('shows edit icon with hint text', () => {
@@ -28,5 +35,19 @@ describe('Action Buttons', () => {
   it('popconfirm calls onRemove prop when accepted', () => {
     const popconfirm = this.component.find(Popconfirm);
     expect(popconfirm.prop('onConfirm')).toEqual(onRemoveMock);
+  });
+
+  it('action button modal contains edit properties', () => {
+    const buttonActionModal = this.component.find(ButtonActionModal);
+    expect(buttonActionModal.prop('title')).toEqual('Edit API Key');
+    expect(buttonActionModal.prop('submitText')).toEqual('Save');
+    expect(buttonActionModal.prop('apiKey')).toEqual(apiKey);
+    expect(buttonActionModal.prop('name')).toEqual(name);
+    expect(buttonActionModal.prop('onCommit')).toEqual(onEditMock);
+  });
+
+  it('edit icon is a child of action button modal', () => {
+    const buttonActionModal = this.component.find(ButtonActionModal);
+    expect(buttonActionModal.find(Icon)).toHaveLength(1);
   });
 });

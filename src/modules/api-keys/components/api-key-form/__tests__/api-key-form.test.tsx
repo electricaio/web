@@ -10,7 +10,7 @@ describe('ApiKeyForm', () => {
   });
 
   it('should have a name input', () => {
-    const name = this.apiKeyForm.find('input#name');
+    const name = this.apiKeyForm.find('input#apiKeyName');
     expect(name).toHaveLength(1);
   });
 
@@ -22,6 +22,16 @@ describe('ApiKeyForm', () => {
   it('should render `GenerateNewKey` component', () => {
     const key = this.apiKeyForm.find(GenerateNewKey);
     expect(key).toHaveLength(1);
+  });
+
+  it('should use name and key as an initial value if passed', () => {
+    const name = 'test name';
+    const apiKey = 'test key';
+    const apiKeyFormWithValues = mount(<ApiKeyForm apiKeyName={name} apiKey={apiKey} />);
+    const nameInputValue = apiKeyFormWithValues.find('input#apiKeyName').prop('value');
+    const keyInputValue = apiKeyFormWithValues.find('input#apiKey').prop('value');
+    expect(nameInputValue).toEqual(name);
+    expect(keyInputValue).toEqual(apiKey);
   });
 
   describe('GenerateNewKey', () => {

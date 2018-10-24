@@ -7,28 +7,44 @@ import { StyledInput } from '../../../ui-kit/input';
 
 const FormItem = Form.Item;
 
-class ApiKeyFormComponent extends Component<FormComponentProps> {
+interface ApiKeyFormComponentProps extends FormComponentProps {
+  apiKeyName?: string;
+  apiKey?: string;
+}
+
+class ApiKeyFormComponent extends Component<ApiKeyFormComponentProps> {
   render() {
     const {
+      apiKeyName,
+      apiKey,
       form: { getFieldDecorator },
     } = this.props;
     return (
       <Form>
         <FormItem>
-          {getFieldDecorator('name', {
+          {getFieldDecorator('apiKeyName', {
+            initialValue: apiKeyName,
             rules: [{ required: true, message: 'Please input a name for this key' }],
           })(<StyledInput placeholder="e.g. Production" />)}
         </FormItem>
-        <GenerateNewKey form={this.props.form} />
+        <GenerateNewKey apiKey={apiKey} form={this.props.form} />
       </Form>
     );
   }
 }
 
-export const GenerateNewKey: SFC<FormComponentProps> = ({ form: { getFieldDecorator } }) => (
+interface GenerateNewKeyProps extends FormComponentProps {
+  apiKey?: string;
+}
+
+export const GenerateNewKey: SFC<GenerateNewKeyProps> = ({
+  apiKey,
+  form: { getFieldDecorator },
+}) => (
   <GenerateKeyContainer>
     <StyledFormItem>
       {getFieldDecorator('apiKey', {
+        initialValue: apiKey,
         rules: [{ required: true, message: 'Please generate an API key' }],
       })(<StyledInput prefix={<Icon type="key" />} />)}
     </StyledFormItem>

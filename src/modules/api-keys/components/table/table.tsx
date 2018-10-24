@@ -17,7 +17,7 @@ type TKeyVisibilityProps = {
 type TKeyVisibilityState = {
   showKey: boolean;
 };
-class KeyVisibility extends Component<TKeyVisibilityProps, TKeyVisibilityState> {
+export class KeyVisibility extends Component<TKeyVisibilityProps, TKeyVisibilityState> {
   readonly state: TKeyVisibilityState = {
     showKey: false,
   };
@@ -33,7 +33,7 @@ class KeyVisibility extends Component<TKeyVisibilityProps, TKeyVisibilityState> 
     const regExp = new RegExp('.', 'g');
     return (
       <KeyContainer>
-        {this.state.showKey ? entity : entity.toString().replace(regExp, '*')}
+        {this.state.showKey ? entity.key : entity.key.replace(regExp, '*')}
         <StyledEye onClick={this.toggleKeyVisibility} type="eye" />
       </KeyContainer>
     );
@@ -43,7 +43,6 @@ class KeyVisibility extends Component<TKeyVisibilityProps, TKeyVisibilityState> 
 export type TTableProps = {
   data: TApiKeyTableEntity[];
   onRemove: (id: string) => void;
-  onCommit: (entity: TApiKeyTableEntity) => void;
 };
 
 export class ApiKeysTable extends Component<TTableProps> {
@@ -64,13 +63,12 @@ export class ApiKeysTable extends Component<TTableProps> {
       },
       {
         title: 'Key',
-        dataIndex: 'key',
-        width: '35%',
         key: 'key',
+        width: '35%',
         render: (entity: TApiKeyTableEntity) => <KeyVisibility entity={entity} />,
       },
       {
-        title: 'Data Created',
+        title: 'Date Created',
         key: 'created',
         render: (entity: TApiKeyTableEntity) => <Date date={entity.created} />,
       },
@@ -79,6 +77,7 @@ export class ApiKeysTable extends Component<TTableProps> {
         key: 'action',
         render: (entity: TApiKeyTableEntity) => (
           <ActionButtons
+            apiKey={entity.key}
             name={entity.name}
             onRemove={this.handleRemove(entity.id)}
             onEdit={this.handleEdit(entity.id)}

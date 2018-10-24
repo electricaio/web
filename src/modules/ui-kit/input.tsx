@@ -8,7 +8,6 @@ border-radius: 2px;
 
 &.ant-input {
   height: 50px
-  color: #9aa8bd;
   border-radius: 2px;
 }
 `;

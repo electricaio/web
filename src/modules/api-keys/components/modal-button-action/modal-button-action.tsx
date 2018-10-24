@@ -1,19 +1,28 @@
 import { TApiKeyTableEntity } from '../../../../models/ApiKeyTableEntity';
-import { NewApiButton } from './new-key-modal.css';
-import React, { Component, Fragment } from 'react';
+import React, { Component, Fragment, ReactElement } from 'react';
 
 import { MainModal } from '../../../../components/modal';
 import { ApiKeyForm } from '../api-key-form/api-key-form';
 
 export type TApiKeysProps = {
   onCommit: (entity: TApiKeyTableEntity) => void;
+  submitText: string;
+  title: string;
+  children: ReactElement<any>;
+  name?: string;
+  apiKey?: string;
 };
 
 export type TApiKeysState = {
   visible: boolean;
 };
 
-export class NewKeyModal extends Component<TApiKeysProps, TApiKeysState> {
+type FormFields = {
+  apiKey: string;
+  apiKeyName: string;
+};
+
+export class ButtonActionModal extends Component<TApiKeysProps, TApiKeysState> {
   formRef: any = null;
 
   readonly state: TApiKeysState = {
@@ -35,11 +44,18 @@ export class NewKeyModal extends Component<TApiKeysProps, TApiKeysState> {
 
   handleCreate = () => {
     const form = this.formRef.props.form;
-    form.validateFields((err: string, values: object) => {
+    form.validateFields((err: string, values: FormFields) => {
       if (err) {
         return;
       }
       form.resetFields();
+      const newEntity: TApiKeyTableEntity = {
+        name: values.apiKeyName,
+        key: values.apiKey,
+        created: new Date(),
+        id: '',
+      };
+      this.props.onCommit(newEntity);
       this.setState({ visible: false });
     });
   };
@@ -50,27 +66,22 @@ export class NewKeyModal extends Component<TApiKeysProps, TApiKeysState> {
 
   render() {
     const { visible } = this.state;
+    const { title, submitText, children, apiKey, name } = this.props;
     return (
       <Fragment>
         <MainModal
-          submitText="Create"
-          title="Generate New API"
+          submitText={submitText}
+          title={title}
           visible={visible}
           handleCancel={this.closeModal}
           handleSave={this.handleCreate}
         >
-          <ApiKeyForm wrappedComponentRef={this.saveFormRef} />
+          <ApiKeyForm apiKeyName={name} apiKey={apiKey} wrappedComponentRef={this.saveFormRef} />
         </MainModal>
-        <NewApiButton type="primary" onClick={this.showModal}>
-          Generate New API Key
-        </NewApiButton>
+        {React.cloneElement(children, {
+          onClick: this.showModal,
+        })}
       </Fragment>
     );
   }
-
-  handleCommit = (el: TApiKeyTableEntity) => {
-    const { onCommit } = this.props;
-
-    onCommit(el);
-  };
 }

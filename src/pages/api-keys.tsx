@@ -5,7 +5,7 @@ import { MainLayout } from '../components/layouts/main-layout';
 export const ApiKeysLayout: SFC = () => {
   return (
     <MainLayout>
-      <ApiKeysContainer  />
+      <ApiKeysContainer />
     </MainLayout>
   );
 };

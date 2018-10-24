@@ -1,9 +1,10 @@
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import React from 'react';
 import { API_KEYS_TABLE_DATA } from '../../../../../fixtures/api-keys-table-data';
-import { ApiKeysTable } from '../table';
+import { ApiKeysTable, KeyVisibility } from '../table';
 import { Table } from 'antd';
 import { TApiKeyTableEntity } from '../../../../../models/ApiKeyTableEntity';
+import { StyledEye, KeyContainer } from '../table.css';
 
 describe('ApiKeys | table Component', () => {
   const data: TApiKeyTableEntity[] = [
@@ -29,17 +30,43 @@ describe('ApiKeys | table Component', () => {
 
   const onRemoveMock = jest.fn();
   beforeEach(() => {
-    this.component = shallow(
-      <ApiKeysTable data={API_KEYS_TABLE_DATA} onRemove={onRemoveMock} onCommit={() => {}} />
-    );
+    this.component = mount(<ApiKeysTable data={API_KEYS_TABLE_DATA} onRemove={onRemoveMock} />);
   });
 
   it('renders 4 columns', () => {
-    expect(this.component.find(Table).prop('columns')).toHaveLength(4);
+    const columns = this.component.find(Table).prop('columns');
+    const columnNames = columns.map((col: any) => col.title);
+    expect(columnNames).toEqual(['Name', 'Key', 'Date Created', 'Action']);
   });
 
   it('passes in data to table', () => {
     expect(this.component.find(Table).prop('dataSource')).toEqual(data);
+  });
+
+  describe('KeyVisibility', () => {
+    const key = '1234567';
+    beforeEach(() => {
+      const entity: TApiKeyTableEntity = {
+        name: 'test',
+        id: '123',
+        key: '1234567',
+        created: new Date(),
+      };
+      this.keyVisibility = mount(<KeyVisibility entity={entity} />);
+    });
+
+    it('hides the api key with asterisks when loaded', () => {
+      const hiddenApiKey = this.keyVisibility.find(KeyContainer).text();
+      expect(hiddenApiKey).toContain('*');
+      expect(hiddenApiKey).not.toEqual(key);
+    });
+
+    it('shows api key when eye is clicked', () => {
+      this.keyVisibility.find(StyledEye).simulate('click');
+      const hiddenApiKey = this.keyVisibility.find(KeyContainer).text();
+      expect(hiddenApiKey).not.toContain('*');
+      expect(hiddenApiKey).toEqual(key);
+    });
   });
 
   it('passes entity name to action buttons', () => {

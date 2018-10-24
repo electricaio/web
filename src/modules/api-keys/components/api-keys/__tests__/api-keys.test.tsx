@@ -11,11 +11,7 @@ describe('ApiKeys | api-keys Component', () => {
   const onCommitMock = jest.fn();
   beforeEach(() => {
     this.component = shallow(
-      <ApiKeys
-        data={API_KEYS_TABLE_DATA}
-        onRemove={onRemoveMock}
-        onCommit={onCommitMock}
-      />
+      <ApiKeys data={API_KEYS_TABLE_DATA} onRemove={onRemoveMock} onCommit={onCommitMock} />
     );
   });
 
@@ -41,11 +37,6 @@ describe('ApiKeys | api-keys Component', () => {
     it('calls remove action when onRemove is called', () => {
       this.table.prop('onRemove')();
       expect(onRemoveMock).toBeCalled();
-    });
-
-    it('calls commit action when onCommit is called', () => {
-      this.table.prop('onCommit')();
-      expect(onCommitMock).toBeCalled();
     });
   });
 });
