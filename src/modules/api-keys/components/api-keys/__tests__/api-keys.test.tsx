@@ -6,7 +6,7 @@ import { ApiKeys } from '../api-keys';
 import { ApiIcon } from '../api-keys.css';
 import { Header } from '../../../../ui-kit/header';
 
-describe('ApiKeys | api-keys Component', () => {
+describe('ApiKeys', () => {
   const onRemoveMock = jest.fn();
   const onCommitMock = jest.fn();
   beforeEach(() => {

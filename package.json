@@ -38,6 +38,7 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "clean-webpack-plugin": "^0.1.17",
+    "copy-webpack-plugin": "^4.5.4",
     "coveralls": "^3.0.2",
     "css-loader": "^1.0.0",
     "enzyme-adapter-react-16": "^1.6.0",
@@ -79,11 +80,14 @@
     "webpack-merge": "^4.1.1"
   },
   "dependencies": {
+    "@types/lodash": "^4.14.117",
     "antd": "^3.10.0",
     "date-fns": "^1.29.0",
     "enzyme": "^3.7.0",
     "fp-ts": "^1.9.0",
+    "img-loader": "^3.0.1",
     "immutable": "^3.8.2",
+    "lodash": "^4.17.11",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-redux": "^5.0.7",
@@ -94,7 +98,8 @@
     "redux-thunk": "^2.3.0",
     "styled-components": "^3.4.9",
     "tslint-config-prettier": "^1.15.0",
-    "typelevel-ts": "^0.3.2"
+    "typelevel-ts": "^0.3.2",
+    "url-loader": "^1.1.2"
   },
   "jest": {
     "transform": {

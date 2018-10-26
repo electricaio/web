@@ -5,9 +5,9 @@ import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import { Home } from './modules/home/components/home/home';
 import { Monitor } from './modules/monitor/components/monitor/monitor';
 import { Notifications } from './modules/notifications/components/notifications/notifications';
-import { StlHub } from './modules/stl-hub/components/stl-hub/stl-hub';
 import { store } from './redux/store';
 import { ApiKeysLayout } from './pages/api-keys';
+import { ConnectorHubLayout } from './pages/connector-hub';
 import { LoginPage } from './pages/login';
 import { SignupPage } from './pages/signup';
 
@@ -22,7 +22,7 @@ class App extends Component {
           <Switch>
             <Route path="/" exact={true} component={Home} />
             <Route path="/api-keys" component={ApiKeysLayout} />
-            <Route path="/stl-hub" component={StlHub} />
+            <Route path="/connector-hub" component={ConnectorHubLayout} />
             <Route path="/monitor" component={Monitor} />
             <Route path="/notifications" component={Notifications} />
             <Route path="/login" component={LoginPage} />

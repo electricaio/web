@@ -15,6 +15,5 @@ export const Header = styled(Layout.Header)`
   padding: 0 275px !important;
 
   height: 70px;
-  background-color: #373c4c;
   display: flex;
 `;
