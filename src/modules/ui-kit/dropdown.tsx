@@ -30,7 +30,7 @@ export class DropdownComponent extends React.Component<TDropdownProps> {
         onVisibleChange={this.handleVisibleChange}
         visible={this.state.visible}
       >
-        <Button size="large" style={{ marginLeft: 8 }}>
+        <Button size="large">
           {this.props.label}
           <Icon type="down" />
         </Button>

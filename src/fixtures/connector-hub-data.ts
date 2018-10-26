@@ -47,7 +47,7 @@ export const CONNECTOR_HUB_DATA: TConnectorEntity[] = [
     type: 'Talent',
   },
   {
-    id: '4',
+    id: '6',
     name: 'Smart Recruiters Candidate API 3.0',
     image: 'smartrecruiters.png',
     ern: 'ern://smartrecruiters:recruiter:3.0',
@@ -56,7 +56,7 @@ export const CONNECTOR_HUB_DATA: TConnectorEntity[] = [
     type: 'Talent',
   },
   {
-    id: '4',
+    id: '7',
     name: 'Lever Interviews API 2.0',
     image: 'lever.png',
     ern: 'ern://lever:interviews:2.0',

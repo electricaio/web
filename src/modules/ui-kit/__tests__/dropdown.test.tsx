@@ -1,7 +1,7 @@
-import { mount } from 'enzyme';
+import { mount, ReactWrapper } from 'enzyme';
 import React from 'react';
 import { DropdownComponent } from '../dropdown';
-import { Dropdown, Button, Icon, Menu } from 'antd';
+import { Dropdown, Button, Icon } from 'antd';
 
 describe('DropdownComponent', () => {
   const label = 'test';
@@ -9,6 +9,12 @@ describe('DropdownComponent', () => {
   beforeEach(() => {
     this.dropdown = mount(<DropdownComponent label={label} keepMenuOpen />);
   });
+
+  const findAndOpenMenu = () => {
+    const menu = new ReactWrapper(this.dropdown.find(Dropdown).props().overlay, true as any);
+    // @ts-ignore
+    menu.props().onClick();
+  };
 
   it('has Dropdown with button', () => {
     const button = this.dropdown.find(Dropdown).find(Button);
@@ -28,8 +34,7 @@ describe('DropdownComponent', () => {
 
   it('keeps menu open when an item is selected', () => {
     this.dropdown.find(Dropdown).prop('onVisibleChange')(true);
-    expect(this.dropdown.state().visible).toBeTruthy();
-    this.dropdown.find(Menu).simulate('click');
+    findAndOpenMenu();
     expect(this.dropdown.state().visible).toBeTruthy();
   });
 
@@ -40,9 +45,8 @@ describe('DropdownComponent', () => {
 
     it('closes menu open when an item is selected', () => {
       this.dropdown.find(Dropdown).prop('onVisibleChange')(true);
-      console.log(this.dropdown.find(Dropdown).html());
       expect(this.dropdown.state().visible).toBeTruthy();
-      this.dropdown.find(Menu).simulate('click');
+      findAndOpenMenu();
       expect(this.dropdown.state().visible).toBeFalsy();
     });
   });

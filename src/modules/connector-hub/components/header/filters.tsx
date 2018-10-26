@@ -21,7 +21,7 @@ export class ConnectorFilters extends React.Component<TFilterProps, any> {
             />
           </FormItem>
           <FormItem>
-            <DropdownComponent label="Filter by Connector Types" keepMenuOpen>
+            <DropdownComponent label="Filter by Connector Type" keepMenuOpen>
               <Menu.Item key="1">
                 <Checkbox>Talent</Checkbox>
               </Menu.Item>
