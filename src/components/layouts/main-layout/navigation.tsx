@@ -22,13 +22,7 @@ export class Navigation extends Component<TNavProps> {
         action: <StyledLink to="/api-keys">api keys</StyledLink>,
       },
       {
-        action: <StyledLink to="/stl-hub">stl hub</StyledLink>,
-      },
-      {
-        action: <StyledLink to="/monitor">monitor</StyledLink>,
-      },
-      {
-        action: <StyledLink to="/notification">notification</StyledLink>,
+        action: <StyledLink to="/connector-hub">connector hub</StyledLink>,
       },
     ];
   }

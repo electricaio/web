@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -26,6 +27,7 @@ module.exports = {
       title: 'Electrica',
       template: './src/index.html',
     }),
+    new CopyWebpackPlugin([{ from: 'src/assets', to: 'assets' }]),
   ],
   output: {
     filename: 'bundle.js',
@@ -105,7 +107,16 @@ module.exports = {
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
-        use: ['file-loader'],
+        use: [
+          'file-loader',
+          {
+            loader: 'img-loader',
+            options: {
+              enabled: true,
+              optipng: true,
+            },
+          },
+        ],
       },
     ],
   },

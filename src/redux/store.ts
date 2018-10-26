@@ -4,9 +4,11 @@ import thunk from 'redux-thunk';
 import { rootReducer } from './reducers';
 import { TApiKeyTableEntity } from '../models/ApiKeyTableEntity';
 import { TAction } from './actions';
+import { TConnectorEntity } from '../models/ConnectorEntity';
 
 export type TAppState = {
   apiKeys: TApiKeyTableEntity[];
+  connectors: TConnectorEntity[];
 };
 
 export function configureStore(initialState: Partial<TAppState> = {}) {
