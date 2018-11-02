@@ -13,7 +13,6 @@ export const ContainerContent = styled(Layout.Content)`
 
 export const Header = styled(Layout.Header)`
   padding: 0 275px !important;
-
   height: 70px;
   display: flex;
 `;

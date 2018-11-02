@@ -2,14 +2,14 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { Form } from 'antd';
 import { MemoryRouter } from 'react-router-dom';
-import { LoginFormComponent as Login } from '../index';
+import { LoginFormComponent as Login } from '../login';
 import { Header } from '../../../components/header';
 
 describe('Login', () => {
   beforeEach(() => {
     this.loginComponent = mount(
       <MemoryRouter>
-        <Login />
+        <Login loginUser={jest.fn()} />
       </MemoryRouter>
     );
   });

@@ -1,16 +1,15 @@
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
-import { TAction } from '../../../redux/actions';
-import { fetchKeyAC } from '../../../redux/actions/connector-hub';
-import { TAppState } from '../../../redux/store';
 import { ConnectorHub } from '../components/connector-hub/connector-hub';
+import { ApplicationState } from '../../../redux/store';
+import { fetchConnectors } from '../../../redux/connector-hub/actions';
 
-const mapStateToProps = (state: TAppState) => ({
-  connectors: state.connectors,
+const mapStateToProps = ({ connectors }: ApplicationState) => ({
+  connectors: connectors.data,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<TAction>) => ({
-  fetchConnectors: bindActionCreators(fetchKeyAC, dispatch),
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  fetchConnectors: bindActionCreators(fetchConnectors, dispatch),
 });
 
 export const ConntectorHubContainer = connect(
