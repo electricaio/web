@@ -1,4 +1,4 @@
-import { Avatar } from 'antd';
+import { Icon } from 'antd';
 import styled from 'styled-components';
 
 export const Profile = styled.div`
@@ -8,11 +8,10 @@ export const Profile = styled.div`
 `;
 
 export const Name = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-right: 10px;
+  display: block;
+  font-weight: bold;
 `;
 
-export const StyledIcon = styled(Avatar as any)`
-  color: #fff;
+export const StyledIcon = styled(Icon as any)`
+  font-size: 20px;
 `;

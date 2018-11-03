@@ -2,7 +2,6 @@ import React from 'react';
 import { Col, Row, Tag } from 'antd';
 import isEmpty from 'lodash/isEmpty';
 
-import { TConnectorEntity } from '../../../../models/ConnectorEntity';
 import {
   CompanyImage,
   StyledMeta,
@@ -15,6 +14,7 @@ import {
 } from './connector-card.css';
 
 import { StyledButton } from '../../../ui-kit/button';
+import { ConnectorModal } from '../../../../redux/connector-hub/types';
 
 interface CompanyImageComponentProps {
   image: string;
@@ -29,7 +29,7 @@ const CompanyImageComponent: React.SFC<CompanyImageComponentProps> = ({ image })
 };
 
 type ConnectorCardProps = {
-  connector: TConnectorEntity;
+  connector: ConnectorModal;
 };
 
 export class ConnectorCard extends React.Component<ConnectorCardProps> {

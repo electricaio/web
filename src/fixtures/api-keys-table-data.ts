@@ -1,6 +1,6 @@
-import { TApiKeyTableEntity } from '../models/ApiKeyTableEntity';
+import { ApiKeyModal } from '../redux/api-keys/types';
 
-export const API_KEYS_TABLE_DATA: TApiKeyTableEntity[] = [
+export const API_KEYS_TABLE_DATA: ApiKeyModal[] = [
   {
     id: 'asdasdsad',
     name: 'Development',

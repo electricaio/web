@@ -1,9 +1,9 @@
 import React, { Component, SFC } from 'react';
 import { Table } from 'antd';
-import { TApiKeyTableEntity } from '../../../../models/ApiKeyTableEntity';
 import { ActionButtons } from './action-buttons';
 import { format } from 'date-fns';
 import { StyledEye, KeyContainer } from './table.css';
+import { ApiKeyModal } from '../../../../redux/api-keys/types';
 
 type TDateProps = {
   date: Date;
@@ -12,7 +12,7 @@ type TDateProps = {
 const Date: SFC<TDateProps> = ({ date }) => <div>{format(date, 'DD.MM.YYYY')}</div>;
 
 type TKeyVisibilityProps = {
-  entity: TApiKeyTableEntity;
+  entity: ApiKeyModal;
 };
 type TKeyVisibilityState = {
   showKey: boolean;
@@ -41,7 +41,7 @@ export class KeyVisibility extends Component<TKeyVisibilityProps, TKeyVisibility
 }
 
 export type TTableProps = {
-  data: TApiKeyTableEntity[];
+  data: ApiKeyModal[];
   onRemove: (id: string) => void;
 };
 
@@ -65,17 +65,17 @@ export class ApiKeysTable extends Component<TTableProps> {
         title: 'Key',
         key: 'key',
         width: '35%',
-        render: (entity: TApiKeyTableEntity) => <KeyVisibility entity={entity} />,
+        render: (entity: ApiKeyModal) => <KeyVisibility entity={entity} />,
       },
       {
         title: 'Date Created',
         key: 'created',
-        render: (entity: TApiKeyTableEntity) => <Date date={entity.created} />,
+        render: (entity: ApiKeyModal) => <Date date={entity.created} />,
       },
       {
         title: 'Action',
         key: 'action',
-        render: (entity: TApiKeyTableEntity) => (
+        render: (entity: ApiKeyModal) => (
           <ActionButtons
             apiKey={entity.key}
             name={entity.name}

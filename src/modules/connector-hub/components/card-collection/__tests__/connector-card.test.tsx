@@ -1,13 +1,13 @@
 import { mount } from 'enzyme';
 import React from 'react';
-import { TConnectorEntity } from '../../../../../models/ConnectorEntity';
 import { ConnectorCard } from '../connector-card';
 import { StyledCard, StyledMeta, ButtonContainer } from '../connector-card.css';
 import { StyledButton } from '../../../../ui-kit/button';
 import { Row, Col } from 'antd';
+import { ConnectorModal } from '../../../../../redux/connector-hub/types';
 
 describe('ConnectorCard', () => {
-  const connector = (overrides: object = {}): TConnectorEntity => ({
+  const connector = (overrides: object = {}): ConnectorModal => ({
     id: '1',
     name: 'company name',
     image: 'image.png',

@@ -3,24 +3,23 @@ import { Col, Row } from 'antd';
 
 import chunk from 'lodash/chunk';
 
-import { TConnectorEntity } from '../../../../models/ConnectorEntity';
-
 import { ConnectorCard } from './connector-card';
+import { ConnectorModal } from '../../../../redux/connector-hub/types';
 
 export const COLUMN_CHUNK_COUNT = 3;
 
 type TCardCollectionProps = {
-  connectors: TConnectorEntity[];
+  connectors: ConnectorModal[];
 };
 
 type TConnectorRowProps = {
-  connectors: TConnectorEntity[];
+  connectors: ConnectorModal[];
 };
 
 const ConnectorRow: SFC<TConnectorRowProps> = ({ connectors }) => {
   return (
     <Row gutter={16}>
-      {connectors.map((connector: TConnectorEntity) => (
+      {connectors.map((connector: ConnectorModal) => (
         <Col span={24 / COLUMN_CHUNK_COUNT} key={connector.id}>
           <ConnectorCard connector={connector} />
         </Col>
@@ -33,7 +32,7 @@ export class CardCollection extends React.Component<TCardCollectionProps> {
   render() {
     const { connectors } = this.props;
     const connectorChunks = chunk(connectors, COLUMN_CHUNK_COUNT);
-    return connectorChunks.map((connectorRow: TConnectorEntity[], index: number) => (
+    return connectorChunks.map((connectorRow: ConnectorModal[], index: number) => (
       <ConnectorRow key={index} connectors={connectorRow} />
     ));
   }

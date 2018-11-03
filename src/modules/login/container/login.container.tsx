@@ -1,18 +1,51 @@
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators, Dispatch } from 'redux';
+import { Dispatch, bindActionCreators } from 'redux';
 import { LoginFormComponent } from '../login';
 import { ApplicationState } from '../../../redux/store';
-import { loginUser } from '../../../redux/user/actions';
+import { loginUser } from '../../../redux/auth/actions';
+import { Spin, message } from 'antd';
 
-const mapStateToProps = ({ user }: ApplicationState) => ({
-  user: user.user,
+const mapStateToProps = ({ login }: ApplicationState) => ({
+  errors: login.errors,
+  loading: login.loading,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  loginUser: bindActionCreators(loginUser, dispatch),
+  login: bindActionCreators(loginUser, dispatch),
 });
+
+const showErrorMessage = () => {
+  message.error('The username or password you entered is incorrect');
+};
+
+interface PropsFromState {
+  loading: boolean;
+  errors?: string;
+}
+
+interface PropsFromDispatch {
+  login: typeof loginUser;
+}
+
+type AllProps = PropsFromState & PropsFromDispatch;
+
+export class LoginComponent extends Component<AllProps> {
+  render() {
+    const { errors, loading } = this.props;
+
+    if (errors) {
+      showErrorMessage();
+    }
+    return (
+      <Spin spinning={loading} delay={1500}>
+        <LoginFormComponent login={this.props.login} />
+      </Spin>
+    );
+  }
+}
 
 export const LoginContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(LoginFormComponent);
+)(LoginComponent);

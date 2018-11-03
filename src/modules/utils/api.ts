@@ -1,10 +1,15 @@
-export default function callApi(method: string, url: string, path: string, data?: any) {
-  return fetch(url + path, {
-    method,
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
-  }).then(res => res.json());
+import axios, { AxiosPromise } from 'axios';
+
+export const PREFIX = '@e:';
+
+export function login(username: string, password: string): AxiosPromise {
+  const headers = {
+    Authorization: `Basic ${process.env.AUTH_TOKEN}`,
+  };
+  const bodyFormData = new FormData();
+  bodyFormData.set('username', `${PREFIX}${username}`);
+  bodyFormData.set('password', password);
+  bodyFormData.set('grant_type', 'password');
+
+  return axios.post(`${process.env.API_ENDPOINT}/oauth/token`, bodyFormData, { headers });
 }
