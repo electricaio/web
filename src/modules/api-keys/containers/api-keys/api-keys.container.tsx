@@ -1,19 +1,16 @@
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
-import { TAction } from '../../../../redux/actions';
-import { commitKeyAC, refreshKeyAC, removeKeyAC } from '../../../../redux/actions/api-keys';
-import { TAppState } from '../../../../redux/store';
 import { ApiKeys } from '../../components/api-keys/api-keys';
+import { ApplicationState } from '../../../../redux/store';
+import { removeKey, createKey } from '../../../../redux/api-keys/actions';
 
-const mapStateToProps = (state: TAppState) => ({
-  data: state.apiKeys,
+const mapStateToProps = ({ apiKeys }: ApplicationState) => ({
+  apiKeys: apiKeys.data,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<TAction>) => ({
-  onRemove: bindActionCreators(removeKeyAC, dispatch),
-  onRefresh: bindActionCreators(refreshKeyAC, dispatch),
-  onCommit: bindActionCreators(commitKeyAC, dispatch),
-  onEdit: bindActionCreators(commitKeyAC, dispatch),
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  removeKey: bindActionCreators(removeKey, dispatch),
+  createKey: bindActionCreators(createKey, dispatch),
 });
 
 export const ApiKeysContainer = connect(

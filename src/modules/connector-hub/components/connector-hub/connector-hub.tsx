@@ -1,14 +1,22 @@
 import React, { Fragment } from 'react';
-import { TConnectorEntity } from '../../../../models/ConnectorEntity';
 import { CardCollection } from '../card-collection/card-collection';
 import { Header } from '../header/header';
 import { Row } from 'antd';
+import { ConnectorModal } from '../../../../redux/connector-hub/types';
+import { fetchConnectors } from '../../../../redux/connector-hub/actions';
 
-type ConnectorCardProps = {
-  connectors: TConnectorEntity[];
-};
+// Separate state props + dispatch props to their own interfaces.
+interface PropsFromState {
+  connectors: ConnectorModal[];
+}
 
-export class ConnectorHub extends React.Component<ConnectorCardProps> {
+interface PropsFromDispatch {
+  fetchConnectors: typeof fetchConnectors;
+}
+
+type AllProps = PropsFromState & PropsFromDispatch;
+
+export class ConnectorHub extends React.Component<AllProps> {
   render() {
     const { connectors } = this.props;
     return (

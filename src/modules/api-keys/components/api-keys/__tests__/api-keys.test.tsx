@@ -11,7 +11,7 @@ describe('ApiKeys', () => {
   const onCommitMock = jest.fn();
   beforeEach(() => {
     this.component = shallow(
-      <ApiKeys data={API_KEYS_TABLE_DATA} onRemove={onRemoveMock} onCommit={onCommitMock} />
+      <ApiKeys apiKeys={API_KEYS_TABLE_DATA} removeKey={onRemoveMock} createKey={onCommitMock} />
     );
   });
 

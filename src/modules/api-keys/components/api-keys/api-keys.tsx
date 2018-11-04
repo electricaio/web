@@ -5,25 +5,33 @@ import { Header } from '../../../ui-kit/header';
 import React, { Component, Fragment } from 'react';
 import { ButtonActionModal } from '../modal-button-action/modal-button-action';
 import { NewApiButton } from '../modal-button-action/modal-button-action.css';
+import { ApiKeyModal } from '../../../../redux/api-keys/types';
+import { removeKey, createKey } from '../../../../redux/api-keys/actions';
 
-export type TApiKeysProps = {
-  data: TApiKeyTableEntity[];
-  onRemove: (id: string) => void;
-  onCommit: (entity: TApiKeyTableEntity) => void;
-};
+// Separate state props + dispatch props to their own interfaces.
+interface PropsFromState {
+  apiKeys: ApiKeyModal[];
+}
 
-export class ApiKeys extends Component<TApiKeysProps> {
+interface PropsFromDispatch {
+  removeKey: typeof removeKey;
+  createKey: typeof createKey;
+}
+
+type AllProps = PropsFromState & PropsFromDispatch;
+
+export class ApiKeys extends Component<AllProps> {
   handleRemove = (id: string) => {
-    const { onRemove } = this.props;
-    onRemove(id);
+    const { removeKey } = this.props;
+    removeKey(id);
   };
   handleCommit = (el: TApiKeyTableEntity) => {
-    const { onCommit } = this.props;
-    onCommit(el);
+    const { createKey } = this.props;
+    createKey(el);
   };
 
   render() {
-    const { data } = this.props;
+    const { apiKeys } = this.props;
 
     return (
       <Fragment>
@@ -32,7 +40,7 @@ export class ApiKeys extends Component<TApiKeysProps> {
           These API Keys grant developers the ability to access electrica services in the Cloud.
           Keep them confidential.
         </Header>
-        <ApiKeysTable data={data} onRemove={this.handleRemove} />
+        <ApiKeysTable data={apiKeys} onRemove={this.handleRemove} />
         <ButtonActionModal
           title="Generate New API Key"
           submitText="Create"

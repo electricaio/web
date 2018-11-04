@@ -6,20 +6,33 @@ import { ForgotPassword } from './login.css';
 import { StyledButton } from '../ui-kit/button';
 import { StyledInput } from '../ui-kit/input';
 import { Header } from '../../components/header';
+import { loginUser } from '../../redux/user/actions';
 
 const FormItem = Form.Item;
+
+// Separate state props + dispatch props to their own interfaces.
+interface PropsFromState {
+  loading?: boolean;
+  errors?: string;
+}
+
+interface PropsFromDispatch {
+  loginUser: typeof loginUser;
+}
 
 export type TLoginProps = {
   form: WrappedFormUtils;
 };
+type AllProps = PropsFromState & PropsFromDispatch & TLoginProps;
 
-class LoginForm extends Component<TLoginProps> {
+class LoginForm extends Component<AllProps> {
   handleSubmit = (e: React.FormEvent) => {
-    const { form } = this.props;
+    const { form, loginUser } = this.props;
     e.preventDefault();
-    form.validateFields((err: string, values: object) => {
+    form.validateFields((err: string, values: any) => {
       if (!err) {
         console.log('Received values of form: ', values);
+        loginUser(values.username, values.password);
       }
     });
   };

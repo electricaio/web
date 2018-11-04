@@ -1,22 +1,29 @@
-import { applyMiddleware, createStore, Store } from 'redux';
-import promiseMiddleware from 'redux-promise-middleware';
-import thunk from 'redux-thunk';
-import { rootReducer } from './reducers';
-import { TApiKeyTableEntity } from '../models/ApiKeyTableEntity';
-import { TAction } from './actions';
-import { TConnectorEntity } from '../models/ConnectorEntity';
+import { combineReducers, Dispatch, Action, AnyAction } from 'redux';
 
-export type TAppState = {
-  apiKeys: TApiKeyTableEntity[];
-  connectors: TConnectorEntity[];
-};
+import { userReducer } from './user/reducer';
+import { UserState } from './user/types';
+import { ApiKeysState } from './api-keys/types';
+import { ConnectorHubState } from './connector-hub/types';
+import { connectorHubReducer } from './connector-hub/reducer';
+import { apiKeysReducer } from './api-keys/reducer';
 
-export function configureStore(initialState: Partial<TAppState> = {}) {
-  return createStore<TAppState, TAction, any, any>(
-    rootReducer,
-    initialState,
-    applyMiddleware(thunk, promiseMiddleware())
-  );
+// The top-level state object
+export interface ApplicationState {
+  user: UserState;
+  apiKeys: ApiKeysState;
+  connectors: ConnectorHubState;
 }
 
-export const store: Store<TAppState, TAction> = configureStore();
+// Additional props for connected React components. This prop is passed by default with `connect()`
+export interface ConnectedReduxProps<A extends Action = AnyAction> {
+  dispatch: Dispatch<A>;
+}
+
+// Whenever an action is dispatched, Redux will update each top-level application state property
+// using the reducer with the matching name. It's important that the names match exactly, and that
+// the reducer acts on the corresponding ApplicationState property type.
+export const rootReducer = combineReducers<ApplicationState>({
+  user: userReducer,
+  connectors: connectorHubReducer,
+  apiKeys: apiKeysReducer,
+});
