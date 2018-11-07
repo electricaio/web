@@ -1,11 +1,13 @@
 import { action } from 'typesafe-actions';
 import get from 'lodash/get';
+import { push } from 'connected-react-router';
+
 import { LoginActionTypes } from './types';
 import { login } from '../../modules/utils/api';
 import { Dispatch } from 'redux';
 import { AxiosResponse } from 'axios';
 
-const AUTH_TOKENS_STORAGE_KEY = 'auth.tokens';
+export const AUTH_TOKENS_STORAGE_KEY = 'auth.tokens';
 
 type LoginSuccessResult = {
   access_token: string;
@@ -16,10 +18,12 @@ type LoginSuccessResult = {
 
 export const loginUser = (username: string, password: string) => (dispatch: Dispatch) => {
   dispatch(action(LoginActionTypes.LOGIN_USER, { username, password }));
-  login(username, password)
+
+  return login(username, password)
     .then((result: AxiosResponse<LoginSuccessResult>) => {
       localStorage.setItem(AUTH_TOKENS_STORAGE_KEY, JSON.stringify(result.data));
       dispatch(action(LoginActionTypes.LOGIN_USER_SUCCESS));
+      dispatch(push('/'));
     })
     .catch(error => {
       dispatch(
@@ -28,8 +32,9 @@ export const loginUser = (username: string, password: string) => (dispatch: Disp
     });
 };
 
-export const logoutUser = () => {
+export const logoutUser = () => (dispatch: Dispatch) => {
   localStorage.removeItem(AUTH_TOKENS_STORAGE_KEY);
+  dispatch(push('/login'));
 };
 
 export const isAuthenticated = () => {

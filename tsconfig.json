@@ -5,11 +5,11 @@
     "skipLibCheck": true,
     "noImplicitAny": true,
     "module": "commonjs",
-    "target": "es5",
+    "target": "es2015",
     "jsx": "react",
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "noUnusedLocals": true
+    "noUnusedLocals": true,
   },
   "include": [
     "./src/**/*",

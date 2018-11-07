@@ -2,14 +2,14 @@ import { Reducer } from 'redux';
 import { LoginState, LoginActionTypes } from './types';
 
 const initialState: LoginState = {
-  errors: undefined,
+  errors: '',
   loading: false,
 };
 
 const reducer: Reducer<LoginState> = (state = initialState, action) => {
   switch (action.type) {
     case LoginActionTypes.LOGIN_USER: {
-      return { ...state, loading: true };
+      return { ...state, loading: true, errors: '' };
     }
     case LoginActionTypes.LOGIN_USER_SUCCESS: {
       return { ...state, loading: false, data: action.payload };

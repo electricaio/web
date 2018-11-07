@@ -38,7 +38,7 @@ export class LoginComponent extends Component<AllProps> {
       showErrorMessage();
     }
     return (
-      <Spin spinning={loading} delay={1500}>
+      <Spin spinning={loading} delay={0}>
         <LoginFormComponent login={this.props.login} />
       </Spin>
     );

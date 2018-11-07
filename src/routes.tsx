@@ -28,11 +28,6 @@ const PrivateRoute: React.SFC<TAppRouter> = ({ component: Component, isAuth, ...
   />
 );
 class App extends Component<PropsFromDispatch> {
-  isAuthenticated = () => {
-    const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
-    return new Date().getTime() < expiresAt;
-  };
-
   render() {
     return (
       <Router>
