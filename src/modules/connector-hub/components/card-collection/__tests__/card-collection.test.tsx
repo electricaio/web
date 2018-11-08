@@ -2,13 +2,13 @@ import { mount } from 'enzyme';
 import React from 'react';
 import times from 'lodash/times';
 import { CardCollection } from '../card-collection';
-import { TConnectorEntity } from '../../../../../models/ConnectorEntity';
 import { ConnectorCard } from '../connector-card';
+import { ConnectorModal } from '../../../../../redux/connector-hub/types';
 
 describe('CardCollection', () => {
   const connectorCount = 3;
 
-  function createConnectors(count: number): TConnectorEntity[] {
+  function createConnectors(count: number): ConnectorModal[] {
     return times(count, () => ({
       id: '1',
       name: 'company name',

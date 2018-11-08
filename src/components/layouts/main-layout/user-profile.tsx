@@ -1,30 +1,57 @@
 import React, { SFC } from 'react';
-import { Avatar, Dropdown, Icon, Menu } from 'antd';
-import { Name, Profile } from './user-profile.css';
+import { connect } from 'react-redux';
+import { Dispatch, bindActionCreators } from 'redux';
+import { Dropdown, Icon, Menu } from 'antd';
 
-export type TUserProfileProps = {
+import { logoutUser } from '../../../redux/auth/actions';
+import { Name, Profile, StyledIcon } from './user-profile.css';
+
+interface ProfileMenuProps {
+  onLogoutUser: typeof logoutUser;
   name: string;
-  src: string;
+}
+
+export const ProfileMenu: React.SFC<ProfileMenuProps> = ({ onLogoutUser, name }) => {
+  return (
+    <Menu>
+      <Menu.Item key="name">
+        <Name>{name}</Name>
+      </Menu.Item>
+      <Menu.Item key="profile">
+        <Icon type="user" />
+        Profile
+      </Menu.Item>
+      <Menu.Item key="logout" onClick={onLogoutUser}>
+        <Icon type="logout" />
+        Logout
+      </Menu.Item>
+    </Menu>
+  );
 };
 
-const menu = (
-  <Menu>
-    <Menu.Item key="1">
-      <Icon type="user" />
-      Profile
-    </Menu.Item>
-    <Menu.Item key="2">
-      <Icon type="logout" />
-      Logout
-    </Menu.Item>
-  </Menu>
-);
+export type UserProfileProps = {
+  name?: string;
+};
 
-export const UserProfile: SFC<TUserProfileProps> = ({ name, src }) => (
+interface PropsFromDispatch {
+  logout: typeof logoutUser;
+}
+
+type AllProps = UserProfileProps & PropsFromDispatch;
+
+export const UserProfileComponent: SFC<AllProps> = ({ name = 'Chris McCaw', logout }) => (
   <Profile>
-    <Name>{name}</Name>
-    <Dropdown overlay={menu}>
-      <Avatar icon="user" src={src} />
+    <Dropdown overlay={<ProfileMenu name={name} onLogoutUser={logout} />}>
+      <StyledIcon type="user" theme="outlined" />
     </Dropdown>
   </Profile>
 );
+
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  logout: bindActionCreators(logoutUser, dispatch),
+});
+
+export const UserProfileContainer = connect(
+  null,
+  mapDispatchToProps
+)(UserProfileComponent);

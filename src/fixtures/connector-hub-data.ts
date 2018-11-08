@@ -1,6 +1,6 @@
-import { TConnectorEntity } from '../models/ConnectorEntity';
+import { ConnectorModal } from '../redux/connector-hub/types';
 
-export const CONNECTOR_HUB_DATA: TConnectorEntity[] = [
+export const CONNECTOR_HUB_DATA: ConnectorModal[] = [
   {
     id: '1',
     name: 'Salesforce Customer API 2.0',

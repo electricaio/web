@@ -1,11 +1,11 @@
-import { TApiKeyTableEntity } from '../../../../models/ApiKeyTableEntity';
 import React, { Component, Fragment, ReactElement } from 'react';
 
 import { MainModal } from '../../../../components/modal';
 import { ApiKeyForm } from '../api-key-form/api-key-form';
+import { ApiKeyModal } from '../../../../redux/api-keys/types';
 
 export type TApiKeysProps = {
-  onCommit: (entity: TApiKeyTableEntity) => void;
+  onCommit: (entity: ApiKeyModal) => void;
   submitText: string;
   title: string;
   children: ReactElement<any>;
@@ -49,7 +49,7 @@ export class ButtonActionModal extends Component<TApiKeysProps, TApiKeysState> {
         return;
       }
       form.resetFields();
-      const newEntity: TApiKeyTableEntity = {
+      const newEntity: ApiKeyModal = {
         name: values.apiKeyName,
         key: values.apiKey,
         created: new Date(),

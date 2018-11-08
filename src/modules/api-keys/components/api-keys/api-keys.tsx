@@ -1,4 +1,3 @@
-import { TApiKeyTableEntity } from '../../../../models/ApiKeyTableEntity';
 import { ApiKeysTable } from '../table/table';
 import { ApiIcon } from './api-keys.css';
 import { Header } from '../../../ui-kit/header';
@@ -25,7 +24,7 @@ export class ApiKeys extends Component<AllProps> {
     const { removeKey } = this.props;
     removeKey(id);
   };
-  handleCommit = (el: TApiKeyTableEntity) => {
+  handleCommit = (el: ApiKeyModal) => {
     const { createKey } = this.props;
     createKey(el);
   };

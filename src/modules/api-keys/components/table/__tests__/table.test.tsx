@@ -3,11 +3,11 @@ import React from 'react';
 import { API_KEYS_TABLE_DATA } from '../../../../../fixtures/api-keys-table-data';
 import { ApiKeysTable, KeyVisibility } from '../table';
 import { Table } from 'antd';
-import { TApiKeyTableEntity } from '../../../../../models/ApiKeyTableEntity';
 import { StyledEye, KeyContainer } from '../table.css';
+import { ApiKeyModal } from '../../../../../redux/api-keys/types';
 
 describe('ApiKeys | table Component', () => {
-  const data: TApiKeyTableEntity[] = [
+  const data: ApiKeyModal[] = [
     {
       id: 'asdasdsad',
       name: 'Development',
@@ -46,7 +46,7 @@ describe('ApiKeys | table Component', () => {
   describe('KeyVisibility', () => {
     const key = '1234567';
     beforeEach(() => {
-      const entity: TApiKeyTableEntity = {
+      const entity: ApiKeyModal = {
         name: 'test',
         id: '123',
         key: '1234567',
@@ -73,7 +73,7 @@ describe('ApiKeys | table Component', () => {
     const actionButtonColumn = this.component
       .find(Table)
       .prop('columns')
-      .find((col: TApiKeyTableEntity) => col.key === 'action');
+      .find((col: ApiKeyModal) => col.key === 'action');
     const entity = {
       id: '123',
       name: 'test',
@@ -86,7 +86,7 @@ describe('ApiKeys | table Component', () => {
     const actionButtonColumn = this.component
       .find(Table)
       .prop('columns')
-      .find((col: TApiKeyTableEntity) => col.key === 'action');
+      .find((col: ApiKeyModal) => col.key === 'action');
     const entity = {
       id: '123',
       name: 'test',

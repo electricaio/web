@@ -4,7 +4,7 @@ import { Navigation } from './navigation';
 import { StyledLayout, Header, ContainerContent } from './main-layout.css';
 import logo from './../../../assets/logo.svg';
 import { Logo } from './logo';
-import { UserProfile } from './user-profile';
+import { UserProfileContainer } from './user-profile';
 
 const { Sider, Content } = Layout;
 
@@ -21,7 +21,7 @@ export class MainLayout extends Component<TMainLayoutProps> {
         <Header>
           <Navigation />
           <Logo src={logo} />
-          <UserProfile src="" name="Chris" />
+          <UserProfileContainer />
         </Header>
         <ContainerContent>
           <StyledLayout>
