@@ -51,7 +51,7 @@ describe('Auth', () => {
       it('routes to the home page  ', async () => {
         await successfulApiResponse();
         const routerDispatchCall = dispatchMock.mock.calls[2][0];
-        expect(routerDispatchCall.payload).toEqual({ method: 'push', args: ['/'] });
+        expect(routerDispatchCall.payload).toEqual({ method: 'push', args: ['/api-keys'] });
       });
     });
 
