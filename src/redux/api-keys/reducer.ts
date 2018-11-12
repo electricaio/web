@@ -7,15 +7,17 @@ import { ActionType } from 'typesafe-actions';
 
 export type ApiKeysActionTypes = ActionType<typeof actions>;
 
-
 const initialState: ApiKeysState = {
   data: API_KEYS_TABLE_DATA,
   loading: false,
 };
 
-const reducer: Reducer<ApiKeysState> = (state = initialState, action: ApiKeysActionTypes): ApiKeysState => {
+const reducer: Reducer<ApiKeysState> = (
+  state = initialState,
+  action: ApiKeysActionTypes
+): ApiKeysState => {
   switch (action.type) {
-    case  ApiKeysTypes.FETCH_ACCESS_KEYS: {
+    case ApiKeysTypes.FETCH_ACCESS_KEYS: {
       return { ...state, loading: true };
     }
 

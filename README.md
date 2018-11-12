@@ -18,14 +18,13 @@ Command | Description
 `npm run format` | Run Prettier to format you code
 `npm run build` | Build app to `/dist/`
 `npm run precommit` | Runs formatting, linting and tests to ensure the codebase is in a correct state
-**Note:** use `npm run precommit` before committing any changes. 
 
 ### Directory Structure
 
-Components - Reusable, simple, generic components (e.g buttons, fonts, and basic layout containers)
-Modules - Specific implementations of generic components. Includes container components and connects to the redux store.
-Pages - Where all your pages go. Pages should be very plain and only contain a few sub-components that define your pages
-Redux - All actions and reducers. The state tree is structured by context. For example `api-keys`, `connector-hub`, `auth`
+1. Components - Reusable, simple, generic components (e.g buttons, fonts, and basic layout containers)
+1. Modules - Specific implementations of generic components. Includes container components and connects to the redux store.
+1. Pages - Where all your pages go. Pages should be very plain and only contain a few sub-components that define your pages
+1. Redux - All actions and reducers. The state tree is structured by context. For example `api-keys`, `connector-hub`, `auth`
 
 ### Component Library
 

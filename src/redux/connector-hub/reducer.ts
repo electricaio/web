@@ -10,7 +10,10 @@ const initialState: ConnectorHubState = {
   loading: false,
 };
 
-const reducer: Reducer<ConnectorHubState> = (state = initialState, action: ConnectorHubActionType): ConnectorHubState => {
+const reducer: Reducer<ConnectorHubState> = (
+  state = initialState,
+  action: ConnectorHubActionType
+): ConnectorHubState => {
   switch (action.type) {
     case getType(actions.connectorHubAsyncActions.request): {
       return { ...state, loading: true };

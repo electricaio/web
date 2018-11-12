@@ -5,29 +5,28 @@ import { AxiosResponse } from 'axios';
 import { createAccessKey, getAccessKeys, refreshAccessKey } from '../../modules/utils/api';
 
 export const createApiKeysAsyncActions = createAsyncAction(
-    ApiKeysTypes.CREATE_ACCESS_KEY,
-    ApiKeysTypes.CREATE_ACCESS_KEY_SUCCESS,
-    ApiKeysTypes.CREATE_ACCESS_KEY_ERROR
-  )<ApiKeyModal, ApiKeyModal, string>();
+  ApiKeysTypes.CREATE_ACCESS_KEY,
+  ApiKeysTypes.CREATE_ACCESS_KEY_SUCCESS,
+  ApiKeysTypes.CREATE_ACCESS_KEY_ERROR
+)<ApiKeyModal, ApiKeyModal, string>();
 
 export const refreshKeysAsyncActions = createAsyncAction(
-    ApiKeysTypes.REFRESH_KEY,
-    ApiKeysTypes.REFRESH_KEY_SUCCESS,
-    ApiKeysTypes.REFRESH_KEY_ERROR
-  )<void, ApiKeyModal, string>();
+  ApiKeysTypes.REFRESH_KEY,
+  ApiKeysTypes.REFRESH_KEY_SUCCESS,
+  ApiKeysTypes.REFRESH_KEY_ERROR
+)<void, ApiKeyModal, string>();
 
 export const fetchApiKeysAsyncActions = createAsyncAction(
-    ApiKeysTypes.FETCH_ACCESS_KEYS,
-    ApiKeysTypes.FETCH_ACCESS_KEYS_SUCCESS,
-    ApiKeysTypes.FETCH_ACCESS_KEYS_ERROR
-  )<void, ApiKeyModal[], string>();
+  ApiKeysTypes.FETCH_ACCESS_KEYS,
+  ApiKeysTypes.FETCH_ACCESS_KEYS_SUCCESS,
+  ApiKeysTypes.FETCH_ACCESS_KEYS_ERROR
+)<void, ApiKeyModal[], string>();
 
-  export const removeKeysAsyncActions = createAsyncAction(
-    ApiKeysTypes.REMOVE_ACCESS_KEY,
-    ApiKeysTypes.REMOVE_ACCESS_KEY_SUCCESS,
-    ApiKeysTypes.REMOVE_ACCESS_KEY_ERROR
-  )<void, void, string>();
-
+export const removeKeysAsyncActions = createAsyncAction(
+  ApiKeysTypes.REMOVE_ACCESS_KEY,
+  ApiKeysTypes.REMOVE_ACCESS_KEY_SUCCESS,
+  ApiKeysTypes.REMOVE_ACCESS_KEY_ERROR
+)<void, void, string>();
 
 export const createKey = (newKey: ApiKeyModal) => (dispatch: Dispatch) => {
   dispatch(createApiKeysAsyncActions.request(newKey));
@@ -43,7 +42,7 @@ export const refreshKey = (accessKeyId: number) => (dispatch: Dispatch) => {
   });
 };
 export const removeKey = (accessKeyId: string) => (dispatch: Dispatch) => {
-    dispatch(removeKeysAsyncActions.request());
+  dispatch(removeKeysAsyncActions.request());
   getAccessKeys().then((result: AxiosResponse) => {
     dispatch(removeKeysAsyncActions.success());
   });

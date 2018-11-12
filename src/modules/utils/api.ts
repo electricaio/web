@@ -49,8 +49,7 @@ export function refreshAccessKey(accessKeyId: number) {
 }
 
 export function removeAccessKey(accessKeyId: number) {
-  return axios.delete(
-    `${process.env.API_ENDPOINT}/v1/access-keys/${accessKeyId}`,
-    { headers: createAuthHeader() }
-  );
+  return axios.delete(`${process.env.API_ENDPOINT}/v1/access-keys/${accessKeyId}`, {
+    headers: createAuthHeader(),
+  });
 }

@@ -15,7 +15,6 @@ export const loginUserAsyncActions = createAsyncAction(
   LoginActionTypes.LOGIN_USER_ERROR
 )<LoginParamsType, AUTH_TOKEN_TYPE, string>();
 
-
 export const loginUser = (username: string, password: string) => (dispatch: Dispatch) => {
   dispatch(loginUserAsyncActions.request({ username, password }));
   return login(username, password)
