@@ -1,6 +1,18 @@
 import axios, { AxiosPromise } from 'axios';
 
 export const PREFIX = '@e:';
+export const AUTH_TOKENS_STORAGE_KEY = 'auth.tokens';
+
+export type AUTH_TOKEN_TYPE = {
+  access_token: string;
+  refresh_token: string;
+  token_type: string;
+  expires_in: number;
+};
+
+const createAuthHeader = () => ({
+  Authorization: `Basic ${JSON.parse(localStorage.getItem(AUTH_TOKENS_STORAGE_KEY)).access_token}`,
+});
 
 export function login(username: string, password: string): AxiosPromise {
   const headers = {
@@ -12,4 +24,32 @@ export function login(username: string, password: string): AxiosPromise {
   bodyFormData.set('grant_type', 'password');
 
   return axios.post(`${process.env.API_ENDPOINT}/oauth/token`, bodyFormData, { headers });
+}
+
+export function getConnectors() {
+  return axios.get(`${process.env.API_ENDPOINT}/v1/connectors`, { headers: createAuthHeader() });
+}
+
+export function getAccessKeys() {
+  return axios.get(`${process.env.API_ENDPOINT}/v1/access-keys`, { headers: createAuthHeader() });
+}
+
+export function createAccessKey(data: any) {
+  return axios.post(`${process.env.API_ENDPOINT}/v1/access-keys`, data, {
+    headers: createAuthHeader(),
+  });
+}
+
+export function refreshAccessKey(accessKeyId: string) {
+  return axios.post(
+    `${process.env.API_ENDPOINT}/v1/access-keys/${accessKeyId}/refresh`,
+    {},
+    { headers: createAuthHeader() }
+  );
+}
+
+export function removeAccessKey(accessKeyId: string) {
+  return axios.delete(`${process.env.API_ENDPOINT}/v1/access-keys/${accessKeyId}`, {
+    headers: createAuthHeader(),
+  });
 }
