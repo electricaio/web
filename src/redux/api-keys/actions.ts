@@ -2,7 +2,12 @@ import { createAsyncAction } from 'typesafe-actions';
 import { ApiKeysTypes, ApiKeyModal } from './types';
 import { Dispatch } from 'redux';
 import { AxiosResponse } from 'axios';
-import { createAccessKey, getAccessKeys, refreshAccessKey } from '../../modules/utils/api';
+import {
+  createAccessKey,
+  getAccessKeys,
+  refreshAccessKey,
+  removeAccessKey,
+} from '../../modules/utils/api';
 
 export const createApiKeysAsyncActions = createAsyncAction(
   ApiKeysTypes.CREATE_ACCESS_KEY,
@@ -35,7 +40,7 @@ export const createKey = (newKey: ApiKeyModal) => (dispatch: Dispatch) => {
   });
 };
 
-export const refreshKey = (accessKeyId: number) => (dispatch: Dispatch) => {
+export const refreshKey = (accessKeyId: string) => (dispatch: Dispatch) => {
   dispatch(refreshKeysAsyncActions.request());
   refreshAccessKey(accessKeyId).then((result: AxiosResponse) => {
     dispatch(refreshKeysAsyncActions.success(result.data));
@@ -43,7 +48,7 @@ export const refreshKey = (accessKeyId: number) => (dispatch: Dispatch) => {
 };
 export const removeKey = (accessKeyId: string) => (dispatch: Dispatch) => {
   dispatch(removeKeysAsyncActions.request());
-  getAccessKeys().then((result: AxiosResponse) => {
+  removeAccessKey(accessKeyId).then((result: AxiosResponse) => {
     dispatch(removeKeysAsyncActions.success());
   });
 };

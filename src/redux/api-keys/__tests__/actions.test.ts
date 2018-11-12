@@ -1,4 +1,4 @@
-import { createKey, fetchKeys, refreshKey } from '../actions';
+import { createKey, fetchKeys, refreshKey, removeKey } from '../actions';
 import { ApiKeysTypes, ApiKeyModal } from '../types';
 
 import * as api from '../../../modules/utils/api';
@@ -38,7 +38,7 @@ describe('Api Key Actions', () => {
         expect(firstDispatchCall.payload).toEqual(newAccessKey);
       });
 
-      it('dispatch FETCH_CONNECTORS_SUCCESS action', async () => {
+      it('dispatch CREATE_ACCESS_KEY_SUCCESS action', async () => {
         await mockDispatchAndFetch();
         const successDispatchCall = dispatchMock.mock.calls[1][0];
         expect(successDispatchCall.type).toEqual(ApiKeysTypes.CREATE_ACCESS_KEY_SUCCESS);
@@ -94,7 +94,7 @@ describe('Api Key Actions', () => {
         dispatchMock = jest.fn();
         const refreshAccessKeyMock = jest.spyOn(api, 'refreshAccessKey');
         refreshAccessKeyMock.mockImplementation(() => Promise.resolve({ data: response }));
-        return refreshKey(123)(dispatchMock);
+        return refreshKey('123')(dispatchMock);
       };
 
       it('dispatches REFRESH_KEY action', async () => {
@@ -103,7 +103,7 @@ describe('Api Key Actions', () => {
         expect(firstDispatchCall.type).toEqual(ApiKeysTypes.REFRESH_KEY);
       });
 
-      it('dispatch FETCH_CONNECTORS_SUCCESS action', async () => {
+      it('dispatch REFRESH_KEY_SUCCESS action', async () => {
         await mockDispatchAndFetch();
         const successDispatchCall = dispatchMock.mock.calls[1][0];
         expect(successDispatchCall.type).toEqual(ApiKeysTypes.REFRESH_KEY_SUCCESS);
@@ -113,6 +113,31 @@ describe('Api Key Actions', () => {
         await mockDispatchAndFetch();
         const successDispatchCall = dispatchMock.mock.calls[1][0];
         expect(successDispatchCall.payload).toEqual(response);
+      });
+    });
+  });
+
+  describe('removeKey', () => {
+    describe('on api success', () => {
+      let dispatchMock: any = null;
+
+      const mockDispatchAndFetch = () => {
+        dispatchMock = jest.fn();
+        const refreshAccessKeyMock = jest.spyOn(api, 'removeAccessKey');
+        refreshAccessKeyMock.mockImplementation(() => Promise.resolve());
+        return removeKey('123')(dispatchMock);
+      };
+
+      it('dispatches REMOVE_ACCESS_KEY action', async () => {
+        await mockDispatchAndFetch();
+        const firstDispatchCall = dispatchMock.mock.calls[0][0];
+        expect(firstDispatchCall.type).toEqual(ApiKeysTypes.REMOVE_ACCESS_KEY);
+      });
+
+      it('dispatch REMOVE_ACCESS_KEY_SUCCESS action', async () => {
+        await mockDispatchAndFetch();
+        const successDispatchCall = dispatchMock.mock.calls[1][0];
+        expect(successDispatchCall.type).toEqual(ApiKeysTypes.REMOVE_ACCESS_KEY_SUCCESS);
       });
     });
   });

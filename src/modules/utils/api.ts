@@ -40,7 +40,7 @@ export function createAccessKey(data: any) {
   });
 }
 
-export function refreshAccessKey(accessKeyId: number) {
+export function refreshAccessKey(accessKeyId: string) {
   return axios.post(
     `${process.env.API_ENDPOINT}/v1/access-keys/${accessKeyId}/refresh`,
     {},
@@ -48,7 +48,7 @@ export function refreshAccessKey(accessKeyId: number) {
   );
 }
 
-export function removeAccessKey(accessKeyId: number) {
+export function removeAccessKey(accessKeyId: string) {
   return axios.delete(`${process.env.API_ENDPOINT}/v1/access-keys/${accessKeyId}`, {
     headers: createAuthHeader(),
   });
