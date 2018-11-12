@@ -10,6 +10,8 @@ export type ConnectorModal = {
 
 export const enum ConnectorHubTypes {
   FETCH_CONNECTORS = '@@hub/FETCH_CONNECTORS',
+  FETCH_CONNECTORS_SUCCESS = '@@hub/FETCH_CONNECTORS_SUCCESS',
+  FETCH_CONNECTORS_ERROR = '@@hub/FETCH_CONNECTORS_ERROR',
 }
 
 export interface ConnectorHubState {

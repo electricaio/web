@@ -1,4 +1,4 @@
-import { loginUser, isAuthenticated, logoutUser, AUTH_TOKENS_STORAGE_KEY } from '../actions';
+import { loginUser, isAuthenticated, logoutUser } from '../actions';
 
 import * as api from '../../../modules/utils/api';
 import { LoginActionTypes } from '../types';
@@ -69,7 +69,7 @@ describe('Auth', () => {
       const dispatchMock = jest.fn();
       logoutUser()(dispatchMock);
       expect(localStorage.removeItem).toBeCalled();
-      expect(localStorage.removeItem).toBeCalledWith(AUTH_TOKENS_STORAGE_KEY);
+      expect(localStorage.removeItem).toBeCalledWith(api.AUTH_TOKENS_STORAGE_KEY);
     });
     it('routes to login page', () => {
       const dispatchMock = jest.fn();
@@ -83,11 +83,11 @@ describe('Auth', () => {
 
   describe('isAuthenticated', () => {
     it('returns true if token is in local storage', () => {
-      (localStorage.getItem as any).mockReturnValue(true);
+      (localStorage.getItem as any).mockReturnValue('1234');
       expect(isAuthenticated()).toBeTruthy();
     });
     it('returns false if token is not in local storage', () => {
-      (localStorage.getItem as any).mockReturnValue(false);
+      (localStorage.getItem as any).mockReturnValue('');
       expect(isAuthenticated()).toBeFalsy();
     });
   });

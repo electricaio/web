@@ -1,3 +1,8 @@
+export type LoginParamsType = {
+  username: string;
+  password: string;
+};
+
 export const enum LoginActionTypes {
   LOGIN_USER = '@@user/LOGIN_USER',
   LOGIN_USER_SUCCESS = '@@user/LOGIN_USER_SUCCESS',
