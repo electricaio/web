@@ -10,8 +10,6 @@ import { loginUser } from '../../redux/auth/actions';
 
 const FormItem = Form.Item;
 
-// Separate state props + dispatch props to their own interfaces.
-
 interface PropsFromDispatch {
   login: typeof loginUser;
 }
@@ -26,10 +24,10 @@ class LoginForm extends Component<AllProps> {
   handleSubmit = (e: React.FormEvent) => {
     const { form, login } = this.props;
     e.preventDefault();
-    form.validateFields((err: string, values: any) => {
+    form.validateFields(async (err: string, values: any) => {
       if (!err) {
         console.log('Received values of form: ', values);
-        login(values.username, values.password);
+        await login(values.username, values.password);
       }
     });
   };

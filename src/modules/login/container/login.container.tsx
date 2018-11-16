@@ -3,16 +3,17 @@ import { connect } from 'react-redux';
 import { Dispatch, bindActionCreators } from 'redux';
 import { LoginFormComponent } from '../login';
 import { ApplicationState } from '../../../redux/store';
-import { loginUser } from '../../../redux/auth/actions';
+import { loginUser, fetchUser } from '../../../redux/auth/actions';
 import { Spin, message } from 'antd';
 
-const mapStateToProps = ({ login }: ApplicationState) => ({
-  errors: login.errors,
-  loading: login.loading,
+const mapStateToProps = ({ auth }: ApplicationState) => ({
+  errors: auth.errors,
+  loading: auth.loading,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   login: bindActionCreators(loginUser, dispatch),
+  fetchUserDetails: bindActionCreators(fetchUser, dispatch),
 });
 
 const showErrorMessage = () => {
