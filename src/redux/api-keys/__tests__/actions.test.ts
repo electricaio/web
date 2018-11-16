@@ -61,7 +61,7 @@ describe('Api Key Actions', () => {
         dispatchMock = jest.fn();
         const getAccessKeyMock = jest.spyOn(api, 'getAccessKeys');
         getAccessKeyMock.mockImplementation(() => Promise.resolve({ data: [response] }));
-        return fetchKeys()(dispatchMock);
+        return fetchKeys(1)(dispatchMock);
       };
 
       it('dispatches FETCH_ACCESS_KEYS action', async () => {

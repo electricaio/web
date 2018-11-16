@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import { createHashHistory } from 'history';
 import configureStore from './redux/configureStore';
-import { Routes } from './routes';
+import { Routes } from './routes/routes';
 import { ConnectedRouter } from 'connected-react-router';
 
 import './theme.less';

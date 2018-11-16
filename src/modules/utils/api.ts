@@ -11,7 +11,7 @@ export type AUTH_TOKEN_TYPE = {
 };
 
 const createAuthHeader = () => ({
-  Authorization: `Basic ${JSON.parse(localStorage.getItem(AUTH_TOKENS_STORAGE_KEY)).access_token}`,
+  Authorization: `Bearer ${JSON.parse(localStorage.getItem(AUTH_TOKENS_STORAGE_KEY)).access_token}`,
 });
 
 export function login(username: string, password: string): AxiosPromise {
@@ -30,8 +30,10 @@ export function getConnectors() {
   return axios.get(`${process.env.API_ENDPOINT}/v1/connectors`, { headers: createAuthHeader() });
 }
 
-export function getAccessKeys() {
-  return axios.get(`${process.env.API_ENDPOINT}/v1/access-keys`, { headers: createAuthHeader() });
+export function getAccessKeys(userId: number) {
+  return axios.get(`${process.env.API_ENDPOINT}/v1/users/${userId}/access-keys`, {
+    headers: createAuthHeader(),
+  });
 }
 
 export function createAccessKey(data: any) {
@@ -50,6 +52,12 @@ export function refreshAccessKey(accessKeyId: string) {
 
 export function removeAccessKey(accessKeyId: string) {
   return axios.delete(`${process.env.API_ENDPOINT}/v1/access-keys/${accessKeyId}`, {
+    headers: createAuthHeader(),
+  });
+}
+
+export function getUser() {
+  return axios.get(`${process.env.API_ENDPOINT}/v1/me/user`, {
     headers: createAuthHeader(),
   });
 }

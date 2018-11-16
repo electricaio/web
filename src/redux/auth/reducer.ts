@@ -2,24 +2,27 @@ import { Reducer } from 'redux';
 import { LoginState } from './types';
 import { ActionType, getType } from 'typesafe-actions';
 
-import * as loginActions from './actions';
-export type LoginAction = ActionType<typeof loginActions>;
+import * as authActions from './actions';
+export type AuthActions = ActionType<typeof authActions>;
 
 const initialState: LoginState = {
   errors: '',
   loading: false,
 };
 
-const reducer: Reducer<LoginState> = (state = initialState, action: LoginAction): LoginState => {
+const reducer: Reducer<LoginState> = (state = initialState, action: AuthActions): LoginState => {
   switch (action.type) {
-    case getType(loginActions.loginUserAsyncActions.request): {
+    case getType(authActions.loginUserAsyncActions.request): {
       return { ...state, loading: true, errors: '' };
     }
-    case getType(loginActions.loginUserAsyncActions.success): {
+    case getType(authActions.loginUserAsyncActions.success): {
       return { ...state, loading: false };
     }
-    case getType(loginActions.loginUserAsyncActions.failure): {
+    case getType(authActions.loginUserAsyncActions.failure): {
       return { ...state, loading: false, errors: action.payload };
+    }
+    case getType(authActions.getUserAsyncActions.success): {
+      return { ...state, loading: false, user: action.payload };
     }
     default: {
       return state;
@@ -27,4 +30,4 @@ const reducer: Reducer<LoginState> = (state = initialState, action: LoginAction)
   }
 };
 
-export { reducer as loginReducer };
+export { reducer as authReducer };

@@ -1,6 +1,6 @@
 import { combineReducers, Dispatch, Action, AnyAction } from 'redux';
 
-import { loginReducer } from './auth/reducer';
+import { authReducer } from './auth/reducer';
 import { LoginState } from './auth/types';
 import { ApiKeysState } from './api-keys/types';
 import { ConnectorHubState } from './connector-hub/types';
@@ -9,7 +9,7 @@ import { apiKeysReducer } from './api-keys/reducer';
 
 // The top-level state object
 export interface ApplicationState {
-  login: LoginState;
+  auth: LoginState;
   apiKeys: ApiKeysState;
   connectors: ConnectorHubState;
 }
@@ -23,7 +23,7 @@ export interface ConnectedReduxProps<A extends Action = AnyAction> {
 // using the reducer with the matching name. It's important that the names match exactly, and that
 // the reducer acts on the corresponding ApplicationState property type.
 export const rootReducer = combineReducers<ApplicationState>({
-  login: loginReducer,
+  auth: authReducer,
   connectors: connectorHubReducer,
   apiKeys: apiKeysReducer,
 });

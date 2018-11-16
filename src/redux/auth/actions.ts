@@ -1,7 +1,7 @@
 import { createAsyncAction } from 'typesafe-actions';
 
-import { LoginActionTypes, LoginParamsType } from './types';
-import { login, AUTH_TOKENS_STORAGE_KEY, AUTH_TOKEN_TYPE } from '../../modules/utils/api';
+import { AuthActionTypes, LoginParamsType, UserDto } from './types';
+import { login, AUTH_TOKENS_STORAGE_KEY, AUTH_TOKEN_TYPE, getUser } from '../../modules/utils/api';
 
 import get from 'lodash/get';
 import { push } from 'connected-react-router';
@@ -10,10 +10,16 @@ import { Dispatch } from 'redux';
 import { AxiosResponse } from 'axios';
 
 export const loginUserAsyncActions = createAsyncAction(
-  LoginActionTypes.LOGIN_USER,
-  LoginActionTypes.LOGIN_USER_SUCCESS,
-  LoginActionTypes.LOGIN_USER_ERROR
+  AuthActionTypes.LOGIN_USER,
+  AuthActionTypes.LOGIN_USER_SUCCESS,
+  AuthActionTypes.LOGIN_USER_ERROR
 )<LoginParamsType, AUTH_TOKEN_TYPE, string>();
+
+export const getUserAsyncActions = createAsyncAction(
+  AuthActionTypes.FETCH_USER,
+  AuthActionTypes.FETCH_USER_SUCCESS,
+  AuthActionTypes.FETCH_USER_ERROR
+)<void, UserDto, string>();
 
 export const loginUser = (username: string, password: string) => (dispatch: Dispatch) => {
   dispatch(loginUserAsyncActions.request({ username, password }));
@@ -35,4 +41,11 @@ export const logoutUser = () => (dispatch: Dispatch) => {
 
 export const isAuthenticated = (): boolean => {
   return !!localStorage.getItem(AUTH_TOKENS_STORAGE_KEY);
+};
+
+export const fetchUser = () => (dispatch: Dispatch) => {
+  dispatch(getUserAsyncActions.request());
+  return getUser().then((result: AxiosResponse<UserDto>) => {
+    dispatch(getUserAsyncActions.success(result.data));
+  });
 };

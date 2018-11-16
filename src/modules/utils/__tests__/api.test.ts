@@ -6,6 +6,7 @@ import {
   refreshAccessKey,
   removeAccessKey,
   getAccessKeys,
+  getUser,
 } from '../api';
 import axios from 'axios';
 jest.mock('axios');
@@ -62,19 +63,21 @@ describe('api', () => {
     });
 
     it('uses get method', () => {
-      getAccessKeys();
+      getAccessKeys(1);
       expect(this.getSpy).toBeCalled();
     });
 
     it('uses access-keys route', () => {
-      getAccessKeys();
-      expect(this.getSpy.mock.calls[0][0]).toEqual(`${process.env.API_ENDPOINT}/v1/access-keys`);
+      getAccessKeys(1);
+      expect(this.getSpy.mock.calls[0][0]).toEqual(
+        `${process.env.API_ENDPOINT}/v1/users/1/access-keys`
+      );
     });
 
     it('passes auth token in header', () => {
-      getAccessKeys();
+      getAccessKeys(1);
       expect(this.getSpy.mock.calls[0][1].headers['Authorization']).toEqual(
-        `Basic ${process.env.AUTH_TOKEN}`
+        `Bearer ${process.env.AUTH_TOKEN}`
       );
     });
   });
@@ -105,7 +108,7 @@ describe('api', () => {
     it('passes auth token in header', () => {
       removeAccessKey(accessKeyId);
       expect(this.deleteSpy.mock.calls[0][1].headers['Authorization']).toEqual(
-        `Basic ${process.env.AUTH_TOKEN}`
+        `Bearer ${process.env.AUTH_TOKEN}`
       );
     });
   });
@@ -136,7 +139,7 @@ describe('api', () => {
     it('passes auth token in header', () => {
       refreshAccessKey(accessKeyId);
       expect(this.postSpy.mock.calls[0][2].headers['Authorization']).toEqual(
-        `Basic ${process.env.AUTH_TOKEN}`
+        `Bearer ${process.env.AUTH_TOKEN}`
       );
     });
   });
@@ -173,7 +176,7 @@ describe('api', () => {
     it('passes auth token in header', () => {
       createAccessKey(accessKetData);
       expect(this.postSpy.mock.calls[0][2].headers['Authorization']).toEqual(
-        `Basic ${process.env.AUTH_TOKEN}`
+        `Bearer ${process.env.AUTH_TOKEN}`
       );
     });
   });
@@ -200,7 +203,34 @@ describe('api', () => {
     it('passes auth token in header', () => {
       getConnectors();
       expect(this.getSpy.mock.calls[0][1].headers['Authorization']).toEqual(
-        `Basic ${process.env.AUTH_TOKEN}`
+        `Bearer ${process.env.AUTH_TOKEN}`
+      );
+    });
+  });
+
+  describe('getUser', () => {
+    beforeEach(() => {
+      this.getSpy = jest.spyOn(axios, 'get');
+    });
+
+    afterEach(() => {
+      this.getSpy.mockReset();
+    });
+
+    it('uses get method', () => {
+      getUser();
+      expect(this.getSpy).toBeCalled();
+    });
+
+    it('calls user me path', () => {
+      getUser();
+      expect(this.getSpy.mock.calls[0][0]).toEqual(`${process.env.API_ENDPOINT}/v1/me/user`);
+    });
+
+    it('passes auth token in header', () => {
+      getUser();
+      expect(this.getSpy.mock.calls[0][1].headers['Authorization']).toEqual(
+        `Bearer ${process.env.AUTH_TOKEN}`
       );
     });
   });

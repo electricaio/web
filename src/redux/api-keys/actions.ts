@@ -27,6 +27,12 @@ export const fetchApiKeysAsyncActions = createAsyncAction(
   ApiKeysTypes.FETCH_ACCESS_KEYS_ERROR
 )<void, ApiKeyModal[], string>();
 
+export const fetchApiKeyAsyncActions = createAsyncAction(
+  ApiKeysTypes.FETCH_ACCESS_KEY,
+  ApiKeysTypes.FETCH_ACCESS_KEY_SUCCESS,
+  ApiKeysTypes.FETCH_ACCESS_KEY_ERROR
+)<void, ApiKeyModal, string>();
+
 export const removeKeysAsyncActions = createAsyncAction(
   ApiKeysTypes.REMOVE_ACCESS_KEY,
   ApiKeysTypes.REMOVE_ACCESS_KEY_SUCCESS,
@@ -53,9 +59,9 @@ export const removeKey = (accessKeyId: string) => (dispatch: Dispatch) => {
   });
 };
 
-export const fetchKeys = () => (dispatch: Dispatch) => {
+export const fetchKeys = (userId: number) => (dispatch: Dispatch) => {
   dispatch(fetchApiKeysAsyncActions.request());
-  getAccessKeys().then((result: AxiosResponse) => {
+  getAccessKeys(userId).then((result: AxiosResponse<ApiKeyModal[]>) => {
     dispatch(fetchApiKeysAsyncActions.success(result.data));
   });
 };

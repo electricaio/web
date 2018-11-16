@@ -1,11 +1,11 @@
 import React, { SFC } from 'react';
 import { ApiKeysContainer } from '../modules/api-keys/containers/api-keys/api-keys.container';
-import { MainLayout } from '../components/layouts/main-layout';
+import { MainLayoutContainer } from '../components/layouts/main-layout/main-layout';
 
 export const ApiKeysLayout: SFC = () => {
   return (
-    <MainLayout>
+    <MainLayoutContainer>
       <ApiKeysContainer />
-    </MainLayout>
+    </MainLayoutContainer>
   );
 };

@@ -10,8 +10,6 @@ import { loginUser } from '../../redux/auth/actions';
 
 const FormItem = Form.Item;
 
-// Separate state props + dispatch props to their own interfaces.
-
 interface PropsFromDispatch {
   login: typeof loginUser;
 }
