@@ -9,9 +9,11 @@ import { Header } from '../../../../ui-kit/header';
 describe('ApiKeys', () => {
   const onRemoveMock = jest.fn();
   const onCommitMock = jest.fn();
+  const userId = 5;
+
   beforeEach(() => {
     this.component = shallow(
-      <ApiKeys apiKeys={API_KEYS_TABLE_DATA} removeKey={onRemoveMock} createKey={onCommitMock} />
+      <ApiKeys apiKeys={API_KEYS_TABLE_DATA} userId={userId} removeKey={onRemoveMock} createKey={onCommitMock} />
     );
   });
 

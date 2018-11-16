@@ -9,11 +9,11 @@ describe('Action Buttons', () => {
   const onRemoveMock = jest.fn();
   const onEditMock = jest.fn();
   const name = 'test name';
-  const apiKey = 'test key';
+  const userId = 5;
 
   beforeEach(() => {
     this.component = shallow(
-      <ActionButtons apiKey={apiKey} name={name} onEdit={onEditMock} onRemove={onRemoveMock} />
+      <ActionButtons name={name} userId={userId} onEdit={onEditMock} onRemove={onRemoveMock} />
     );
   });
 
@@ -41,7 +41,6 @@ describe('Action Buttons', () => {
     const buttonActionModal = this.component.find(ButtonActionModal);
     expect(buttonActionModal.prop('title')).toEqual('Edit API Key');
     expect(buttonActionModal.prop('submitText')).toEqual('Save');
-    expect(buttonActionModal.prop('apiKey')).toEqual(apiKey);
     expect(buttonActionModal.prop('name')).toEqual(name);
     expect(buttonActionModal.prop('onCommit')).toEqual(onEditMock);
   });

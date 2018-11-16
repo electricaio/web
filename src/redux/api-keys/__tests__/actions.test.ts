@@ -8,7 +8,7 @@ jest.mock('../../../modules/utils/api');
 describe('Api Key Actions', () => {
   describe('createKey', () => {
     const newAccessKey: ApiKeyModal = {
-      id: 'asdasdsad',
+      id: 1,
       name: 'Development',
       key: '14f4a1c0-e3sd5-5842-c7b3-162db8b95wex',
       created: new Date('02/03/2018'),
@@ -94,7 +94,7 @@ describe('Api Key Actions', () => {
         dispatchMock = jest.fn();
         const refreshAccessKeyMock = jest.spyOn(api, 'refreshAccessKey');
         refreshAccessKeyMock.mockImplementation(() => Promise.resolve({ data: response }));
-        return refreshKey('123')(dispatchMock);
+        return refreshKey(1)(dispatchMock);
       };
 
       it('dispatches REFRESH_KEY action', async () => {
@@ -125,7 +125,7 @@ describe('Api Key Actions', () => {
         dispatchMock = jest.fn();
         const refreshAccessKeyMock = jest.spyOn(api, 'removeAccessKey');
         refreshAccessKeyMock.mockImplementation(() => Promise.resolve());
-        return removeKey('123')(dispatchMock);
+        return removeKey(1)(dispatchMock);
       };
 
       it('dispatches REMOVE_ACCESS_KEY action', async () => {

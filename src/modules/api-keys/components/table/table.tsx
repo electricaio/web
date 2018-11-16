@@ -42,15 +42,16 @@ export class KeyVisibility extends Component<TKeyVisibilityProps, TKeyVisibility
 
 export type TTableProps = {
   data: ApiKeyModal[];
-  onRemove: (id: string) => void;
+  userId: number;
+  onRemove: (id: number) => void;
 };
 
 export class ApiKeysTable extends Component<TTableProps> {
-  handleRemove = (id: string) => () => {
+  handleRemove = (id: number) => () => {
     this.props.onRemove(id);
   };
 
-  handleEdit = (id: string) => () => {
+  handleEdit = (id: number) => () => {
     //  this.props.onEdit(id);
   };
 
@@ -77,8 +78,8 @@ export class ApiKeysTable extends Component<TTableProps> {
         key: 'action',
         render: (entity: ApiKeyModal) => (
           <ActionButtons
-            apiKey={entity.key}
             name={entity.name}
+            userId={this.props.userId}
             onRemove={this.handleRemove(entity.id)}
             onEdit={this.handleEdit(entity.id)}
           />
@@ -90,7 +91,11 @@ export class ApiKeysTable extends Component<TTableProps> {
   render() {
     const { data } = this.props;
     const columns = this.getColumns();
-
+    
+    // make key to render table
+    data.map(el => {
+      el.key = el.name;
+    });
     return <Table pagination={false} columns={columns} dataSource={data} />;
   }
 }

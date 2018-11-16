@@ -20,7 +20,9 @@ const reducer: Reducer<ApiKeysState> = (
     case ApiKeysTypes.FETCH_ACCESS_KEYS: {
       return { ...state, loading: true };
     }
-
+    case ApiKeysTypes.FETCH_ACCESS_KEYS_SUCCESS: {
+      return { ...state, loading: true, data: action.payload };
+    }
     default: {
       return state;
     }

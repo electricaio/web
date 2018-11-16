@@ -5,9 +5,10 @@ import { MainModal } from '../../../../../components/modal';
 import { ApiKeyForm } from '../../api-key-form/api-key-form';
 
 describe('New Key Modal', () => {
+  const userId = 5;
   beforeEach(() => {
     this.newKeyComponent = shallow(
-      <ButtonActionModal submitText="" title="" onCommit={() => {}}>
+      <ButtonActionModal submitText="" title="" onCommit={() => {}} userId={userId} >
         <span className="clickable">Testing</span>
       </ButtonActionModal>
     );

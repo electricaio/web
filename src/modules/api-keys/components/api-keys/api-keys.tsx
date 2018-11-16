@@ -10,6 +10,7 @@ import { removeKey, createKey } from '../../../../redux/api-keys/actions';
 // Separate state props + dispatch props to their own interfaces.
 interface PropsFromState {
   apiKeys: ApiKeyModal[];
+  userId: number;
 }
 
 interface PropsFromDispatch {
@@ -20,18 +21,18 @@ interface PropsFromDispatch {
 type AllProps = PropsFromState & PropsFromDispatch;
 
 export class ApiKeys extends Component<AllProps> {
-  handleRemove = (id: string) => {
+  handleRemove = (id: number) => {
     const { removeKey } = this.props;
     removeKey(id);
   };
 
-  handleCommit = (el: ApiKeyModal) => {
+  handleCommit = (param: any) => {
     const { createKey } = this.props;
-    createKey(el);
+    createKey(param);
   };
 
   render() {
-    const { apiKeys } = this.props;
+    const { apiKeys, userId } = this.props;
 
     return (
       <Fragment>
@@ -40,11 +41,12 @@ export class ApiKeys extends Component<AllProps> {
           These API Keys grant developers the ability to access electrica services in the Cloud.
           Keep them confidential.
         </Header>
-        <ApiKeysTable data={apiKeys} onRemove={this.handleRemove} />
+        <ApiKeysTable data={apiKeys} userId={userId} onRemove={this.handleRemove} />
         <ButtonActionModal
           title="Generate New API Key"
           submitText="Create"
           onCommit={this.handleCommit}
+          userId={userId}
         >
           <NewApiButton type="primary">Generate New API Key</NewApiButton>
         </ButtonActionModal>
