@@ -30,7 +30,7 @@ interface PropsFromDispatch {
 
 type AllProps = PropsFromState & PropsFromDispatch;
 
-class ApiKeysComonent extends Component<AllProps> {
+export class ApiKeysComponent extends Component<AllProps> {
   componentDidMount = () => {
     this.props.fetchKeys(this.props.userId);
   };
@@ -44,4 +44,4 @@ class ApiKeysComonent extends Component<AllProps> {
 export const ApiKeysContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(ApiKeysComonent);
+)(ApiKeysComponent);

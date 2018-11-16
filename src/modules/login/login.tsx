@@ -24,10 +24,10 @@ class LoginForm extends Component<AllProps> {
   handleSubmit = (e: React.FormEvent) => {
     const { form, login } = this.props;
     e.preventDefault();
-    form.validateFields(async (err: string, values: any) => {
+    form.validateFields((err: string, values: any) => {
       if (!err) {
         console.log('Received values of form: ', values);
-        await login(values.username, values.password);
+        login(values.username, values.password);
       }
     });
   };

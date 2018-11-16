@@ -20,12 +20,12 @@ const showErrorMessage = () => {
   message.error('The username or password you entered is incorrect');
 };
 
-interface PropsFromState {
+export interface PropsFromState {
   loading: boolean;
   errors?: string;
 }
 
-interface PropsFromDispatch {
+export interface PropsFromDispatch {
   login: typeof loginUser;
 }
 
