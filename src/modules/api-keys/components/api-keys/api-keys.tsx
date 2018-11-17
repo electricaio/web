@@ -26,13 +26,17 @@ export class ApiKeys extends Component<AllProps> {
     removeKey(id);
   };
 
-  handleCommit = (param: any) => {
+  handleCommit = (keyName: ApiKeyModal) => {
     const { createKey } = this.props;
+    const param = {
+      name: keyName,
+      userId: this.props.userId,
+    };
     createKey(param);
   };
 
   render() {
-    const { apiKeys, userId } = this.props;
+    const { apiKeys } = this.props;
 
     return (
       <Fragment>
@@ -41,12 +45,11 @@ export class ApiKeys extends Component<AllProps> {
           These API Keys grant developers the ability to access electrica services in the Cloud.
           Keep them confidential.
         </Header>
-        <ApiKeysTable data={apiKeys} userId={userId} onRemove={this.handleRemove} />
+        <ApiKeysTable data={apiKeys} onRemove={this.handleRemove} />
         <ButtonActionModal
           title="Generate New API Key"
           submitText="Create"
           onCommit={this.handleCommit}
-          userId={userId}
         >
           <NewApiButton type="primary">Generate New API Key</NewApiButton>
         </ButtonActionModal>

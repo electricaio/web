@@ -1,6 +1,6 @@
 import { Reducer } from 'redux';
+import _ from 'lodash';
 import { ApiKeysState, ApiKeysTypes } from './types';
-import { API_KEYS_TABLE_DATA } from '../../fixtures/api-keys-table-data';
 
 import * as actions from './actions';
 import { ActionType } from 'typesafe-actions';
@@ -8,7 +8,7 @@ import { ActionType } from 'typesafe-actions';
 export type ApiKeysActionTypes = ActionType<typeof actions>;
 
 const initialState: ApiKeysState = {
-  data: API_KEYS_TABLE_DATA,
+  data: [],
   loading: false,
 };
 
@@ -21,7 +21,12 @@ const reducer: Reducer<ApiKeysState> = (
       return { ...state, loading: true };
     }
     case ApiKeysTypes.FETCH_ACCESS_KEYS_SUCCESS: {
-      return { ...state, loading: true, data: action.payload };
+      const accessKeys = _.cloneDeep(action.payload);
+      accessKeys.map((obj) => {
+        obj.key = obj.name;
+        return obj;
+      });
+      return { ...state, loading: true, data: accessKeys };
     }
     default: {
       return state;

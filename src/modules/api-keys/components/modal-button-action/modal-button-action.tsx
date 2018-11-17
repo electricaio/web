@@ -9,7 +9,6 @@ export type TApiKeysProps = {
   title: string;
   children: ReactElement<any>;
   name?: string;
-  userId: number;
 };
 
 export type TApiKeysState = {
@@ -47,11 +46,7 @@ export class ButtonActionModal extends Component<TApiKeysProps, TApiKeysState> {
         return;
       }
       form.resetFields();
-      const param = {
-        name: values.apiKeyName,
-        userId: this.props.userId,
-      };
-      this.props.onCommit(param);
+      this.props.onCommit(values.apiKeyName);
       this.setState({ visible: false });
     });
   };

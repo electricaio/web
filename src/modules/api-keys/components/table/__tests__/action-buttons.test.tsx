@@ -9,11 +9,10 @@ describe('Action Buttons', () => {
   const onRemoveMock = jest.fn();
   const onEditMock = jest.fn();
   const name = 'test name';
-  const userId = 5;
 
   beforeEach(() => {
     this.component = shallow(
-      <ActionButtons name={name} userId={userId} onEdit={onEditMock} onRemove={onRemoveMock} />
+      <ActionButtons name={name} onEdit={onEditMock} onRemove={onRemoveMock} />
     );
   });
 

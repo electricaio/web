@@ -6,10 +6,9 @@ export type TActionButtonsNewProps = {
   onRemove: () => void;
   onEdit: () => void;
   name: string;
-  userId: number;
 };
 
-export const ActionButtons: SFC<TActionButtonsNewProps> = ({ name, userId, onEdit, onRemove }) => (
+export const ActionButtons: SFC<TActionButtonsNewProps> = ({ name, onEdit, onRemove }) => (
   <Container>
     <Tooltip placement="top" title="Edit">
       <ButtonActionModal
@@ -17,7 +16,6 @@ export const ActionButtons: SFC<TActionButtonsNewProps> = ({ name, userId, onEdi
         title="Edit API Key"
         submitText="Save"
         onCommit={onEdit}
-        userId={userId}
       >
         <Icon type="edit" />
       </ButtonActionModal>

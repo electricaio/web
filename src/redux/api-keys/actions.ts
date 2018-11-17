@@ -29,9 +29,9 @@ export const fetchApiKeysAsyncActions = createAsyncAction(
 )<void, ApiKeyModal[], string>();
 
 export const getApiKeyAsyncActions = createAsyncAction(
-  ApiKeysTypes.GET_ACCESS_KEY,
-  ApiKeysTypes.GET_ACCESS_KEY_SUCCESS,
-  ApiKeysTypes.GET_ACCESS_KEY_ERROR
+  ApiKeysTypes.FETCH_ACCESS_KEY,
+  ApiKeysTypes.FETCH_ACCESS_KEY_SUCCESS,
+  ApiKeysTypes.FETCH_ACCESS_KEY_ERROR
 )<void, ApiKeyModal, string>();
 
 export const removeKeysAsyncActions = createAsyncAction(
