@@ -7,7 +7,7 @@ import { ApiKeyForm } from '../../api-key-form/api-key-form';
 describe('New Key Modal', () => {
   beforeEach(() => {
     this.newKeyComponent = shallow(
-      <ButtonActionModal submitText="" title="" onCommit={() => {}} >
+      <ButtonActionModal submitText="" title="" onCommit={() => {}}>
         <span className="clickable">Testing</span>
       </ButtonActionModal>
     );

@@ -12,11 +12,6 @@ describe('ApiKeyForm', () => {
     expect(name).toHaveLength(1);
   });
 
-  it('should have a generate key input', () => {
-    const keyInput = this.apiKeyForm.find('input#apiKey');
-    expect(keyInput).toHaveLength(1);
-  });
-
   it('should use name and key as an initial value if passed', () => {
     const name = 'test name';
     const apiKeyFormWithValues = mount(<ApiKeyForm apiKeyName={name} />);

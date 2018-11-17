@@ -22,7 +22,7 @@ const reducer: Reducer<ApiKeysState> = (
     }
     case ApiKeysTypes.FETCH_ACCESS_KEYS_SUCCESS: {
       const accessKeys = _.cloneDeep(action.payload);
-      accessKeys.map((obj) => {
+      accessKeys.map(obj => {
         obj.key = obj.name;
         return obj;
       });

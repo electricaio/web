@@ -13,7 +13,12 @@ describe('ApiKeys', () => {
 
   beforeEach(() => {
     this.component = shallow(
-      <ApiKeys apiKeys={API_KEYS_TABLE_DATA} userId={userId} removeKey={onRemoveMock} createKey={onCommitMock} />
+      <ApiKeys
+        apiKeys={API_KEYS_TABLE_DATA}
+        userId={userId}
+        removeKey={onRemoveMock}
+        createKey={onCommitMock}
+      />
     );
   });
 

@@ -44,6 +44,7 @@ export const createKey = (param: any) => (dispatch: Dispatch) => {
   dispatch(createApiKeysAsyncActions.request(param));
   createAccessKey(param).then((result: AxiosResponse) => {
     dispatch(createApiKeysAsyncActions.success(result.data));
+    dispatch(this.fetchKeys(param.userId));
   });
 };
 

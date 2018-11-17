@@ -37,7 +37,9 @@ export class ApiKeysComponent extends Component<AllProps> {
 
   render() {
     const { removeKey, createKey, apiKeys, userId } = this.props;
-    return <ApiKeys removeKey={removeKey} createKey={createKey} apiKeys={apiKeys} userId={userId} />;
+    return (
+      <ApiKeys removeKey={removeKey} createKey={createKey} apiKeys={apiKeys} userId={userId} />
+    );
   }
 }
 
