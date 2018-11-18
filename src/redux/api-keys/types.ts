@@ -1,5 +1,6 @@
 export type ApiKeyModal = {
-  id: string;
+  id?: number;
+  userId?: number;
   name: string;
   key?: string;
   created?: Date;

@@ -83,7 +83,7 @@ describe('api', () => {
   });
 
   describe('removeAccessKey', () => {
-    const accessKeyId = '123';
+    const accessKeyId = 1;
 
     beforeEach(() => {
       this.deleteSpy = jest.spyOn(axios, 'delete');
@@ -114,7 +114,7 @@ describe('api', () => {
   });
 
   describe('refreshAccessKey', () => {
-    const accessKeyId = '123';
+    const accessKeyId = 1;
 
     beforeEach(() => {
       this.postSpy = jest.spyOn(axios, 'post');

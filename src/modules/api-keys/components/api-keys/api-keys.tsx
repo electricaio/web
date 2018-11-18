@@ -10,6 +10,7 @@ import { removeKey, createKey } from '../../../../redux/api-keys/actions';
 // Separate state props + dispatch props to their own interfaces.
 interface PropsFromState {
   apiKeys: ApiKeyModal[];
+  userId: number;
 }
 
 interface PropsFromDispatch {
@@ -20,14 +21,14 @@ interface PropsFromDispatch {
 type AllProps = PropsFromState & PropsFromDispatch;
 
 export class ApiKeys extends Component<AllProps> {
-  handleRemove = (id: string) => {
+  handleRemove = (id: number) => {
     const { removeKey } = this.props;
     removeKey(id);
   };
 
-  handleCommit = (el: ApiKeyModal) => {
+  handleCommit = (apiKey: ApiKeyModal) => {
     const { createKey } = this.props;
-    createKey(el);
+    createKey({ name: apiKey.name, userId: this.props.userId });
   };
 
   render() {

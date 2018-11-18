@@ -9,21 +9,21 @@ import { ApiKeyModal } from '../../../../../redux/api-keys/types';
 describe('ApiKeys | table Component', () => {
   const data: ApiKeyModal[] = [
     {
-      id: 'asdasdsad',
+      id: 1,
       name: 'Development',
-      key: '14f4a1c0-e3sd5-5842-c7b3-162db8b95wex',
+      key: 'Development',
       created: new Date('02/03/2018'),
     },
     {
-      id: 'qweqwe',
+      id: 2,
       name: 'Staging',
-      key: '14f4a1c0-e6csd-5842-c7b3-162db8b95cc3',
+      key: 'Staging',
       created: new Date('01/02/2018'),
     },
     {
-      id: 'zxczxc',
+      id: 3,
       name: 'Production',
-      key: '14s4a1c0-e365-5ds42-c7b3-162db8b95cc3',
+      key: 'Production',
       created: new Date('01/04/2018'),
     },
   ];
@@ -43,12 +43,16 @@ describe('ApiKeys | table Component', () => {
     expect(this.component.find(Table).prop('dataSource')).toEqual(data);
   });
 
+  it('add the key property in dataSource', () => {
+    expect(this.component.find(Table).prop('dataSource')[0].key).toEqual(data[0].name);
+  });
+
   describe('KeyVisibility', () => {
     const key = '1234567';
     beforeEach(() => {
       const entity: ApiKeyModal = {
         name: 'test',
-        id: '123',
+        id: 1,
         key: '1234567',
         created: new Date(),
       };
@@ -75,7 +79,7 @@ describe('ApiKeys | table Component', () => {
       .prop('columns')
       .find((col: ApiKeyModal) => col.key === 'action');
     const entity = {
-      id: '123',
+      id: 1,
       name: 'test',
     };
     const actionButtons = actionButtonColumn.render(entity);
@@ -88,7 +92,7 @@ describe('ApiKeys | table Component', () => {
       .prop('columns')
       .find((col: ApiKeyModal) => col.key === 'action');
     const entity = {
-      id: '123',
+      id: 1,
       name: 'test',
     };
     const actionButtons = actionButtonColumn.render(entity);

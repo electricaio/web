@@ -36,13 +36,19 @@ export function getAccessKeys(userId: number) {
   });
 }
 
+export function getAccessKey(accessKeyId: number) {
+  return axios.get(`${process.env.API_ENDPOINT}/v1/access-keys/${accessKeyId}`, {
+    headers: createAuthHeader(),
+  });
+}
+
 export function createAccessKey(data: any) {
   return axios.post(`${process.env.API_ENDPOINT}/v1/access-keys`, data, {
     headers: createAuthHeader(),
   });
 }
 
-export function refreshAccessKey(accessKeyId: string) {
+export function refreshAccessKey(accessKeyId: number) {
   return axios.post(
     `${process.env.API_ENDPOINT}/v1/access-keys/${accessKeyId}/refresh`,
     {},
@@ -50,7 +56,7 @@ export function refreshAccessKey(accessKeyId: string) {
   );
 }
 
-export function removeAccessKey(accessKeyId: string) {
+export function removeAccessKey(accessKeyId: number) {
   return axios.delete(`${process.env.API_ENDPOINT}/v1/access-keys/${accessKeyId}`, {
     headers: createAuthHeader(),
   });

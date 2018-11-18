@@ -1,16 +1,15 @@
 import React, { Component, Fragment, ReactElement } from 'react';
 
 import { MainModal } from '../../../../components/modal';
-import { ApiKeyForm } from '../api-key-form/api-key-form';
 import { ApiKeyModal } from '../../../../redux/api-keys/types';
+import { ApiKeyForm } from '../api-key-form/api-key-form';
 
 export type TApiKeysProps = {
-  onCommit: (entity: ApiKeyModal) => void;
+  onCommit: (apiKey: ApiKeyModal) => void;
   submitText: string;
   title: string;
   children: ReactElement<any>;
   name?: string;
-  apiKey?: string;
 };
 
 export type TApiKeysState = {
@@ -18,7 +17,6 @@ export type TApiKeysState = {
 };
 
 type FormFields = {
-  apiKey: string;
   apiKeyName: string;
 };
 
@@ -49,13 +47,7 @@ export class ButtonActionModal extends Component<TApiKeysProps, TApiKeysState> {
         return;
       }
       form.resetFields();
-      const newEntity: ApiKeyModal = {
-        name: values.apiKeyName,
-        key: values.apiKey,
-        created: new Date(),
-        id: '',
-      };
-      this.props.onCommit(newEntity);
+      this.props.onCommit({ name: values.apiKeyName });
       this.setState({ visible: false });
     });
   };
@@ -66,7 +58,7 @@ export class ButtonActionModal extends Component<TApiKeysProps, TApiKeysState> {
 
   render() {
     const { visible } = this.state;
-    const { title, submitText, children, apiKey, name } = this.props;
+    const { title, submitText, children, name } = this.props;
     return (
       <Fragment>
         <MainModal
@@ -76,7 +68,7 @@ export class ButtonActionModal extends Component<TApiKeysProps, TApiKeysState> {
           handleCancel={this.closeModal}
           handleSave={this.handleCreate}
         >
-          <ApiKeyForm apiKeyName={name} apiKey={apiKey} wrappedComponentRef={this.saveFormRef} />
+          <ApiKeyForm apiKeyName={name} wrappedComponentRef={this.saveFormRef} />
         </MainModal>
         {React.cloneElement(children, {
           onClick: this.showModal,
