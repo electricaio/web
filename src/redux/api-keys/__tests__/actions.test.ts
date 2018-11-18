@@ -8,10 +8,8 @@ jest.mock('../../../modules/utils/api');
 describe('Api Key Actions', () => {
   describe('createKey', () => {
     const newAccessKey: ApiKeyModal = {
-      id: 1,
       name: 'Development',
-      key: '14f4a1c0-e3sd5-5842-c7b3-162db8b95wex',
-      created: new Date('02/03/2018'),
+      userId: 2,
     };
 
     describe('on api success', () => {

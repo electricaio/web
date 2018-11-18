@@ -1,4 +1,5 @@
 import React, { Component, SFC } from 'react';
+import _ from 'lodash';
 import { Table } from 'antd';
 import { ActionButtons } from './action-buttons';
 import { format } from 'date-fns';
@@ -89,6 +90,10 @@ export class ApiKeysTable extends Component<TTableProps> {
   render() {
     const { data } = this.props;
     const columns = this.getColumns();
-    return <Table pagination={false} columns={columns} dataSource={data} />;
+    const tableData = _.cloneDeep(data);
+    tableData.map(obj => {
+      obj.key = obj.name;
+    });
+    return <Table pagination={false} columns={columns} dataSource={tableData} />;
   }
 }

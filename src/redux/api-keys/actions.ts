@@ -40,11 +40,11 @@ export const removeKeysAsyncActions = createAsyncAction(
   ApiKeysTypes.REMOVE_ACCESS_KEY_ERROR
 )<void, void, string>();
 
-export const createKey = (param: any) => (dispatch: Dispatch) => {
-  dispatch(createApiKeysAsyncActions.request(param));
-  createAccessKey(param).then((result: AxiosResponse) => {
+export const createKey = (data: ApiKeyModal) => (dispatch: Dispatch) => {
+  dispatch(createApiKeysAsyncActions.request(data));
+  createAccessKey(data).then((result: AxiosResponse) => {
     dispatch(createApiKeysAsyncActions.success(result.data));
-    dispatch(this.fetchKeys(param.userId));
+    dispatch(this.fetchKeys(data.userId));
   });
 };
 

@@ -26,13 +26,9 @@ export class ApiKeys extends Component<AllProps> {
     removeKey(id);
   };
 
-  handleCommit = (keyName: ApiKeyModal) => {
+  handleCommit = (apiKey: ApiKeyModal) => {
     const { createKey } = this.props;
-    const param = {
-      name: keyName,
-      userId: this.props.userId,
-    };
-    createKey(param);
+    createKey({ name: apiKey.name, userId: this.props.userId });
   };
 
   render() {

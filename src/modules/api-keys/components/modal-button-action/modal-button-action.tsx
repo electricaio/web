@@ -1,10 +1,11 @@
 import React, { Component, Fragment, ReactElement } from 'react';
 
 import { MainModal } from '../../../../components/modal';
+import { ApiKeyModal } from '../../../../redux/api-keys/types';
 import { ApiKeyForm } from '../api-key-form/api-key-form';
 
 export type TApiKeysProps = {
-  onCommit: (param: any) => void;
+  onCommit: (apiKey: ApiKeyModal) => void;
   submitText: string;
   title: string;
   children: ReactElement<any>;
@@ -46,7 +47,7 @@ export class ButtonActionModal extends Component<TApiKeysProps, TApiKeysState> {
         return;
       }
       form.resetFields();
-      this.props.onCommit(values.apiKeyName);
+      this.props.onCommit({ name: values.apiKeyName });
       this.setState({ visible: false });
     });
   };
