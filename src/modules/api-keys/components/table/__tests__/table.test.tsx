@@ -43,6 +43,10 @@ describe('ApiKeys | table Component', () => {
     expect(this.component.find(Table).prop('dataSource')).toEqual(data);
   });
 
+  it('add the key property in dataSource', () => {
+    expect(this.component.find(Table).prop('dataSource')[0].key).toEqual(data[0].name);
+  });
+
   describe('KeyVisibility', () => {
     const key = '1234567';
     beforeEach(() => {
