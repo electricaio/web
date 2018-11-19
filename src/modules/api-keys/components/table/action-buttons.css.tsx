@@ -25,3 +25,8 @@ export const DeleteIcon = styled(Icon)`
   color: red !important;
   font-size: 18px !important;
 `;
+
+export const WarningIcon = styled(Icon)`
+  color: sandybrown !important;
+  font-size: 18px !important;
+`;

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { ApiKeys } from '../../components/api-keys/api-keys';
 import { ApplicationState } from '../../../../redux/store';
-import { removeKey, createKey, fetchKeys } from '../../../../redux/api-keys/actions';
+import { removeKey, createKey, fetchKeys, refreshKey } from '../../../../redux/api-keys/actions';
 import { ApiKeyModal } from '../../../../redux/api-keys/types';
 
 const mapStateToProps = ({ apiKeys, auth }: ApplicationState) => ({
@@ -15,6 +15,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   removeKey: bindActionCreators(removeKey, dispatch),
   fetchKeys: bindActionCreators(fetchKeys, dispatch),
   createKey: bindActionCreators(createKey, dispatch),
+  refreshKey: bindActionCreators(refreshKey, dispatch),
 });
 
 interface PropsFromState {
@@ -26,6 +27,7 @@ interface PropsFromDispatch {
   removeKey: typeof removeKey;
   createKey: typeof createKey;
   fetchKeys: typeof fetchKeys;
+  refreshKey: typeof refreshKey;
 }
 
 type AllProps = PropsFromState & PropsFromDispatch;
@@ -36,9 +38,15 @@ export class ApiKeysComponent extends Component<AllProps> {
   };
 
   render() {
-    const { removeKey, createKey, apiKeys, userId } = this.props;
+    const { removeKey, createKey, refreshKey, apiKeys, userId } = this.props;
     return (
-      <ApiKeys removeKey={removeKey} createKey={createKey} apiKeys={apiKeys} userId={userId} />
+      <ApiKeys
+        removeKey={removeKey}
+        createKey={createKey}
+        refreshKey={refreshKey}
+        apiKeys={apiKeys}
+        userId={userId}
+      />
     );
   }
 }

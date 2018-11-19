@@ -117,28 +117,28 @@ describe('api', () => {
     const accessKeyId = 1;
 
     beforeEach(() => {
-      this.postSpy = jest.spyOn(axios, 'post');
+      this.putSpy = jest.spyOn(axios, 'put');
     });
 
     afterEach(() => {
-      this.postSpy.mockReset();
+      this.putSpy.mockReset();
     });
 
     it('uses post method', () => {
       refreshAccessKey(accessKeyId);
-      expect(this.postSpy).toBeCalled();
+      expect(this.putSpy).toBeCalled();
     });
 
     it('uses access-keys route with access key id', () => {
       refreshAccessKey(accessKeyId);
-      expect(this.postSpy.mock.calls[0][0]).toEqual(
+      expect(this.putSpy.mock.calls[0][0]).toEqual(
         `${process.env.API_ENDPOINT}/v1/access-keys/${accessKeyId}/refresh`
       );
     });
 
     it('passes auth token in header', () => {
       refreshAccessKey(accessKeyId);
-      expect(this.postSpy.mock.calls[0][2].headers['Authorization']).toEqual(
+      expect(this.putSpy.mock.calls[0][2].headers['Authorization']).toEqual(
         `Bearer ${process.env.AUTH_TOKEN}`
       );
     });

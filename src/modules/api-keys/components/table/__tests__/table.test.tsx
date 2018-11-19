@@ -29,8 +29,11 @@ describe('ApiKeys | table Component', () => {
   ];
 
   const onRemoveMock = jest.fn();
+  const onRefreshMock = jest.fn();
   beforeEach(() => {
-    this.component = mount(<ApiKeysTable data={API_KEYS_TABLE_DATA} onRemove={onRemoveMock} />);
+    this.component = mount(
+      <ApiKeysTable data={API_KEYS_TABLE_DATA} onRemove={onRemoveMock} onRefresh={onRefreshMock} />
+    );
   });
 
   it('renders 4 columns', () => {
@@ -98,5 +101,19 @@ describe('ApiKeys | table Component', () => {
     const actionButtons = actionButtonColumn.render(entity);
     actionButtons.props.onRemove();
     expect(onRemoveMock).toBeCalled();
+  });
+
+  it('calls onRefresh props when refresh action button is called', () => {
+    const actionButtonColumn = this.component
+      .find(Table)
+      .prop('columns')
+      .find((col: ApiKeyModal) => col.key === 'action');
+    const entity = {
+      id: 1,
+      name: 'test',
+    };
+    const actionButtons = actionButtonColumn.render(entity);
+    actionButtons.props.onRefresh();
+    expect(onRefreshMock).toBeCalled();
   });
 });
