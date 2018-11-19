@@ -102,4 +102,18 @@ describe('ApiKeys | table Component', () => {
     actionButtons.props.onRemove();
     expect(onRemoveMock).toBeCalled();
   });
+
+  it('calls onRefresh props when refresh action button is called', () => {
+    const actionButtonColumn = this.component
+      .find(Table)
+      .prop('columns')
+      .find((col: ApiKeyModal) => col.key === 'action');
+    const entity = {
+      id: 1,
+      name: 'test',
+    };
+    const actionButtons = actionButtonColumn.render(entity);
+    actionButtons.props.onRefresh();
+    expect(onRefreshMock).toBeCalled();
+  });
 });

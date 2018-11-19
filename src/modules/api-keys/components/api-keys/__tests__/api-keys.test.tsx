@@ -47,5 +47,10 @@ describe('ApiKeys', () => {
       this.table.prop('onRemove')();
       expect(onRemoveMock).toBeCalled();
     });
+
+    it('calls refresh action when onRefresh is called', () => {
+      this.table.prop('onRefresh')();
+      expect(onRefreshMock).toBeCalled();
+    });
   });
 });
