@@ -29,8 +29,9 @@ describe('ApiKeys | table Component', () => {
   ];
 
   const onRemoveMock = jest.fn();
+  const onRefreshMock = jest.fn();
   beforeEach(() => {
-    this.component = mount(<ApiKeysTable data={API_KEYS_TABLE_DATA} onRemove={onRemoveMock} />);
+    this.component = mount(<ApiKeysTable data={API_KEYS_TABLE_DATA} onRemove={onRemoveMock} onRefresh={onRefreshMock} />);
   });
 
   it('renders 4 columns', () => {

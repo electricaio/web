@@ -17,6 +17,7 @@ describe('API Keys Container', () => {
         removeKey={jest.fn()}
         createKey={jest.fn()}
         fetchKeys={fetchKeys}
+        refreshKey={jest.fn()}
       />
     );
   });

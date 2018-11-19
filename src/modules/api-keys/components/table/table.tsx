@@ -43,6 +43,7 @@ export class KeyVisibility extends Component<TKeyVisibilityProps, TKeyVisibility
 export type TTableProps = {
   data: ApiKeyModal[];
   onRemove: (id: number) => void;
+  onRefresh: (id: number) => void;
 };
 
 export class ApiKeysTable extends Component<TTableProps> {
@@ -50,8 +51,8 @@ export class ApiKeysTable extends Component<TTableProps> {
     this.props.onRemove(id);
   };
 
-  handleEdit = (id: number) => () => {
-    //  this.props.onEdit(id);
+  handleRefresh = (id: number) => () => {
+     this.props.onRefresh(id);
   };
 
   getColumns() {
@@ -79,7 +80,7 @@ export class ApiKeysTable extends Component<TTableProps> {
           <ActionButtons
             name={entity.name}
             onRemove={this.handleRemove(entity.id)}
-            onEdit={this.handleEdit(entity.id)}
+            onRefresh={this.handleRefresh(entity.id)}
           />
         ),
       },

@@ -5,7 +5,7 @@ import React, { Component, Fragment } from 'react';
 import { ButtonActionModal } from '../modal-button-action/modal-button-action';
 import { NewApiButton } from '../modal-button-action/modal-button-action.css';
 import { ApiKeyModal } from '../../../../redux/api-keys/types';
-import { removeKey, createKey } from '../../../../redux/api-keys/actions';
+import { removeKey, createKey, refreshKey } from '../../../../redux/api-keys/actions';
 
 // Separate state props + dispatch props to their own interfaces.
 interface PropsFromState {
@@ -16,11 +16,17 @@ interface PropsFromState {
 interface PropsFromDispatch {
   removeKey: typeof removeKey;
   createKey: typeof createKey;
+  refreshKey: typeof refreshKey;
 }
 
 type AllProps = PropsFromState & PropsFromDispatch;
 
 export class ApiKeys extends Component<AllProps> {
+  handleRefresh = (id: number) => {
+    const { refreshKey } = this.props;
+    refreshKey(id);
+  };
+
   handleRemove = (id: number) => {
     const { removeKey } = this.props;
     removeKey(id);
@@ -41,7 +47,7 @@ export class ApiKeys extends Component<AllProps> {
           These API Keys grant developers the ability to access electrica services in the Cloud.
           Keep them confidential.
         </Header>
-        <ApiKeysTable data={apiKeys} onRemove={this.handleRemove} />
+        <ApiKeysTable data={apiKeys} onRemove={this.handleRemove} onRefresh={this.handleRefresh} />
         <ButtonActionModal
           title="Generate New API Key"
           submitText="Create"

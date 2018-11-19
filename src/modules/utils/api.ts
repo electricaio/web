@@ -49,7 +49,7 @@ export function createAccessKey(data: any) {
 }
 
 export function refreshAccessKey(accessKeyId: number) {
-  return axios.post(
+  return axios.put(
     `${process.env.API_ENDPOINT}/v1/access-keys/${accessKeyId}/refresh`,
     {},
     { headers: createAuthHeader() }

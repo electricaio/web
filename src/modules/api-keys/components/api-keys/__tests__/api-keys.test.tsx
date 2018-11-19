@@ -9,6 +9,7 @@ import { Header } from '../../../../ui-kit/header';
 describe('ApiKeys', () => {
   const onRemoveMock = jest.fn();
   const onCommitMock = jest.fn();
+  const onRefreshMock = jest.fn();
   const userId = 5;
 
   beforeEach(() => {
@@ -18,6 +19,7 @@ describe('ApiKeys', () => {
         userId={userId}
         removeKey={onRemoveMock}
         createKey={onCommitMock}
+        refreshKey={onRefreshMock}
       />
     );
   });

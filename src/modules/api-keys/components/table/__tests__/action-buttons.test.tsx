@@ -7,12 +7,12 @@ import { ButtonActionModal } from '../../modal-button-action/modal-button-action
 
 describe('Action Buttons', () => {
   const onRemoveMock = jest.fn();
-  const onEditMock = jest.fn();
+  const onRefreshMock = jest.fn();
   const name = 'test name';
 
   beforeEach(() => {
     this.component = shallow(
-      <ActionButtons name={name} onEdit={onEditMock} onRemove={onRemoveMock} />
+      <ActionButtons name={name} onRefresh={onRefreshMock} onRemove={onRemoveMock} />
     );
   });
 
@@ -41,7 +41,7 @@ describe('Action Buttons', () => {
     expect(buttonActionModal.prop('title')).toEqual('Edit API Key');
     expect(buttonActionModal.prop('submitText')).toEqual('Save');
     expect(buttonActionModal.prop('name')).toEqual(name);
-    expect(buttonActionModal.prop('onCommit')).toEqual(onEditMock);
+    expect(buttonActionModal.prop('onCommit')).toEqual(onRefreshMock);
   });
 
   it('edit icon is a child of action button modal', () => {
