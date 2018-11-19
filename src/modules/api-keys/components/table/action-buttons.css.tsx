@@ -30,4 +30,3 @@ export const WarningIcon = styled(Icon)`
   color: sandybrown !important;
   font-size: 18px !important;
 `;
-

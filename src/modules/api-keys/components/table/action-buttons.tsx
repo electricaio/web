@@ -17,6 +17,7 @@ export const ActionButtons: SFC<TActionButtonsNewProps> = ({ name, onRefresh, on
         onConfirm={onRefresh}
         okText="Yes"
         cancelText="No"
+        data-test="Popconfirm1"
       >
         <Icon type="sync" />
       </Popconfirm>
@@ -28,6 +29,7 @@ export const ActionButtons: SFC<TActionButtonsNewProps> = ({ name, onRefresh, on
       onConfirm={onRemove}
       okText="Yes"
       cancelText="No"
+      data-test="Popconfirm2"
     >
       <Icon type="delete" />
     </Popconfirm>

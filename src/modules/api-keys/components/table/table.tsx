@@ -52,7 +52,7 @@ export class ApiKeysTable extends Component<TTableProps> {
   };
 
   handleRefresh = (id: number) => () => {
-     this.props.onRefresh(id);
+    this.props.onRefresh(id);
   };
 
   getColumns() {
