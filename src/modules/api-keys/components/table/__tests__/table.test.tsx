@@ -1,7 +1,7 @@
 import { mount } from 'enzyme';
 import React from 'react';
 import { API_KEYS_TABLE_DATA } from '../../../../../fixtures/api-keys-table-data';
-import { ApiKeysTable, KeyVisibility } from '../table';
+import { ApiKeysTable, KeyVisibility, Date } from '../table';
 import { Table } from 'antd';
 import { StyledEye, KeyContainer } from '../table.css';
 import { ApiKeyModal } from '../../../../../redux/api-keys/types';
@@ -74,6 +74,17 @@ describe('ApiKeys | table Component', () => {
       expect(hiddenApiKey).not.toContain('*');
       expect(hiddenApiKey).toEqual(key);
     });
+  });
+
+  it('shows formatted date', () => {
+    const entity: ApiKeyModal = {
+      name: 'test',
+      id: 1,
+      key: '1234567',
+      createdAt: '2018-11-10T18:42:08.552',
+    };
+    this.formattedDate = mount(<Date date={entity.createdAt} />);
+    expect(this.formattedDate.find(Date).text()).toEqual('10.11.2018');
   });
 
   it('passes entity name to action buttons', () => {

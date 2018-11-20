@@ -9,7 +9,7 @@ type TDateProps = {
   date: string;
 };
 
-const Date: SFC<TDateProps> = ({ date }) => <div>{format(date, 'DD.MM.YYYY')}</div>;
+export const Date: SFC<TDateProps> = ({ date }) => <div>{format(date, 'DD.MM.YYYY')}</div>;
 
 type TKeyVisibilityProps = {
   entity: ApiKeyModal;
