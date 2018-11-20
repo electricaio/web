@@ -38,7 +38,7 @@ export const removeKeysAsyncActions = createAsyncAction(
   ApiKeysTypes.REMOVE_ACCESS_KEY,
   ApiKeysTypes.REMOVE_ACCESS_KEY_SUCCESS,
   ApiKeysTypes.REMOVE_ACCESS_KEY_ERROR
-)<void, void, string>();
+)<void, ApiKeyModal, string>();
 
 export const createKey = (data: ApiKeyModal) => (dispatch: Dispatch) => {
   dispatch(createApiKeysAsyncActions.request(data));
@@ -57,7 +57,8 @@ export const refreshKey = (accessKeyId: number) => (dispatch: Dispatch) => {
 export const removeKey = (accessKeyId: number) => (dispatch: Dispatch) => {
   dispatch(removeKeysAsyncActions.request());
   removeAccessKey(accessKeyId).then((result: AxiosResponse) => {
-    dispatch(removeKeysAsyncActions.success());
+    dispatch(removeKeysAsyncActions.success(result.data));
+    dispatch(this.fetchKeys(result.data.userId));
   });
 };
 
