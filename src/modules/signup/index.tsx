@@ -68,18 +68,18 @@ class SignupForm extends Component<TSignupProps, TSignupFormState> {
           </p>
         </Header>
         <StyledForm layout="vertical" onSubmit={this.handleSubmit}>
-          <StyledFormItem label="User name">
+          <StyledFormItem label="Email">
             {getFieldDecorator('email', {
               rules: [
                 {
                   required: true,
-                  message: 'Please input a Username!',
+                  message: 'Please input your email address!',
                 },
               ],
             })(
               <StyledInput
                 prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                placeholder="Username"
+                placeholder="Email"
               />
             )}
           </StyledFormItem>
