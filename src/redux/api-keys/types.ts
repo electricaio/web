@@ -3,7 +3,7 @@ export type ApiKeyModal = {
   userId?: number;
   name: string;
   key?: string;
-  created?: Date;
+  createdAt?: Date;
 };
 
 export const enum ApiKeysTypes {

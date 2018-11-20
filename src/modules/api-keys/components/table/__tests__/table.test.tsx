@@ -12,19 +12,19 @@ describe('ApiKeys | table Component', () => {
       id: 1,
       name: 'Development',
       key: 'Development',
-      created: new Date('02/03/2018'),
+      createdAt: new Date('02/03/2018'),
     },
     {
       id: 2,
       name: 'Staging',
       key: 'Staging',
-      created: new Date('01/02/2018'),
+      createdAt: new Date('01/02/2018'),
     },
     {
       id: 3,
       name: 'Production',
       key: 'Production',
-      created: new Date('01/04/2018'),
+      createdAt: new Date('01/04/2018'),
     },
   ];
 
@@ -57,7 +57,7 @@ describe('ApiKeys | table Component', () => {
         name: 'test',
         id: 1,
         key: '1234567',
-        created: new Date(),
+        createdAt: new Date(),
       };
       this.keyVisibility = mount(<KeyVisibility entity={entity} />);
     });
