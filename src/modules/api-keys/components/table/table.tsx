@@ -6,7 +6,7 @@ import { StyledEye, KeyContainer } from './table.css';
 import { ApiKeyModal } from '../../../../redux/api-keys/types';
 
 type TDateProps = {
-  date: Date;
+  date: string;
 };
 
 const Date: SFC<TDateProps> = ({ date }) => <div>{format(date, 'DD.MM.YYYY')}</div>;
