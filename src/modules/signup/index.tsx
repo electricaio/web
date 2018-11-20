@@ -72,6 +72,9 @@ class SignupForm extends Component<TSignupProps, TSignupFormState> {
             {getFieldDecorator('email', {
               rules: [
                 {
+                  type: 'email', message: 'The input is not valid E-mail!',
+                },
+                {
                   required: true,
                   message: 'Please input your email address!',
                 },
