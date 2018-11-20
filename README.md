@@ -4,7 +4,7 @@
 
 1. Run: `nvm install | nvm use`
 1. Run: `npm i` to install the dependencies
-1. Run: `cp .env.sample .env` and update the values if needed
+1. Run: `cp example.env .env` and update the values if needed
 1. Run: `npm run start` to run start the application.
 1. Start coding!
 
