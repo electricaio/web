@@ -9,7 +9,7 @@ type TDateProps = {
   date: Date;
 };
 
-const FormatDate: SFC<TDateProps> = ({ date }) => <div>{format(date, 'DD.MM.YYYY')}</div>;
+const Date: SFC<TDateProps> = ({ date }) => <div>{format(date, 'DD.MM.YYYY')}</div>;
 
 type TKeyVisibilityProps = {
   entity: ApiKeyModal;
@@ -71,7 +71,7 @@ export class ApiKeysTable extends Component<TTableProps> {
       {
         title: 'Date Created',
         key: 'created',
-        render: (entity: ApiKeyModal) => <FormatDate date={this.getDate(entity.createdAt)} />,
+        render: (entity: ApiKeyModal) => <Date date={entity.createdAt} />,
       },
       {
         title: 'Action',
@@ -85,10 +85,6 @@ export class ApiKeysTable extends Component<TTableProps> {
         ),
       },
     ];
-  }
-
-  getDate(dateObj: any) {
-    return new Date(dateObj.year, 0, dateObj.dayOfYear);
   }
 
   render() {
