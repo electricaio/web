@@ -93,11 +93,6 @@ class SignupForm extends Component<TSignupProps, TSignupFormState> {
               rules: [{ required: true, message: 'Please enter your last name' }],
             })(<StyledInput />)}
           </StyledFormItem>
-          <StyledFormItem label="Company">
-            {getFieldDecorator('company', {
-              rules: [{ message: 'Your company' }],
-            })(<StyledInput />)}
-          </StyledFormItem>
           <StyledFormItem label="Password">
             {getFieldDecorator('password', {
               rules: [
