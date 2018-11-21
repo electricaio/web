@@ -1,7 +1,7 @@
 import { loginUser, signupUser, isAuthenticated, logoutUser, fetchUser } from '../actions';
 
 import * as api from '../../../modules/utils/api';
-import { AuthActionTypes } from '../types';
+import { AuthActionTypes, SignupParamsType } from '../types';
 import { CALL_HISTORY_METHOD } from 'connected-react-router';
 
 jest.mock('../../../modules/utils/api');
@@ -66,7 +66,7 @@ describe('Auth', () => {
 
   describe('signupUser', () => {
     let dispatchMock: any = null;
-    const params: any = {
+    const params: SignupParamsType = {
       email: 'test@test.com',
       firstName: 'First',
       lastName: 'Last',
