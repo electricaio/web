@@ -1,7 +1,13 @@
 import { createAsyncAction } from 'typesafe-actions';
 
 import { AuthActionTypes, LoginParamsType, SignupParamsType, UserDto } from './types';
-import { login, createUser, AUTH_TOKENS_STORAGE_KEY, AUTH_TOKEN_TYPE, getUser } from '../../modules/utils/api';
+import {
+  login,
+  createUser,
+  AUTH_TOKENS_STORAGE_KEY,
+  AUTH_TOKEN_TYPE,
+  getUser,
+} from '../../modules/utils/api';
 
 import get from 'lodash/get';
 import { push } from 'connected-react-router';
