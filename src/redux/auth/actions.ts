@@ -37,7 +37,6 @@ export const signupUser = (signupParams: SignupParamsType) => (dispatch: Dispatc
   dispatch(signupUserAsyncActions.request(signupParams));
   return createUser(signupParams)
     .then((result: AxiosResponse<AUTH_TOKEN_TYPE>) => {
-      localStorage.setItem(AUTH_TOKENS_STORAGE_KEY, JSON.stringify(result.data));
       dispatch(signupUserAsyncActions.success(result.data));
       dispatch(push('/login'));
     })
