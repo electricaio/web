@@ -24,6 +24,15 @@ const reducer: Reducer<LoginState> = (state = initialState, action: AuthActions)
     case getType(authActions.getUserAsyncActions.success): {
       return { ...state, loading: false, user: action.payload };
     }
+    case getType(authActions.signupUserAsyncActions.request): {
+      return { ...state, loading: true, errors: '' };
+    }
+    case getType(authActions.signupUserAsyncActions.success): {
+      return { ...state, loading: false };
+    }
+    case getType(authActions.signupUserAsyncActions.failure): {
+      return { ...state, loading: false, errors: action.payload };
+    }
     default: {
       return state;
     }
