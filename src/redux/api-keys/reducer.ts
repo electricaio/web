@@ -22,6 +22,16 @@ const reducer: Reducer<ApiKeysState> = (
     case ApiKeysTypes.FETCH_ACCESS_KEYS_SUCCESS: {
       return { ...state, loading: true, data: action.payload };
     }
+    case ApiKeysTypes.REMOVE_ACCESS_KEY: {
+      return { ...state, loading: false };
+    }
+    case ApiKeysTypes.REMOVE_ACCESS_KEY_SUCCESS: {
+      return {
+        ...state,
+        loading: false,
+        data: state.data.filter(item => item.id !== action.payload.id),
+      };
+    }
     default: {
       return state;
     }

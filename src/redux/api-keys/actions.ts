@@ -58,7 +58,6 @@ export const removeKey = (accessKeyId: number) => (dispatch: Dispatch) => {
   dispatch(removeKeysAsyncActions.request());
   removeAccessKey(accessKeyId).then((result: AxiosResponse) => {
     dispatch(removeKeysAsyncActions.success(result.data));
-    dispatch(this.fetchKeys(result.data.userId));
   });
 };
 
