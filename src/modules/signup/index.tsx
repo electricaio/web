@@ -6,26 +6,41 @@ import { StyledFormItem, StyledForm } from './signup.css';
 import { StyledButton } from '../ui-kit/button';
 import { StyledInput } from '../ui-kit/input';
 import { WrappedFormUtils } from 'antd/lib/form/Form';
+import { signupUser } from '../../redux/auth/actions';
+// import { SignupParamsType } from '../../redux/auth/types';
+
+interface PropsFromDispatch {
+  signup: typeof signupUser;
+}
 
 export type TSignupProps = {
   form: WrappedFormUtils;
 };
 
 type TSignupFormState = {
-  confirmDirty: boolean;
+  confirmDirty?: boolean;
 };
 
-class SignupForm extends Component<TSignupProps, TSignupFormState> {
+type AllProps = TSignupProps & PropsFromDispatch & TSignupFormState;
+
+class SignupForm extends Component<AllProps> {
   readonly state: TSignupFormState = {
     confirmDirty: false,
   };
 
   handleSubmit = (e: FormEvent) => {
-    const { form } = this.props;
+    const { form, signup } = this.props;
     e.preventDefault();
-    form.validateFields((err: string, values: object) => {
+    form.validateFields((err: string, values: any) => {
       if (!err) {
         console.log('Received values of form: ', values);
+        signup({
+          email: values.email,
+          firstName: values.firstname,
+          lastName: values.lastname,
+          organizationId: 1,
+          password: values.password,
+        });
       }
     });
   };

@@ -9,7 +9,7 @@ describe('Signup', () => {
   beforeEach(() => {
     this.signupComponent = mount(
       <MemoryRouter>
-        <SignupFormComponent />
+        <SignupFormComponent signup={jest.fn()} />
       </MemoryRouter>
     );
   });
