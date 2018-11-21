@@ -20,7 +20,7 @@ describe('Signup', () => {
   });
 
   it('should contain sign ups', () => {
-    const components = ['email', 'firstname', 'lastname', 'company', 'password', 'confirm'];
+    const components = ['email', 'firstname', 'lastname', 'password', 'confirm'];
     components.forEach(name => {
       const comp = this.signupComponent.find(`input#${name}`);
       expect(comp).toHaveLength(1);
@@ -36,7 +36,7 @@ describe('Signup', () => {
     const form = this.signupComponent.find(Form);
     form.simulate('submit');
     const validations = this.signupComponent.find('.ant-form-explain');
-    expect(validations).toHaveLength(0);
+    expect(validations).toHaveLength(1);
   });
 
   it('should fail validation if the passwords do not match', () => {
