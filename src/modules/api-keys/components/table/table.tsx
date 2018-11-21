@@ -6,10 +6,10 @@ import { StyledEye, KeyContainer } from './table.css';
 import { ApiKeyModal } from '../../../../redux/api-keys/types';
 
 type TDateProps = {
-  date: Date;
+  date: string;
 };
 
-const Date: SFC<TDateProps> = ({ date }) => <div>{format(date, 'DD.MM.YYYY')}</div>;
+export const Date: SFC<TDateProps> = ({ date }) => <div>{format(date, 'DD.MM.YYYY')}</div>;
 
 type TKeyVisibilityProps = {
   entity: ApiKeyModal;
@@ -71,7 +71,7 @@ export class ApiKeysTable extends Component<TTableProps> {
       {
         title: 'Date Created',
         key: 'created',
-        render: (entity: ApiKeyModal) => <Date date={entity.created} />,
+        render: (entity: ApiKeyModal) => <Date date={entity.createdAt} />,
       },
       {
         title: 'Action',
