@@ -7,7 +7,6 @@ import { StyledButton } from '../ui-kit/button';
 import { StyledInput } from '../ui-kit/input';
 import { WrappedFormUtils } from 'antd/lib/form/Form';
 import { signupUser } from '../../redux/auth/actions';
-// import { SignupParamsType } from '../../redux/auth/types';
 
 interface PropsFromDispatch {
   signup: typeof signupUser;
