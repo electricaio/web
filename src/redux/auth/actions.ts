@@ -1,7 +1,7 @@
 import { createAsyncAction } from 'typesafe-actions';
 
 import { AuthActionTypes, LoginParamsType, SignupParamsType, UserDto } from './types';
-import { login, signup, AUTH_TOKENS_STORAGE_KEY, AUTH_TOKEN_TYPE, getUser } from '../../modules/utils/api';
+import { login, createUser, AUTH_TOKENS_STORAGE_KEY, AUTH_TOKEN_TYPE, getUser } from '../../modules/utils/api';
 
 import get from 'lodash/get';
 import { push } from 'connected-react-router';
@@ -29,7 +29,7 @@ export const getUserAsyncActions = createAsyncAction(
 
 export const signupUser = (signupParams: SignupParamsType) => (dispatch: Dispatch) => {
   dispatch(signupUserAsyncActions.request(signupParams));
-  return signup(signupParams)
+  return createUser(signupParams)
     .then((result: AxiosResponse<AUTH_TOKEN_TYPE>) => {
       localStorage.setItem(AUTH_TOKENS_STORAGE_KEY, JSON.stringify(result.data));
       dispatch(signupUserAsyncActions.success(result.data));

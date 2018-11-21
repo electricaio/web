@@ -27,7 +27,7 @@ export function login(username: string, password: string): AxiosPromise {
   return axios.post(`${process.env.API_ENDPOINT}/oauth/token`, bodyFormData, { headers });
 }
 
-export function signup(bodyFormData: SignupParamsType): AxiosPromise {
+export function createUser(bodyFormData: SignupParamsType): AxiosPromise {
   const headers = {
     Authorization: `Basic ${process.env.AUTH_TOKEN}`,
   };
