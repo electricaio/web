@@ -43,4 +43,3 @@ export interface SignupState {
   readonly loading: boolean;
   readonly errors?: string;
 }
-
