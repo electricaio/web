@@ -10,13 +10,21 @@ describe('CardCollection', () => {
 
   function createConnectors(count: number): ConnectorModal[] {
     return times(count, () => ({
-      id: '1',
-      name: 'company name',
-      image: 'image.png',
-      ern: 'ern://company:customer:2.0',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum commodo',
-      keys: ['key1', 'key2'],
-      type: 'Talent',
+      typeId: 1,
+      authorizationType: "None",
+      name: "SalesForce CRM API 2.0",
+      resource: "customer",
+      version: "2.0",
+      namespace: "salesforce",
+      properties: {
+        url: "https://www.salesforce.com",
+        sdk_url: "url_to_sdk",
+        image_url: "string",
+        description: "This connector allows you to connect to SalesForce CRM system."
+      },
+      id: 4,
+      ern: "ern://salesforce:customer:2_0",
+      revisionVersion: 0,
     }));
   }
 

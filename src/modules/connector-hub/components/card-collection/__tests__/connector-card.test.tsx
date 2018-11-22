@@ -1,20 +1,27 @@
 import { mount } from 'enzyme';
 import React from 'react';
 import { ConnectorCard } from '../connector-card';
-import { StyledCard, StyledMeta, ButtonContainer } from '../connector-card.css';
-import { StyledButton } from '../../../../ui-kit/button';
+import { StyledCard, StyledMeta } from '../connector-card.css';
 import { Row, Col } from 'antd';
 import { ConnectorModal } from '../../../../../redux/connector-hub/types';
 
 describe('ConnectorCard', () => {
   const connector = (overrides: object = {}): ConnectorModal => ({
-    id: '1',
-    name: 'company name',
-    image: 'image.png',
-    ern: 'ern://company:customer:2.0',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum commodo',
-    keys: ['key1', 'key2'],
-    type: 'Talent',
+    typeId: 1,
+    authorizationType: "None",
+    name: "SalesForce CRM API 2.0",
+    resource: "customer",
+    version: "2.0",
+    namespace: "salesforce",
+    properties: {
+      url: "https://www.salesforce.com",
+      sdk_url: "url_to_sdk",
+      image_url: "string",
+      description: "This connector allows you to connect to SalesForce CRM system."
+    },
+    id: 4,
+    ern: "ern://salesforce:customer:2_0",
+    revisionVersion: 0,
     ...overrides,
   });
 
@@ -32,24 +39,7 @@ describe('ConnectorCard', () => {
         .find(ConnectorCard)
         .find(StyledMeta)
         .prop('description')
-    ).toEqual(connector().description);
-  });
-
-  it('should render a button in the card displaying number of api keys', () => {
-    const button = this.connectorCard.find(StyledButton);
-    expect(button).toHaveLength(1);
-    expect(button.prop('icon')).toEqual('key');
-    expect(button.prop('type')).toEqual('primary');
-    expect(button.text()).toEqual(`View ${connector().keys.length} keys`);
-  });
-
-  it('should render text when no api keys are available', () => {
-    const noApiKeysConnectorCard = mount(<ConnectorCard connector={connector({ keys: [] })} />);
-    const button = noApiKeysConnectorCard.find(StyledButton);
-    expect(button).toHaveLength(0);
-    expect(noApiKeysConnectorCard.find(ButtonContainer).text()).toEqual(
-      'There are no keys for this connector'
-    );
+    ).toEqual(connector().properties.description);
   });
 
   it('renders a two column grid with ern details', () => {
