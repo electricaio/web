@@ -1,6 +1,5 @@
 import React from 'react';
 import { Col, Row, Tag } from 'antd';
-import isEmpty from 'lodash/isEmpty';
 
 import {
   CompanyImage,
@@ -8,7 +7,6 @@ import {
   ErnCol,
   ButtonContainer,
   ErnValue,
-  NoKeys,
   StyledCard,
   ImageContainer,
 } from './connector-card.css';
@@ -39,10 +37,10 @@ export class ConnectorCard extends React.Component<ConnectorCardProps> {
       <StyledCard
         hoverable
         title={connector.name}
-        cover={<CompanyImageComponent image={connector.image} />}
-        extra={<Tag color="green">{connector.type}</Tag>}
+        cover={<CompanyImageComponent image={connector.properties.image_url} />}
+        extra={<Tag color="green">{connector.typeId}</Tag>}
       >
-        <StyledMeta description={connector.description} />
+        <StyledMeta description={connector.properties.description} />
         <Row>
           <ErnCol span={4}>ERN</ErnCol>
           <Col span={8}>
@@ -50,13 +48,9 @@ export class ConnectorCard extends React.Component<ConnectorCardProps> {
           </Col>
         </Row>
         <ButtonContainer>
-          {isEmpty(connector.keys) ? (
-            <NoKeys>There are no keys for this connector</NoKeys>
-          ) : (
             <StyledButton icon="key" type="primary">
-              View {connector.keys.length} keys
+              Configure Collections
             </StyledButton>
-          )}
         </ButtonContainer>
       </StyledCard>
     );
