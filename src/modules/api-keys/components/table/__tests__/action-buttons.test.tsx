@@ -1,6 +1,6 @@
 import { shallow } from 'enzyme';
 import React from 'react';
-import { Tooltip, Icon } from 'antd';
+import { Icon, Popconfirm } from 'antd';
 
 import { ActionButtons } from '../action-buttons';
 
@@ -16,8 +16,8 @@ describe('Action Buttons', () => {
   });
 
   it('Renders a popconfirm component with a refresh icon', () => {
-    const tooltip = this.component.find(Tooltip);
-    const popconfirm = tooltip.find('[data-test="Popconfirm1"]');
+    const tooltip = this.component.find('[data-test="tooltip1"]');
+    const popconfirm = tooltip.find(Popconfirm);
     expect(popconfirm.prop('placement')).toEqual('top');
     expect(popconfirm.prop('okText')).toEqual('Yes');
     expect(popconfirm.prop('cancelText')).toEqual('No');
@@ -25,7 +25,8 @@ describe('Action Buttons', () => {
   });
 
   it('Renders a popconfirm component with a delete icon', () => {
-    const popconfirm = this.component.find('[data-test="Popconfirm2"]');
+    const tooltip = this.component.find('[data-test="tooltip2"]');
+    const popconfirm = tooltip.find(Popconfirm);
     expect(popconfirm.prop('placement')).toEqual('top');
     expect(popconfirm.prop('okText')).toEqual('Yes');
     expect(popconfirm.prop('cancelText')).toEqual('No');
@@ -33,12 +34,12 @@ describe('Action Buttons', () => {
   });
 
   it('popconfirm calls onRemove prop when accepted', () => {
-    const popconfirm = this.component.find('[data-test="Popconfirm2"]');
+    const popconfirm = this.component.find('[data-test="tooltip2"]').find(Popconfirm);
     expect(popconfirm.prop('onConfirm')).toEqual(onRemoveMock);
   });
 
   it('popconfirm calls onRefresh prop when accepted', () => {
-    const popconfirm = this.component.find('[data-test="Popconfirm1"]');
+    const popconfirm = this.component.find('[data-test="tooltip1"]').find(Popconfirm);
     expect(popconfirm.prop('onConfirm')).toEqual(onRefreshMock);
   });
 });
