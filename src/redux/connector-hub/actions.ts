@@ -8,11 +8,11 @@ export const connectorHubAsyncActions = createAsyncAction(
   ConnectorHubTypes.FETCH_CONNECTORS,
   ConnectorHubTypes.FETCH_CONNECTORS_SUCCESS,
   ConnectorHubTypes.FETCH_CONNECTORS_ERROR
-)<void, ConnectorModal, string>();
+)<void, ConnectorModal[], string>();
 
 export const fetchConnectors = () => (dispatch: Dispatch) => {
   dispatch(connectorHubAsyncActions.request());
-  getConnectors().then((result: AxiosResponse<ConnectorModal>) => {
+  getConnectors().then((result: AxiosResponse<ConnectorModal[]>) => {
     dispatch(connectorHubAsyncActions.success(result.data));
   });
 };
