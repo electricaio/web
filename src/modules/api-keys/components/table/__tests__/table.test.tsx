@@ -1,10 +1,9 @@
 import { mount } from 'enzyme';
 import React from 'react';
 import { API_KEYS_TABLE_DATA } from '../../../../../fixtures/api-keys-table-data';
-import { ApiKeysTable, KeyVisibility, Date } from '../table';
+import { ApiKeysTable, Date } from '../table';
 import { Table } from 'antd';
-import { StyledEye, KeyContainer } from '../table.css';
-import { ApiKeyModal } from '../../../../../redux/api-keys/types';
+import { ApiKeyModal, ApiHiddenKeyModal } from '../../../../../redux/api-keys/types';
 
 describe('ApiKeys | table Component', () => {
   const data: ApiKeyModal[] = [
@@ -28,11 +27,29 @@ describe('ApiKeys | table Component', () => {
     },
   ];
 
+  const hiddenKey: ApiHiddenKeyModal = {
+    createdAt: '2018-11-20T18:42:08.552',
+    id: 1,
+    jti: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
+    key: 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9',
+    name: 'Development',
+    revisionVersion: 0,
+    updatedAt: '2018-11-22T15:14:38.718Z',
+    userId: 5,
+  };
+
   const onRemoveMock = jest.fn();
   const onRefreshMock = jest.fn();
+  const getKeyMock = jest.fn();
   beforeEach(() => {
     this.component = mount(
-      <ApiKeysTable data={API_KEYS_TABLE_DATA} onRemove={onRemoveMock} onRefresh={onRefreshMock} />
+      <ApiKeysTable
+        data={API_KEYS_TABLE_DATA}
+        hiddenKey={hiddenKey}
+        onRemove={onRemoveMock}
+        onRefresh={onRefreshMock}
+        getKey={getKeyMock}
+      />
     );
   });
 
@@ -50,32 +67,6 @@ describe('ApiKeys | table Component', () => {
     expect(this.component.find(Table).prop('dataSource')[0].key).toEqual(data[0].name);
   });
 
-  describe('KeyVisibility', () => {
-    const key = '1234567';
-    beforeEach(() => {
-      const entity: ApiKeyModal = {
-        name: 'test',
-        id: 1,
-        key: '1234567',
-        createdAt: '2018-11-10T18:42:08.552',
-      };
-      this.keyVisibility = mount(<KeyVisibility entity={entity} />);
-    });
-
-    it('hides the api key with asterisks when loaded', () => {
-      const hiddenApiKey = this.keyVisibility.find(KeyContainer).text();
-      expect(hiddenApiKey).toContain('*');
-      expect(hiddenApiKey).not.toEqual(key);
-    });
-
-    it('shows api key when eye is clicked', () => {
-      this.keyVisibility.find(StyledEye).simulate('click');
-      const hiddenApiKey = this.keyVisibility.find(KeyContainer).text();
-      expect(hiddenApiKey).not.toContain('*');
-      expect(hiddenApiKey).toEqual(key);
-    });
-  });
-
   it('shows formatted date', () => {
     const entity: ApiKeyModal = {
       name: 'test',
@@ -83,8 +74,8 @@ describe('ApiKeys | table Component', () => {
       key: '1234567',
       createdAt: '2018-11-10T18:42:08.552',
     };
-    this.formattedDate = mount(<Date date={entity.createdAt} />);
-    expect(this.formattedDate.find(Date).text()).toEqual('10.11.2018');
+    const formattedDate = mount(<Date date={entity.createdAt} />);
+    expect(formattedDate.find(Date).text()).toEqual('10.11.2018');
   });
 
   it('passes entity name to action buttons', () => {

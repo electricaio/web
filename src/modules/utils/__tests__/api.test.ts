@@ -6,6 +6,7 @@ import {
   refreshAccessKey,
   removeAccessKey,
   getAccessKeys,
+  getAccessKey,
   getUser,
 } from '../api';
 import axios from 'axios';
@@ -82,6 +83,37 @@ describe('api', () => {
     });
   });
 
+  describe('getAccessKey', () => {
+    const accessKeyId = 1;
+
+    beforeEach(() => {
+      this.getSpy = jest.spyOn(axios, 'get');
+    });
+
+    afterEach(() => {
+      this.getSpy.mockReset();
+    });
+
+    it('uses get method', () => {
+      getAccessKey(accessKeyId);
+      expect(this.getSpy).toBeCalled();
+    });
+
+    it('uses access-keys route with access key id', () => {
+      getAccessKey(accessKeyId);
+      expect(this.getSpy.mock.calls[0][0]).toEqual(
+        `${process.env.API_ENDPOINT}/v1/access-keys/${accessKeyId}`
+      );
+    });
+
+    it('passes auth token in header', () => {
+      getAccessKey(accessKeyId);
+      expect(this.getSpy.mock.calls[0][1].headers['Authorization']).toEqual(
+        `Bearer ${process.env.AUTH_TOKEN}`
+      );
+    });
+  });
+
   describe('removeAccessKey', () => {
     const accessKeyId = 1;
 
@@ -124,7 +156,7 @@ describe('api', () => {
       this.putSpy.mockReset();
     });
 
-    it('uses post method', () => {
+    it('uses put method', () => {
       refreshAccessKey(accessKeyId);
       expect(this.putSpy).toBeCalled();
     });

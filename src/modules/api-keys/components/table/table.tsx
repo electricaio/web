@@ -1,9 +1,11 @@
 import React, { Component, SFC } from 'react';
-import { Table } from 'antd';
+import { Input, Modal, Table } from 'antd';
 import { ActionButtons } from './action-buttons';
 import { format } from 'date-fns';
-import { StyledEye, KeyContainer } from './table.css';
-import { ApiKeyModal } from '../../../../redux/api-keys/types';
+import { CopyKeyButton, StyledEye, KeyContainer, MaskStyle } from './table.css';
+import { ApiKeyModal, ApiHiddenKeyModal } from '../../../../redux/api-keys/types';
+
+const { TextArea } = Input;
 
 type TDateProps = {
   date: string;
@@ -11,48 +13,50 @@ type TDateProps = {
 
 export const Date: SFC<TDateProps> = ({ date }) => <div>{format(date, 'DD.MM.YYYY')}</div>;
 
-type TKeyVisibilityProps = {
-  entity: ApiKeyModal;
+export type TTableProps = {
+  data: ApiKeyModal[];
+  hiddenKey: ApiHiddenKeyModal;
+  onRemove: (id: number) => void;
+  onRefresh: (id: number) => void;
+  getKey: (id: number) => void;
 };
+
 type TKeyVisibilityState = {
   showKey: boolean;
 };
-export class KeyVisibility extends Component<TKeyVisibilityProps, TKeyVisibilityState> {
+
+export class ApiKeysTable extends Component<TTableProps, TKeyVisibilityState> {
   readonly state: TKeyVisibilityState = {
     showKey: false,
   };
 
-  toggleKeyVisibility = () => {
-    this.setState({
-      showKey: !this.state.showKey,
-    });
-  };
-
-  render() {
-    const { entity } = this.props;
-    const regExp = new RegExp('.', 'g');
-    return (
-      <KeyContainer>
-        {this.state.showKey ? entity.key : entity.key.replace(regExp, '*')}
-        <StyledEye onClick={this.toggleKeyVisibility} type="eye" />
-      </KeyContainer>
-    );
-  }
-}
-
-export type TTableProps = {
-  data: ApiKeyModal[];
-  onRemove: (id: number) => void;
-  onRefresh: (id: number) => void;
-};
-
-export class ApiKeysTable extends Component<TTableProps> {
   handleRemove = (id: number) => () => {
     this.props.onRemove(id);
   };
 
   handleRefresh = (id: number) => () => {
     this.props.onRefresh(id);
+  };
+
+  handleCopyKey = () => {
+    const textarea = document.getElementById('key-textarea') as HTMLInputElement;
+    textarea.select();
+    document.execCommand('copy');
+  };
+
+  handleShowKey = (id: number) => {
+    this.setState(
+      {
+        showKey: true,
+      },
+      () => {
+        this.props.getKey(id);
+      }
+    );
+  };
+
+  handleCloseModal = () => {
+    this.setState({ showKey: false });
   };
 
   getColumns() {
@@ -66,7 +70,17 @@ export class ApiKeysTable extends Component<TTableProps> {
         title: 'Key',
         key: 'key',
         width: '35%',
-        render: (entity: ApiKeyModal) => <KeyVisibility entity={entity} />,
+        render: (entity: ApiKeyModal) => (
+          <KeyContainer>
+            {'********'}
+            <StyledEye
+              onClick={() => {
+                this.handleShowKey(entity.id);
+              }}
+              type="eye"
+            />
+          </KeyContainer>
+        ),
       },
       {
         title: 'Date Created',
@@ -88,9 +102,33 @@ export class ApiKeysTable extends Component<TTableProps> {
   }
 
   render() {
-    const { data } = this.props;
+    const { data, hiddenKey } = this.props;
     const columns = this.getColumns();
     const dataSource = data.map(obj => ({ ...obj, key: obj.name }));
-    return <Table pagination={false} columns={columns} dataSource={dataSource} />;
+    return (
+      <div>
+        <Table pagination={false} columns={columns} dataSource={dataSource} />
+        {this.state.showKey && (
+          <Modal
+            visible={this.state.showKey}
+            title={''}
+            closable={false}
+            onCancel={this.handleCloseModal}
+            maskStyle={MaskStyle}
+            centered
+            width={700}
+            footer={
+              document.queryCommandSupported('copy') && (
+                <CopyKeyButton size="large" type="default" onClick={this.handleCopyKey}>
+                  {'Copy Key'}
+                </CopyKeyButton>
+              )
+            }
+          >
+            <TextArea autosize value={hiddenKey && hiddenKey.key} id="key-textarea" />
+          </Modal>
+        )}
+      </div>
+    );
   }
 }
