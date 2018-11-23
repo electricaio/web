@@ -6,26 +6,36 @@ import { StyledFormItem, StyledForm } from './signup.css';
 import { StyledButton } from '../ui-kit/button';
 import { StyledInput } from '../ui-kit/input';
 import { WrappedFormUtils } from 'antd/lib/form/Form';
+import { signupUser } from '../../redux/auth/actions';
+import { SignupParamsType } from '../../redux/auth/types';
+
+interface PropsFromDispatch {
+  signup: typeof signupUser;
+}
 
 export type TSignupProps = {
   form: WrappedFormUtils;
 };
 
 type TSignupFormState = {
-  confirmDirty: boolean;
+  confirmDirty?: boolean;
 };
 
-class SignupForm extends Component<TSignupProps, TSignupFormState> {
+type AllProps = TSignupProps & PropsFromDispatch & TSignupFormState;
+
+class SignupForm extends Component<AllProps> {
   readonly state: TSignupFormState = {
     confirmDirty: false,
   };
 
   handleSubmit = (e: FormEvent) => {
-    const { form } = this.props;
+    const { form, signup } = this.props;
     e.preventDefault();
-    form.validateFields((err: string, values: object) => {
+    form.validateFields((err: string, values: SignupParamsType) => {
       if (!err) {
         console.log('Received values of form: ', values);
+        values.organizationId = 1;
+        signup(values);
       }
     });
   };
@@ -68,34 +78,33 @@ class SignupForm extends Component<TSignupProps, TSignupFormState> {
           </p>
         </Header>
         <StyledForm layout="vertical" onSubmit={this.handleSubmit}>
-          <StyledFormItem label="User name">
+          <StyledFormItem label="Email">
             {getFieldDecorator('email', {
               rules: [
                 {
+                  type: 'email',
+                  message: 'The input is not valid E-mail!',
+                },
+                {
                   required: true,
-                  message: 'Please input a Username!',
+                  message: 'Please input your email address!',
                 },
               ],
             })(
               <StyledInput
                 prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                placeholder="Username"
+                placeholder="Email"
               />
             )}
           </StyledFormItem>
           <StyledFormItem label="First Name">
-            {getFieldDecorator('firstname', {
+            {getFieldDecorator('firstName', {
               rules: [{ required: true, message: 'Please enter your first name' }],
             })(<StyledInput />)}
           </StyledFormItem>
           <StyledFormItem label="Last Name">
-            {getFieldDecorator('lastname', {
+            {getFieldDecorator('lastName', {
               rules: [{ required: true, message: 'Please enter your last name' }],
-            })(<StyledInput />)}
-          </StyledFormItem>
-          <StyledFormItem label="Company">
-            {getFieldDecorator('company', {
-              rules: [{ message: 'Your company' }],
             })(<StyledInput />)}
           </StyledFormItem>
           <StyledFormItem label="Password">
