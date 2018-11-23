@@ -7,6 +7,7 @@ import { StyledButton } from '../ui-kit/button';
 import { StyledInput } from '../ui-kit/input';
 import { WrappedFormUtils } from 'antd/lib/form/Form';
 import { signupUser } from '../../redux/auth/actions';
+import { SignupParamsType } from '../../redux/auth/types';
 
 interface PropsFromDispatch {
   signup: typeof signupUser;
@@ -30,16 +31,11 @@ class SignupForm extends Component<AllProps> {
   handleSubmit = (e: FormEvent) => {
     const { form, signup } = this.props;
     e.preventDefault();
-    form.validateFields((err: string, values: any) => {
+    form.validateFields((err: string, values: SignupParamsType) => {
       if (!err) {
         console.log('Received values of form: ', values);
-        signup({
-          email: values.email,
-          firstName: values.firstname,
-          lastName: values.lastname,
-          organizationId: 1,
-          password: values.password,
-        });
+        values.organizationId = 1;
+        signup(values);
       }
     });
   };
@@ -102,12 +98,12 @@ class SignupForm extends Component<AllProps> {
             )}
           </StyledFormItem>
           <StyledFormItem label="First Name">
-            {getFieldDecorator('firstname', {
+            {getFieldDecorator('firstName', {
               rules: [{ required: true, message: 'Please enter your first name' }],
             })(<StyledInput />)}
           </StyledFormItem>
           <StyledFormItem label="Last Name">
-            {getFieldDecorator('lastname', {
+            {getFieldDecorator('lastName', {
               rules: [{ required: true, message: 'Please enter your last name' }],
             })(<StyledInput />)}
           </StyledFormItem>
