@@ -15,8 +15,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   signup: bindActionCreators(signupUser, dispatch),
 });
 
-const showErrorMessage = () => {
-  message.error('Your signup failed');
+const showErrorMessage = (errors: string) => {
+  message.error(`Your signup failed ${errors}`);
 };
 
 export interface PropsFromState {
@@ -33,9 +33,9 @@ type AllProps = PropsFromState & PropsFromDispatch;
 export class SignupComponent extends Component<AllProps> {
   render() {
     const { errors, loading } = this.props;
-
+    
     if (errors) {
-      showErrorMessage();
+      showErrorMessage(errors);
     }
     return (
       <Spin spinning={loading} delay={0}>
