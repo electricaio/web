@@ -19,7 +19,7 @@ const reducer: Reducer<ConnectorHubState> = (
       return { ...state, loading: true };
     }
     case getType(actions.connectorHubAsyncActions.success): {
-      return { ...state, loading: false };
+      return { ...state, loading: false, data: action.payload };
     }
 
     default: {

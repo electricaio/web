@@ -197,13 +197,8 @@ describe('api', () => {
 
     it('passes oauth url with endpoint env var', () => {
       getConnectors();
-      expect(this.getSpy.mock.calls[0][0]).toEqual(`${process.env.API_ENDPOINT}/v1/connectors`);
-    });
-
-    it('passes auth token in header', () => {
-      getConnectors();
-      expect(this.getSpy.mock.calls[0][1].headers['Authorization']).toEqual(
-        `Bearer ${process.env.AUTH_TOKEN}`
+      expect(this.getSpy.mock.calls[0][0]).toEqual(
+        `${process.env.API_ENDPOINT}/public/v1/connectors`
       );
     });
   });
