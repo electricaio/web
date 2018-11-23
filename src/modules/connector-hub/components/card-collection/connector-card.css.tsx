@@ -17,7 +17,7 @@ export const ImageContainer = styled.div`
 
 export const CompanyImage = styled.img`
   height: 200px;
-  width: auto !important;
+  width: 100%;
   padding: 20px;
 `;
 

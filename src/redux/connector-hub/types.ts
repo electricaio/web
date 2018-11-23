@@ -1,11 +1,19 @@
 export type ConnectorModal = {
-  id: string;
+  typeId: number;
+  authorizationType: string;
   name: string;
+  resource: string;
+  version: string;
+  namespace: string;
+  properties: {
+    url: string;
+    sdk_url: string;
+    image_url: string;
+    description: string;
+  };
+  id: number;
   ern: string;
-  description: string;
-  image: string;
-  type: string;
-  keys: string[];
+  revisionVersion: number;
 };
 
 export const enum ConnectorHubTypes {
