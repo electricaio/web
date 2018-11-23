@@ -18,9 +18,9 @@ interface CompanyImageComponentProps {
   image: string;
 }
 
-const companyImageMockUrl = 'salesforce_logo_detail.png';
+const companyImageMockUrl: string = 'salesforce_logo_detail.png';
 
-const CompanyImageComponent: React.SFC<CompanyImageComponentProps> = ({ image }) => {
+const CompanyImageComponent: React.SFC<CompanyImageComponentProps> = ({ image }: CompanyImageComponentProps) => {
   return (
     <ImageContainer>
       <CompanyImage src={`../../../../assets/${image}`} />
@@ -50,9 +50,9 @@ export class ConnectorCard extends React.Component<ConnectorCardProps> {
           </Col>
         </Row>
         <ButtonContainer>
-            <StyledButton icon="key" type="primary">
-              Configure Collections
-            </StyledButton>
+          <StyledButton icon="key" type="primary">
+            Configure Collections
+          </StyledButton>
         </ButtonContainer>
       </StyledCard>
     );

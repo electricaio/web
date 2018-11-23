@@ -8,19 +8,19 @@ import { ConnectorModal } from '../../../../../redux/connector-hub/types';
 describe('ConnectorCard', () => {
   const connector = (overrides: object = {}): ConnectorModal => ({
     typeId: 1,
-    authorizationType: "None",
-    name: "SalesForce CRM API 2.0",
-    resource: "customer",
-    version: "2.0",
-    namespace: "salesforce",
+    authorizationType: 'None',
+    name: 'SalesForce CRM API 2.0',
+    resource: 'customer',
+    version: '2.0',
+    namespace: 'salesforce',
     properties: {
-      url: "https://www.salesforce.com",
-      sdk_url: "url_to_sdk",
-      image_url: "string",
-      description: "This connector allows you to connect to SalesForce CRM system."
+      url: 'https://www.salesforce.com',
+      sdk_url: 'url_to_sdk',
+      image_url: 'string',
+      description: 'This connector allows you to connect to SalesForce CRM system.',
     },
     id: 4,
-    ern: "ern://salesforce:customer:2_0",
+    ern: 'ern://salesforce:customer:2_0',
     revisionVersion: 0,
     ...overrides,
   });

@@ -10,8 +10,8 @@ export type ConnectorModal = {
     sdk_url: string;
     image_url: string;
     description: string;
-  }
-  id: number; 
+  };
+  id: number;
   ern: string;
   revisionVersion: number;
 };
