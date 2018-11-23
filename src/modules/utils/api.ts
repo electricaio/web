@@ -27,9 +27,7 @@ export function login(username: string, password: string): AxiosPromise {
 }
 
 export function getConnectors() {
-  return axios.get(`${process.env.API_ENDPOINT}/public/v1/connectors`, {
-    headers: createAuthHeader(),
-  });
+  return axios.get(`${process.env.API_ENDPOINT}/public/v1/connectors`);
 }
 
 export function getAccessKeys(userId: number) {
