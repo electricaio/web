@@ -18,6 +18,8 @@ interface CompanyImageComponentProps {
   image: string;
 }
 
+const companyImageMockUrl = 'salesforce_logo_detail.png';
+
 const CompanyImageComponent: React.SFC<CompanyImageComponentProps> = ({ image }) => {
   return (
     <ImageContainer>
@@ -37,7 +39,7 @@ export class ConnectorCard extends React.Component<ConnectorCardProps> {
       <StyledCard
         hoverable
         title={connector.name}
-        cover={<CompanyImageComponent image={connector.properties.image_url} />}
+        cover={<CompanyImageComponent image={companyImageMockUrl} />}
         extra={<Tag color="green">{connector.typeId}</Tag>}
       >
         <StyledMeta description={connector.properties.description} />
