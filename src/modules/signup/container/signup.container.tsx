@@ -33,7 +33,7 @@ type AllProps = PropsFromState & PropsFromDispatch;
 export class SignupComponent extends Component<AllProps> {
   render() {
     const { errors, loading } = this.props;
-    
+
     if (errors) {
       showErrorMessage(errors);
     }

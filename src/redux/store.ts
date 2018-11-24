@@ -6,12 +6,15 @@ import { ApiKeysState } from './api-keys/types';
 import { ConnectorHubState } from './connector-hub/types';
 import { connectorHubReducer } from './connector-hub/reducer';
 import { apiKeysReducer } from './api-keys/reducer';
+import { ConnectionsState } from './connections/types';
+import { connectionsReducer } from './connections/reducer';
 
 // The top-level state object
 export interface ApplicationState {
   auth: LoginState;
   apiKeys: ApiKeysState;
   connectors: ConnectorHubState;
+  connections: ConnectionsState;
 }
 
 // Additional props for connected React components. This prop is passed by default with `connect()`
@@ -26,4 +29,5 @@ export const rootReducer = combineReducers<ApplicationState>({
   auth: authReducer,
   connectors: connectorHubReducer,
   apiKeys: apiKeysReducer,
+  connections: connectionsReducer,
 });

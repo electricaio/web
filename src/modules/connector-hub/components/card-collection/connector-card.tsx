@@ -20,7 +20,9 @@ interface CompanyImageComponentProps {
 
 const companyImageMockUrl: string = 'salesforce_logo_detail.png';
 
-const CompanyImageComponent: React.SFC<CompanyImageComponentProps> = ({ image }: CompanyImageComponentProps) => {
+const CompanyImageComponent: React.SFC<CompanyImageComponentProps> = ({
+  image,
+}: CompanyImageComponentProps) => {
   return (
     <ImageContainer>
       <CompanyImage src={`../../../../assets/${image}`} />

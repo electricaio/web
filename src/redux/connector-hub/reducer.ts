@@ -2,11 +2,12 @@ import { Reducer } from 'redux';
 import { ConnectorHubState } from './types';
 import { ActionType, getType } from 'typesafe-actions';
 import * as actions from './actions';
+import { CONNECTOR_HUB_DATA } from '../../fixtures/connector-hub-data';
 
 export type ConnectorHubActionType = ActionType<typeof actions>;
 
 const initialState: ConnectorHubState = {
-  data: [],
+  data: CONNECTOR_HUB_DATA,
   loading: false,
 };
 
