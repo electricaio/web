@@ -1,5 +1,5 @@
 import React from 'react';
-import { Col, Row, Tag } from 'antd';
+import { Col, Row, Tag, Button } from 'antd';
 
 import {
   CompanyImage,
@@ -11,7 +11,6 @@ import {
   ImageContainer,
 } from './connector-card.css';
 
-import { StyledButton } from '../../../ui-kit/button';
 import { ConnectorModal } from '../../../../redux/connector-hub/types';
 
 interface CompanyImageComponentProps {
@@ -52,9 +51,7 @@ export class ConnectorCard extends React.Component<ConnectorCardProps> {
           </Col>
         </Row>
         <ButtonContainer>
-          <StyledButton icon="key" type="primary">
-            Configure Collections
-          </StyledButton>
+          <Button type="primary" size="large">Configure</Button>
         </ButtonContainer>
       </StyledCard>
     );
