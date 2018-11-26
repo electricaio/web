@@ -1,77 +1,75 @@
-import axios, { AxiosPromise } from 'axios';
-import { SignupParamsType } from '../../redux/auth/types';
+import axios, { AxiosPromise, AxiosInstance } from 'axios';
+import { SignupParamsType, TokenState } from '../../redux/auth/types';
 
 export const PREFIX = '@e:';
 export const AUTH_TOKENS_STORAGE_KEY = 'auth.tokens';
 
-export type AUTH_TOKEN_TYPE = {
-  access_token: string;
-  refresh_token: string;
-  token_type: string;
-  expires_in: number;
-};
+export class Api {
+  apiInstance: AxiosInstance;
 
-const createAuthHeader = () => ({
-  Authorization: `Bearer ${JSON.parse(localStorage.getItem(AUTH_TOKENS_STORAGE_KEY)).access_token}`,
-});
+  constructor(tokens?: TokenState) {
+    this.apiInstance = axios.create({
+      baseURL: process.env.API_ENDPOINT,
+      headers: tokens
+        ? {
+            Authorization: `Bearer ${tokens.access_token}`,
+          }
+        : {},
+    });
+  }
 
-export function login(username: string, password: string): AxiosPromise {
-  const headers = {
-    Authorization: `Basic ${process.env.AUTH_TOKEN}`,
-  };
-  const bodyFormData = new FormData();
-  bodyFormData.set('username', `${PREFIX}${username}`);
-  bodyFormData.set('password', password);
-  bodyFormData.set('grant_type', 'password');
+  login(username: string, password: string): AxiosPromise {
+    const headers = {
+      Authorization: `Basic ${process.env.AUTH_TOKEN}`,
+    };
+    const bodyFormData = new FormData();
+    bodyFormData.set('username', `${PREFIX}${username}`);
+    bodyFormData.set('password', password);
+    bodyFormData.set('grant_type', 'password');
+    return this.apiInstance.post(`/oauth/token`, bodyFormData, { headers });
+  }
 
-  return axios.post(`${process.env.API_ENDPOINT}/oauth/token`, bodyFormData, { headers });
-}
+  createUser(bodyFormData: SignupParamsType): AxiosPromise {
+    const headers = {
+      Authorization: `Basic ${process.env.AUTH_TOKEN}`,
+    };
+    return this.apiInstance.post(`/public/v1/users`, bodyFormData, { headers });
+  }
 
-export function createUser(bodyFormData: SignupParamsType): AxiosPromise {
-  const headers = {
-    Authorization: `Basic ${process.env.AUTH_TOKEN}`,
-  };
-  return axios.post(`${process.env.API_ENDPOINT}/public/v1/users`, bodyFormData, { headers });
-}
+  refreshToken(refreshToken: string): AxiosPromise {
+    const bodyFormData = new FormData();
+    bodyFormData.set('client_id', 'frontend-test');
+    bodyFormData.set('client_secret', 'change_me');
+    bodyFormData.set('refresh_token', refreshToken);
+    bodyFormData.set('grant_type', 'refresh_token');
+    return this.apiInstance.post(`/oauth/token`, bodyFormData);
+  }
 
-export function getConnectors() {
-  return axios.get(`${process.env.API_ENDPOINT}/public/v1/connectors`);
-}
+  getConnectors(): AxiosPromise {
+    return this.apiInstance.get(`/public/v1/connectors`);
+  }
 
-export function getAccessKeys(userId: number) {
-  return axios.get(`${process.env.API_ENDPOINT}/v1/users/${userId}/access-keys`, {
-    headers: createAuthHeader(),
-  });
-}
+  getAccessKeys(userId: number): AxiosPromise {
+    return this.apiInstance.get(`/v1/users/${userId}/access-keys`);
+  }
 
-export function getAccessKey(accessKeyId: number) {
-  return axios.get(`${process.env.API_ENDPOINT}/v1/access-keys/${accessKeyId}`, {
-    headers: createAuthHeader(),
-  });
-}
+  getAccessKey(accessKeyId: number): AxiosPromise {
+    return this.apiInstance.get(`/v1/access-keys/${accessKeyId}`);
+  }
 
-export function createAccessKey(data: any) {
-  return axios.post(`${process.env.API_ENDPOINT}/v1/access-keys`, data, {
-    headers: createAuthHeader(),
-  });
-}
+  createAccessKey(data: any): AxiosPromise {
+    return this.apiInstance.post(`/v1/access-keys`, data);
+  }
 
-export function refreshAccessKey(accessKeyId: number) {
-  return axios.put(
-    `${process.env.API_ENDPOINT}/v1/access-keys/${accessKeyId}/refresh`,
-    {},
-    { headers: createAuthHeader() }
-  );
-}
+  refreshAccessKey(accessKeyId: number): AxiosPromise {
+    return this.apiInstance.put(`/v1/access-keys/${accessKeyId}/refresh`, {});
+  }
 
-export function removeAccessKey(accessKeyId: number) {
-  return axios.delete(`${process.env.API_ENDPOINT}/v1/access-keys/${accessKeyId}`, {
-    headers: createAuthHeader(),
-  });
-}
+  removeAccessKey(accessKeyId: number): AxiosPromise {
+    return this.apiInstance.delete(`/v1/access-keys/${accessKeyId}`);
+  }
 
-export function getUser() {
-  return axios.get(`${process.env.API_ENDPOINT}/v1/me/user`, {
-    headers: createAuthHeader(),
-  });
+  getUser(): AxiosPromise {
+    return this.apiInstance.get('v1/me/user');
+  }
 }

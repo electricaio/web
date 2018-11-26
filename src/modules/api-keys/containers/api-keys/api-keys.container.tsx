@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { ApiKeys } from '../../components/api-keys/api-keys';
 import { ApplicationState } from '../../../../redux/store';
-import { removeKey, createKey, fetchKeys, refreshKey } from '../../../../redux/api-keys/actions';
 import { ApiKeyModal } from '../../../../redux/api-keys/types';
+import { removeKey, createKey, refreshKey, fetchKeys } from '../../../../redux/api-keys/async';
 
 const mapStateToProps = ({ apiKeys, auth }: ApplicationState) => ({
   apiKeys: apiKeys.data,

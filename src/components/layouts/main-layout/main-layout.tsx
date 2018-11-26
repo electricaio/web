@@ -6,10 +6,10 @@ import logo from './../../../assets/logo.svg';
 import { Logo } from './logo';
 import { UserProfileContainer } from './user-profile';
 import { UserDto } from '../../../redux/auth/types';
-import { fetchUser } from '../../../redux/auth/actions';
 import { ApplicationState } from '../../../redux/store';
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
+import { fetchUser } from '../../../redux/auth/async';
 
 const { Content } = Layout;
 

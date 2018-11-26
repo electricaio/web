@@ -6,7 +6,7 @@ import { ForgotPassword } from './login.css';
 import { StyledButton } from '../ui-kit/button';
 import { StyledInput } from '../ui-kit/input';
 import { Header } from '../../components/header';
-import { loginUser } from '../../redux/auth/actions';
+import { loginUser } from '../../redux/auth/async';
 
 const FormItem = Form.Item;
 

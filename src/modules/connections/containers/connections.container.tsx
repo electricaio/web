@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { ApplicationState } from '../../../redux/store';
 import { fetchConnections } from '../../../redux/connections/actions';
-import { getKey } from '../../../redux/api-keys/actions';
 import { Spin } from 'antd';
 import { ConnectionsComponent } from '../components/connections';
 import { BreadcrumbComponent } from '../../../components/breadcrumb/breadcrumb';
@@ -11,6 +10,7 @@ import { ConnectionModal } from '../../../redux/connections/types';
 import { ApiKeyModal } from '../../../redux/api-keys/types';
 import { ConnectorModal } from '../../../redux/connector-hub/types';
 import { RouteComponentProps } from 'react-router';
+import { getKey } from '../../../redux/api-keys/async';
 
 const mapStateToProps = ({ connections, apiKeys, connectors }: ApplicationState) => ({
   connections: connections.data,
@@ -54,7 +54,6 @@ export class Connections extends Component<AllProps> {
 
   public render() {
     const { loading, connectors, connections, accessKeys, match } = this.props;
-    console.log('======', connectors, parseInt(match.params.connectorId, 10));
     const connector = connectors.find(con => con.id === parseInt(match.params.connectorId, 10));
     const breadcrumbNameMap = {
       '/connector-hub': 'Connector Hub',

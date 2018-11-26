@@ -8,7 +8,7 @@ import { ConnectionsContainer } from '../../modules/connections/containers/conne
 
 describe('Dashboard', () => {
   beforeEach(() => {
-    this.component = shallow(<PrivateDashboard isAuth={() => true} />);
+    this.component = shallow(<PrivateDashboard isAuthenticated />);
   });
 
   const routeComponent = (path: string) => {
@@ -35,12 +35,12 @@ describe('Dashboard', () => {
     const TestComponent: SFC = () => <div>content</div>;
 
     it('redirects to login if auth failed', () => {
-      const component = shallow(<PrivateRoute component={TestComponent} isAuth={() => false} />);
+      const component = shallow(<PrivateRoute component={TestComponent} isAuthenticated={false} />);
       expect(component.find(Route).prop('render')()).toEqual(<Redirect to="/login" />);
     });
 
     it('render component if aith passed', () => {
-      const component = shallow(<PrivateRoute component={TestComponent} isAuth={() => true} />);
+      const component = shallow(<PrivateRoute component={TestComponent} isAuthenticated />);
       expect(component.find(Route).prop('render')()).toEqual(<TestComponent />);
     });
   });

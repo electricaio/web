@@ -1,21 +1,23 @@
 import { Store, createStore, applyMiddleware } from 'redux';
+import { persistStore } from 'redux-persist';
+
 import { History } from 'history';
 
 import promiseMiddleware from 'redux-promise-middleware';
 import thunk from 'redux-thunk';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
 
+import requestMiddleware from './middleware/requestMiddleware';
+
 import { ApplicationState, rootReducer } from './store';
 
-export default function configureStore(
-  history: History,
-  initialState?: ApplicationState
-): Store<ApplicationState> {
-  const store = createStore(
+export default (history: History, initialState?: ApplicationState) => {
+  const store: Store<ApplicationState> = createStore(
     connectRouter(history)(rootReducer),
     initialState,
-    applyMiddleware(routerMiddleware(history), thunk, promiseMiddleware())
+    applyMiddleware(thunk, requestMiddleware(), routerMiddleware(history), promiseMiddleware())
   );
+  const persistor = persistStore(store);
 
-  return store;
-}
+  return { store, persistor };
+};
