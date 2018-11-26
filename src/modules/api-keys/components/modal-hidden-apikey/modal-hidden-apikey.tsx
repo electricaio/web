@@ -1,11 +1,12 @@
 import React, { Component, Fragment, ReactElement } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
-import { Input, Modal } from 'antd';
+import { Input, Modal, Spin } from 'antd';
 import { ApplicationState } from '../../../../redux/store';
 import { getKey } from '../../../../redux/api-keys/actions';
 import { ApiKeyModal } from '../../../../redux/api-keys/types';
-import { CopyKeyButton, MaskStyle } from './modal-hidden-apikey.css';
+import { StyledButton } from '../../../ui-kit/button';
+import { MaskStyle } from './modal-hidden-apikey.css';
 
 const { TextArea } = Input;
 
@@ -28,7 +29,7 @@ interface PropsFromDispatch {
 type AllProps = PropsFromState & PropsFromDispatch & THiddenApiKeyProps;
 
 export type THiddenApiKeyProps = {
-  id: number;
+  entity: ApiKeyModal;
   children: ReactElement<any>;
 };
 
@@ -50,14 +51,16 @@ export class HiddenAPIKeyModalComponent extends Component<AllProps, THiddenApiKe
   };
 
   handleCopyKey = () => {
-    const textarea = document.getElementById('key-textarea') as HTMLInputElement;
+    const textarea = document.getElementById(
+      `text-area-${this.props.entity.name}`
+    ) as HTMLInputElement;
     textarea.select();
     document.execCommand('copy');
   };
 
   getKey = (): string => {
-    this.props.getKey(this.props.id);
-    return this.props.apiKeys.filter(item => item.id === this.props.id)[0].key;
+    this.props.getKey(this.props.entity.id);
+    return this.props.apiKeys.find(item => item.id === this.props.entity.id).key;
   };
 
   render() {
@@ -75,14 +78,14 @@ export class HiddenAPIKeyModalComponent extends Component<AllProps, THiddenApiKe
           centered
           width={700}
           footer={
-            document.queryCommandSupported('copy') && (
-              <CopyKeyButton size="large" type="primary" onClick={this.handleCopyKey}>
-                {'Copy Key'}
-              </CopyKeyButton>
-            )
+            <StyledButton size="large" type="primary" onClick={this.handleCopyKey}>
+              {'Copy Key'}
+            </StyledButton>
           }
         >
-          <TextArea autosize value={this.getKey()} id="key-textarea" />
+          <Spin tip={`Loading ${this.props.entity.name} Access Key`} spinning={!this.getKey()}>
+            <TextArea autosize value={this.getKey()} id={`text-area-${this.props.entity.name}`} />
+          </Spin>
         </Modal>
         {React.cloneElement(children, {
           onClick: this.showModal,

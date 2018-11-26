@@ -38,7 +38,7 @@ export class ApiKeysTable extends Component<TTableProps> {
         title: 'Key',
         key: 'key',
         render: (entity: ApiKeyModal) => (
-          <HiddenAPIKeyModal id={entity.id}>
+          <HiddenAPIKeyModal entity={entity}>
             <StyledEye type="eye" />
           </HiddenAPIKeyModal>
         ),
