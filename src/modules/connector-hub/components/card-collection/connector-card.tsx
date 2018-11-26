@@ -24,8 +24,9 @@ interface TypeModel {
   name: string;
 }
 const typeNames: TypeModel[] = [
-  { id: 1, name: 'Talent' },
-  { id: 2, name: 'Foundation' },
+  { id: 1, name: 'Foundation' },
+  { id: 2, name: 'CRM' },
+  { id: 3, name: 'Talent' },
 ];
 
 const CompanyImageComponent: React.SFC<CompanyImageComponentProps> = ({
