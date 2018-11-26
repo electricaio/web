@@ -9,9 +9,8 @@ import { StyledButton } from '../../../ui-kit/button';
 import { MaskStyle } from './modal-hidden-apikey.css';
 
 const { TextArea } = Input;
-
-const mapStateToProps = ({ apiKeys }: ApplicationState) => ({
-  apiKeys: apiKeys.data,
+const mapStateToProps = ({ apiKeys }: ApplicationState, { entity }: THiddenApiKeyProps) => ({
+  hiddenApiKey: apiKeys.data.find(item => item.id === entity.id).key,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -19,7 +18,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 interface PropsFromState {
-  apiKeys: ApiKeyModal[];
+  hiddenApiKey: string;
 }
 
 interface PropsFromDispatch {
@@ -38,13 +37,12 @@ export type THiddenApiKeyState = {
 };
 
 export class HiddenAPIKeyModalComponent extends Component<AllProps, THiddenApiKeyState> {
-  hiddenKey: string = null;
-
   readonly state: THiddenApiKeyState = {
     visible: false,
   };
 
   showModal = () => {
+    this.props.getKey(this.props.entity.id);
     this.setState({ visible: true });
   };
 
@@ -60,14 +58,9 @@ export class HiddenAPIKeyModalComponent extends Component<AllProps, THiddenApiKe
     document.execCommand('copy');
   };
 
-  getKey = (): string => {
-    this.props.getKey(this.props.entity.id);
-    return (this.hiddenKey = this.props.apiKeys.find(item => item.id === this.props.entity.id).key);
-  };
-
   render() {
     const { visible } = this.state;
-    const { children } = this.props;
+    const { children, hiddenApiKey } = this.props;
 
     return (
       <Fragment>
@@ -85,8 +78,8 @@ export class HiddenAPIKeyModalComponent extends Component<AllProps, THiddenApiKe
             </StyledButton>
           }
         >
-          <Spin tip={`Loading ${this.props.entity.name} Access Key`} spinning={!this.getKey()}>
-            <TextArea autosize value={this.hiddenKey} id={`text-area-${this.props.entity.name}`} />
+          <Spin tip={`Loading ${this.props.entity.name} Access Key`} spinning={!hiddenApiKey}>
+            <TextArea autosize value={hiddenApiKey} id={`text-area-${this.props.entity.name}`} />
           </Spin>
         </Modal>
         {React.cloneElement(children, {
