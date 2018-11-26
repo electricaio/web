@@ -12,22 +12,13 @@ import {
 } from './connector-card.css';
 
 import { ConnectorModal } from '../../../../redux/connector-hub/types';
+import { TYPE_NAMES_DATA } from '../../../../fixtures/connector-type-data';
 
 interface CompanyImageComponentProps {
   image: string;
 }
 
 const companyImageMockUrl: string = 'salesforce_logo_detail.png';
-
-interface TypeModel {
-  id: number;
-  name: string;
-}
-const typeNames: TypeModel[] = [
-  { id: 1, name: 'Foundation' },
-  { id: 2, name: 'CRM' },
-  { id: 3, name: 'Talent' },
-];
 
 const CompanyImageComponent: React.SFC<CompanyImageComponentProps> = ({
   image,
@@ -51,7 +42,7 @@ export class ConnectorCard extends React.Component<ConnectorCardProps> {
         hoverable
         title={connector.name}
         cover={<CompanyImageComponent image={companyImageMockUrl} />}
-        extra={<Tag color="green">{typeNames.find(myObj => myObj.id === connector.typeId).name}</Tag>}
+        extra={<Tag color="green">{TYPE_NAMES_DATA.find(myObj => myObj.id === connector.typeId).name}</Tag>}
       >
         <StyledMeta description={connector.properties.description} />
         <Row>
