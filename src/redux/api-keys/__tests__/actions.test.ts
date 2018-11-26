@@ -150,12 +150,13 @@ describe('Api Key Actions', () => {
   describe('removeKey', () => {
     describe('on api success', () => {
       let dispatchMock: any = null;
+      const response = { accessKey: 'this is the new key' };
 
       const mockDispatchAndFetch = () => {
         dispatchMock = jest.fn();
-        const refreshAccessKeyMock = jest.spyOn(api, 'removeAccessKey');
-        refreshAccessKeyMock.mockImplementation(() => Promise.resolve());
-        return removeKey(1)(dispatchMock);
+        const removeAccessKeyMock = jest.spyOn(api, 'removeAccessKey');
+        removeAccessKeyMock.mockImplementation(() => Promise.resolve({ data: response }));
+        return removeKey(2)(dispatchMock);
       };
 
       it('dispatches REMOVE_ACCESS_KEY action', async () => {
@@ -168,6 +169,12 @@ describe('Api Key Actions', () => {
         await mockDispatchAndFetch();
         const successDispatchCall = dispatchMock.mock.calls[1][0];
         expect(successDispatchCall.type).toEqual(ApiKeysTypes.REMOVE_ACCESS_KEY_SUCCESS);
+      });
+
+      it('dispatch new access key response payload to reducers', async () => {
+        await mockDispatchAndFetch();
+        const successDispatchCall = dispatchMock.mock.calls[1][0];
+        expect(successDispatchCall.payload).toEqual(response);
       });
     });
   });

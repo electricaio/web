@@ -1,4 +1,5 @@
 import axios, { AxiosPromise } from 'axios';
+import { SignupParamsType } from '../../redux/auth/types';
 
 export const PREFIX = '@e:';
 export const AUTH_TOKENS_STORAGE_KEY = 'auth.tokens';
@@ -26,8 +27,15 @@ export function login(username: string, password: string): AxiosPromise {
   return axios.post(`${process.env.API_ENDPOINT}/oauth/token`, bodyFormData, { headers });
 }
 
+export function createUser(bodyFormData: SignupParamsType): AxiosPromise {
+  const headers = {
+    Authorization: `Basic ${process.env.AUTH_TOKEN}`,
+  };
+  return axios.post(`${process.env.API_ENDPOINT}/public/v1/users`, bodyFormData, { headers });
+}
+
 export function getConnectors() {
-  return axios.get(`${process.env.API_ENDPOINT}/v1/connectors`, { headers: createAuthHeader() });
+  return axios.get(`${process.env.API_ENDPOINT}/public/v1/connectors`);
 }
 
 export function getAccessKeys(userId: number) {

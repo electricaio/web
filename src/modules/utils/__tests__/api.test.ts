@@ -1,5 +1,6 @@
 import {
   login,
+  createUser,
   PREFIX,
   getConnectors,
   createAccessKey,
@@ -45,6 +46,44 @@ describe('api', () => {
       expect(formData.get('username')).toEqual(`${PREFIX}${username}`);
       expect(formData.get('password')).toEqual(password);
       expect(formData.get('grant_type')).toEqual('password');
+    });
+
+    it('passes auth token in header', () => {
+      expect(this.postSpy.mock.calls[0][2].headers['Authorization']).toEqual(
+        `Basic ${process.env.AUTH_TOKEN}`
+      );
+    });
+  });
+
+  describe('signup', () => {
+    const params: any = {
+      email: 'test@test.com',
+      firstName: 'First',
+      lastName: 'Last',
+      organizationId: 1,
+      password: 'password',
+    };
+
+    beforeEach(() => {
+      this.postSpy = jest.spyOn(axios, 'post');
+      createUser(params);
+    });
+
+    afterEach(() => {
+      this.postSpy.mockReset();
+    });
+
+    it('uses post method', () => {
+      expect(this.postSpy).toBeCalled();
+    });
+
+    it('passes oauth url with endpoint env var', () => {
+      expect(this.postSpy.mock.calls[0][0]).toEqual(`${process.env.API_ENDPOINT}/public/v1/users`);
+    });
+
+    it('passes form data with username, password and grant type', () => {
+      const formData = this.postSpy.mock.calls[0][1];
+      expect(formData).toEqual(params);
     });
 
     it('passes auth token in header', () => {
@@ -229,13 +268,8 @@ describe('api', () => {
 
     it('passes oauth url with endpoint env var', () => {
       getConnectors();
-      expect(this.getSpy.mock.calls[0][0]).toEqual(`${process.env.API_ENDPOINT}/v1/connectors`);
-    });
-
-    it('passes auth token in header', () => {
-      getConnectors();
-      expect(this.getSpy.mock.calls[0][1].headers['Authorization']).toEqual(
-        `Bearer ${process.env.AUTH_TOKEN}`
+      expect(this.getSpy.mock.calls[0][0]).toEqual(
+        `${process.env.API_ENDPOINT}/public/v1/connectors`
       );
     });
   });

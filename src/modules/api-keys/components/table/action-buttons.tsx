@@ -9,7 +9,7 @@ export type TActionButtonsNewProps = {
 
 export const ActionButtons: SFC<TActionButtonsNewProps> = ({ name, onRefresh, onRemove }) => (
   <Container>
-    <Tooltip placement="top" title="Refresh">
+    <Tooltip placement="top" title="Refresh" data-test="tooltip1">
       <Popconfirm
         icon={<WarningIcon type="question-circle-o" />}
         placement="top"
@@ -17,21 +17,21 @@ export const ActionButtons: SFC<TActionButtonsNewProps> = ({ name, onRefresh, on
         onConfirm={onRefresh}
         okText="Yes"
         cancelText="No"
-        data-test="Popconfirm1"
       >
         <Icon type="sync" />
       </Popconfirm>
     </Tooltip>
-    <Popconfirm
-      icon={<DeleteIcon type="question-circle-o" />}
-      placement="top"
-      title={`Delete ${name} key?`}
-      onConfirm={onRemove}
-      okText="Yes"
-      cancelText="No"
-      data-test="Popconfirm2"
-    >
-      <Icon type="delete" />
-    </Popconfirm>
+    <Tooltip placement="top" title="Delete" data-test="tooltip2">
+      <Popconfirm
+        icon={<DeleteIcon type="question-circle-o" />}
+        placement="top"
+        title={`Delete ${name} key?`}
+        onConfirm={onRemove}
+        okText="Yes"
+        cancelText="No"
+      >
+        <Icon type="delete" />
+      </Popconfirm>
+    </Tooltip>
   </Container>
 );

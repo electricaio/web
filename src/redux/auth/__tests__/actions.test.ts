@@ -1,7 +1,7 @@
-import { loginUser, isAuthenticated, logoutUser, fetchUser } from '../actions';
+import { loginUser, signupUser, isAuthenticated, logoutUser, fetchUser } from '../actions';
 
 import * as api from '../../../modules/utils/api';
-import { AuthActionTypes } from '../types';
+import { AuthActionTypes, SignupParamsType } from '../types';
 import { CALL_HISTORY_METHOD } from 'connected-react-router';
 
 jest.mock('../../../modules/utils/api');
@@ -60,6 +60,62 @@ describe('Auth', () => {
         await errorApiResponse();
         const errorDispatchCall = dispatchMock.mock.calls[1][0];
         expect(errorDispatchCall.type).toEqual(AuthActionTypes.LOGIN_USER_ERROR);
+      });
+    });
+  });
+
+  describe('signupUser', () => {
+    let dispatchMock: any = null;
+    const params: SignupParamsType = {
+      email: 'test@test.com',
+      firstName: 'First',
+      lastName: 'Last',
+      organizationId: 1,
+      password: 'password',
+    };
+
+    const mockDispatchAndSignupUser = (apiResponse: () => void) => {
+      dispatchMock = jest.fn();
+      const sinupMock = jest.spyOn(api, 'createUser');
+      sinupMock.mockImplementation((parmas: any) => apiResponse());
+      return signupUser(params)(dispatchMock);
+    };
+
+    const successfulApiResponse = () => {
+      return mockDispatchAndSignupUser(() => Promise.resolve({ data: { email: 'test@test.com' } }));
+    };
+
+    const errorApiResponse = () => {
+      return mockDispatchAndSignupUser(() => Promise.reject({ error: 'error' }));
+    };
+
+    describe('on api success', () => {
+      it('dispatches SIGNUP_USER action user with parameters', async () => {
+        await successfulApiResponse();
+        const firstDispatchCall = dispatchMock.mock.calls[0][0];
+
+        expect(firstDispatchCall.type).toEqual(AuthActionTypes.SIGNUP_USER);
+        expect(firstDispatchCall.payload).toEqual(params);
+      });
+
+      it('dispatch SIGNUP_USER_SUCCESS action', async () => {
+        await successfulApiResponse();
+        const successDispatchCall = dispatchMock.mock.calls[1][0];
+        expect(successDispatchCall.type).toEqual(AuthActionTypes.SIGNUP_USER_SUCCESS);
+      });
+
+      it('routes to the login page  ', async () => {
+        await successfulApiResponse();
+        const routerDispatchCall = dispatchMock.mock.calls[2][0];
+        expect(routerDispatchCall.payload).toEqual({ method: 'push', args: ['/login'] });
+      });
+    });
+
+    describe('on api error', () => {
+      it('dispatches SIGNUP_USER_ERROR action', async () => {
+        await errorApiResponse();
+        const errorDispatchCall = dispatchMock.mock.calls[1][0];
+        expect(errorDispatchCall.type).toEqual(AuthActionTypes.SIGNUP_USER_ERROR);
       });
     });
   });
