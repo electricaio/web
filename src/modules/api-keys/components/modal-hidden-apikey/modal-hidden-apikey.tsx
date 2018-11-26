@@ -38,6 +38,8 @@ export type THiddenApiKeyState = {
 };
 
 export class HiddenAPIKeyModalComponent extends Component<AllProps, THiddenApiKeyState> {
+  hiddenKey: string = null;
+
   readonly state: THiddenApiKeyState = {
     visible: false,
   };
@@ -60,7 +62,7 @@ export class HiddenAPIKeyModalComponent extends Component<AllProps, THiddenApiKe
 
   getKey = (): string => {
     this.props.getKey(this.props.entity.id);
-    return this.props.apiKeys.find(item => item.id === this.props.entity.id).key;
+    return (this.hiddenKey = this.props.apiKeys.find(item => item.id === this.props.entity.id).key);
   };
 
   render() {
@@ -84,7 +86,7 @@ export class HiddenAPIKeyModalComponent extends Component<AllProps, THiddenApiKe
           }
         >
           <Spin tip={`Loading ${this.props.entity.name} Access Key`} spinning={!this.getKey()}>
-            <TextArea autosize value={this.getKey()} id={`text-area-${this.props.entity.name}`} />
+            <TextArea autosize value={this.hiddenKey} id={`text-area-${this.props.entity.name}`} />
           </Spin>
         </Modal>
         {React.cloneElement(children, {

@@ -32,6 +32,19 @@ const reducer: Reducer<ApiKeysState> = (
         }
       });
       return { ...state, loading: false, data: state.data };
+    }
+    case ApiKeysTypes.REFRESH_KEY: {
+      return { ...state, loading: true };
+    }
+    case ApiKeysTypes.REFRESH_KEY_SUCCESS: {
+      const updatedData = state.data.map(item => {
+        if (item.id === action.payload.id) {
+          return { ...item, ...action.payload };
+        }
+        return item;
+      });
+      return { ...state, loading: true, data: updatedData };
+    }
     case ApiKeysTypes.REMOVE_ACCESS_KEY: {
       return { ...state, loading: true };
     }
