@@ -19,6 +19,15 @@ interface CompanyImageComponentProps {
 
 const companyImageMockUrl: string = 'salesforce_logo_detail.png';
 
+interface TypeModel {
+  id: number;
+  name: string;
+}
+const typeNames: TypeModel[] = [
+  { id: 1, name: 'Talent' },
+  { id: 2, name: 'Foundation' },
+];
+
 const CompanyImageComponent: React.SFC<CompanyImageComponentProps> = ({
   image,
 }: CompanyImageComponentProps) => {
@@ -41,7 +50,7 @@ export class ConnectorCard extends React.Component<ConnectorCardProps> {
         hoverable
         title={connector.name}
         cover={<CompanyImageComponent image={companyImageMockUrl} />}
-        extra={<Tag color="green">{connector.typeId}</Tag>}
+        extra={<Tag color="green">{typeNames.find(myObj => myObj.id === connector.typeId).name}</Tag>}
       >
         <StyledMeta description={connector.properties.description} />
         <Row>
