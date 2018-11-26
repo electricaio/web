@@ -1,9 +1,9 @@
-import { mount } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import React from 'react';
 import { API_KEYS_TABLE_DATA } from '../../../../../fixtures/api-keys-table-data';
 import { ApiKeysTable, Date } from '../table';
 import { Table } from 'antd';
-import { ApiKeyModal, ApiHiddenKeyModal } from '../../../../../redux/api-keys/types';
+import { ApiKeyModal } from '../../../../../redux/api-keys/types';
 
 describe('ApiKeys | table Component', () => {
   const data: ApiKeyModal[] = [
@@ -27,29 +27,11 @@ describe('ApiKeys | table Component', () => {
     },
   ];
 
-  const hiddenKey: ApiHiddenKeyModal = {
-    createdAt: '2018-11-20T18:42:08.552',
-    id: 1,
-    jti: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-    key: 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9',
-    name: 'Development',
-    revisionVersion: 0,
-    updatedAt: '2018-11-22T15:14:38.718Z',
-    userId: 5,
-  };
-
   const onRemoveMock = jest.fn();
   const onRefreshMock = jest.fn();
-  const getKeyMock = jest.fn();
   beforeEach(() => {
-    this.component = mount(
-      <ApiKeysTable
-        data={API_KEYS_TABLE_DATA}
-        hiddenKey={hiddenKey}
-        onRemove={onRemoveMock}
-        onRefresh={onRefreshMock}
-        getKey={getKeyMock}
-      />
+    this.component = shallow(
+      <ApiKeysTable data={API_KEYS_TABLE_DATA} onRemove={onRemoveMock} onRefresh={onRefreshMock} />
     );
   });
 
@@ -61,10 +43,6 @@ describe('ApiKeys | table Component', () => {
 
   it('passes in data to table', () => {
     expect(this.component.find(Table).prop('dataSource')).toEqual(data);
-  });
-
-  it('add the key property in dataSource', () => {
-    expect(this.component.find(Table).prop('dataSource')[0].key).toEqual(data[0].name);
   });
 
   it('shows formatted date', () => {

@@ -8,7 +8,6 @@ export type ApiKeysActionTypes = ActionType<typeof actions>;
 
 const initialState: ApiKeysState = {
   data: [],
-  hiddenKey: null,
   loading: false,
 };
 
@@ -27,7 +26,12 @@ const reducer: Reducer<ApiKeysState> = (
       return { ...state, loading: true };
     }
     case ApiKeysTypes.FETCH_ACCESS_KEY_SUCCESS: {
-      return { ...state, loading: true, hiddenKey: action.payload };
+      state.data.map(obj => {
+        if (obj.id === action.payload.id) {
+          obj.key = action.payload.key;
+        }
+      });
+      return { ...state, loading: false, data: state.data };
     }
     default: {
       return state;

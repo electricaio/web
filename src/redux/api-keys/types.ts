@@ -3,14 +3,6 @@ export type ApiKeyModal = {
   userId?: number;
   name: string;
   key?: string;
-  createdAt?: string;
-};
-
-export type ApiHiddenKeyModal = {
-  id?: number;
-  userId?: number;
-  name: string;
-  key?: string;
   jti?: string;
   revisionVersion?: number;
   createdAt?: string;
@@ -40,5 +32,4 @@ export const enum ApiKeysTypes {
 export interface ApiKeysState {
   readonly loading?: boolean;
   readonly data: ApiKeyModal[];
-  readonly hiddenKey: ApiHiddenKeyModal;
 }

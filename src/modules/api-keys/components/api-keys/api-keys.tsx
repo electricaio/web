@@ -4,13 +4,12 @@ import { Header } from '../../../ui-kit/header';
 import React, { Component, Fragment } from 'react';
 import { ButtonActionModal } from '../modal-button-action/modal-button-action';
 import { NewApiButton } from '../modal-button-action/modal-button-action.css';
-import { ApiKeyModal, ApiHiddenKeyModal } from '../../../../redux/api-keys/types';
-import { removeKey, createKey, refreshKey, getKey } from '../../../../redux/api-keys/actions';
+import { ApiKeyModal } from '../../../../redux/api-keys/types';
+import { removeKey, createKey, refreshKey } from '../../../../redux/api-keys/actions';
 
 // Separate state props + dispatch props to their own interfaces.
 interface PropsFromState {
   apiKeys: ApiKeyModal[];
-  hiddenKey: ApiHiddenKeyModal;
   userId: number;
 }
 
@@ -18,7 +17,6 @@ interface PropsFromDispatch {
   removeKey: typeof removeKey;
   createKey: typeof createKey;
   refreshKey: typeof refreshKey;
-  getKey: typeof getKey;
 }
 
 type AllProps = PropsFromState & PropsFromDispatch;
@@ -34,18 +32,13 @@ export class ApiKeys extends Component<AllProps> {
     removeKey(id);
   };
 
-  getKey = (id: number) => {
-    const { getKey } = this.props;
-    getKey(id);
-  };
-
   handleCommit = (apiKey: ApiKeyModal) => {
     const { createKey } = this.props;
     createKey({ name: apiKey.name, userId: this.props.userId });
   };
 
   render() {
-    const { apiKeys, hiddenKey } = this.props;
+    const { apiKeys } = this.props;
 
     return (
       <Fragment>
@@ -54,13 +47,7 @@ export class ApiKeys extends Component<AllProps> {
           These API Keys grant developers the ability to access electrica services in the Cloud.
           Keep them confidential.
         </Header>
-        <ApiKeysTable
-          data={apiKeys}
-          hiddenKey={hiddenKey}
-          onRemove={this.handleRemove}
-          onRefresh={this.handleRefresh}
-          getKey={this.getKey}
-        />
+        <ApiKeysTable data={apiKeys} onRemove={this.handleRemove} onRefresh={this.handleRefresh} />
         <ButtonActionModal
           title="Generate New API Key"
           submitText="Create"
