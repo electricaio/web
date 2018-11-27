@@ -36,7 +36,7 @@ export const CONNECTOR_HUB_DATA: ConnectorModal[] = [
     revisionVersion: 0,
   },
   {
-    typeId: 1,
+    typeId: 2,
     authorizationType: 'None',
     name: 'Slack Channel',
     resource: 'channel',

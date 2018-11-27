@@ -1,5 +1,5 @@
 import React from 'react';
-import { Col, Row, Tag } from 'antd';
+import { Col, Row, Tag, Button } from 'antd';
 
 import {
   CompanyImage,
@@ -11,14 +11,22 @@ import {
   ImageContainer,
 } from './connector-card.css';
 
-import { StyledButton } from '../../../ui-kit/button';
 import { ConnectorModal } from '../../../../redux/connector-hub/types';
 
 interface CompanyImageComponentProps {
   image: string;
 }
-
 const companyImageMockUrl: string = 'salesforce_logo_detail.png';
+
+interface TypeModel {
+  id: number;
+  name: string;
+}
+export const TYPE_NAMES_DATA: TypeModel[] = [
+  { id: 1, name: 'Foundation' },
+  { id: 2, name: 'CRM' },
+  { id: 3, name: 'Talent' },
+];
 
 const CompanyImageComponent: React.SFC<CompanyImageComponentProps> = ({
   image,
@@ -42,7 +50,7 @@ export class ConnectorCard extends React.Component<ConnectorCardProps> {
         hoverable
         title={connector.name}
         cover={<CompanyImageComponent image={companyImageMockUrl} />}
-        extra={<Tag color="green">{connector.typeId}</Tag>}
+        extra={<Tag color="green">{TYPE_NAMES_DATA.find(myObj => myObj.id === connector.typeId).name}</Tag>}
       >
         <StyledMeta description={connector.properties.description} />
         <Row>
@@ -52,9 +60,7 @@ export class ConnectorCard extends React.Component<ConnectorCardProps> {
           </Col>
         </Row>
         <ButtonContainer>
-          <StyledButton icon="key" type="primary">
-            Configure Collections
-          </StyledButton>
+          <Button type="primary" size="large">Configure</Button>
         </ButtonContainer>
       </StyledCard>
     );
