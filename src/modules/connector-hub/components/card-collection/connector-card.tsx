@@ -12,13 +12,21 @@ import {
 } from './connector-card.css';
 
 import { ConnectorModal } from '../../../../redux/connector-hub/types';
-import { TYPE_NAMES_DATA } from '../../../../fixtures/connector-type-data';
 
 interface CompanyImageComponentProps {
   image: string;
 }
-
 const companyImageMockUrl: string = 'salesforce_logo_detail.png';
+
+interface TypeModel {
+  id: number;
+  name: string;
+}
+export const TYPE_NAMES_DATA: TypeModel[] = [
+  { id: 1, name: 'Foundation' },
+  { id: 2, name: 'CRM' },
+  { id: 3, name: 'Talent' },
+];
 
 const CompanyImageComponent: React.SFC<CompanyImageComponentProps> = ({
   image,

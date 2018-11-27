@@ -4,7 +4,16 @@ import { ConnectorCard } from '../connector-card';
 import { StyledCard, StyledMeta } from '../connector-card.css';
 import { Row, Col, Tag, Card } from 'antd';
 import { ConnectorModal } from '../../../../../redux/connector-hub/types';
-import { TYPE_NAMES_DATA } from '../../../../../fixtures/connector-type-data';
+
+interface TypeModel {
+  id: number;
+  name: string;
+}
+export const TYPE_NAMES_DATA: TypeModel[] = [
+  { id: 1, name: 'Foundation' },
+  { id: 2, name: 'CRM' },
+  { id: 3, name: 'Talent' },
+];
 
 describe('ConnectorCard', () => {
   const connector = (overrides: object = {}): ConnectorModal => ({
