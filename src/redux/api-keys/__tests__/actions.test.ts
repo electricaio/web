@@ -130,13 +130,13 @@ describe('Api Key Actions', () => {
       it('dispatches REFRESH_KEY action', async () => {
         await mockDispatchAndFetch();
         const firstDispatchCall = dispatchMock.mock.calls[0][0];
-        expect(firstDispatchCall.type).toEqual(ApiKeysTypes.REFRESH_KEY);
+        expect(firstDispatchCall.type).toEqual(ApiKeysTypes.FETCH_ACCESS_KEY);
       });
 
       it('dispatch REFRESH_KEY_SUCCESS action', async () => {
         await mockDispatchAndFetch();
         const successDispatchCall = dispatchMock.mock.calls[1][0];
-        expect(successDispatchCall.type).toEqual(ApiKeysTypes.REFRESH_KEY_SUCCESS);
+        expect(successDispatchCall.type).toEqual(ApiKeysTypes.FETCH_ACCESS_KEY_SUCCESS);
       });
 
       it('dispatch new access key response payload to reducers', async () => {
