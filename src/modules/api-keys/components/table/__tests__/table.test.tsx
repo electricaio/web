@@ -56,6 +56,33 @@ describe('ApiKeys | table Component', () => {
     expect(formattedDate.find(Date).text()).toEqual('10.11.2018');
   });
 
+  it('passes entity to HiddenAPIKeyModal', () => {
+    const showKeyButtonColumn = this.component
+      .find(Table)
+      .prop('columns')
+      .find((col: ApiKeyModal) => col.key === 'key');
+    const entity = {
+      id: 1,
+      name: 'test',
+    };
+    const hiddenApiKeyModal = showKeyButtonColumn.render(entity);
+    expect(hiddenApiKeyModal.props.entity).toEqual(entity);
+  });
+
+  it('passes entity createdAt to Date', () => {
+    const dateColumn = this.component
+      .find(Table)
+      .prop('columns')
+      .find((col: ApiKeyModal) => col.key === 'created');
+    const entity = {
+      id: 1,
+      name: 'test',
+      createdAt: '2018-11-10T18:42:08.552',
+    };
+    const dateComponent = dateColumn.render(entity);
+    expect(dateComponent.props.date).toEqual(entity.createdAt);
+  });
+
   it('passes entity name to action buttons', () => {
     const actionButtonColumn = this.component
       .find(Table)
