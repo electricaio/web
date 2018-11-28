@@ -45,9 +45,9 @@ export const fetchKeys = (userId: number) =>
 
 export const getKey = (accessKeyId: number) => (dispatch: Dispatch) => {
   dispatch(fetchApiKeyAsyncActions.request());
-  withAuth((api: Api) => {
+  dispatch(withAuth((api: Api) => {
     return api.getAccessKey(accessKeyId).then((result: AxiosResponse) => {
       dispatch(fetchApiKeyAsyncActions.success(result.data));
     });
-  });
+  }));
 };

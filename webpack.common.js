@@ -29,10 +29,6 @@ module.exports = {
     }),
     new CopyWebpackPlugin([{ from: 'src/assets', to: 'assets' }]),
   ],
-  output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist'),
-  },
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
     alias: {
