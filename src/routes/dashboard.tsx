@@ -22,34 +22,18 @@ export interface TAppRouter extends AllProps {
   component: React.ComponentType<RouteProps>;
 }
 
-export const PrivateRoute: React.SFC<TAppRouter> = ({ component: Component, isAuth, ...rest }) => (
-  <Route
-    {...rest}
-    render={props => {
-      return isAuth() ? <Component {...props} /> : <Redirect to="/login" push />;
-    }}
-  />
-);
-
 export const PrivateDashboard: React.SFC<PropsFromDispatch> = ({ isAuth }) => {
-  return (
+  return isAuth() ? (
     <MainLayoutContainer>
       <Switch>
-        <PrivateRoute exact isAuth={isAuth} path="/" component={HomeContainer} />
-        <PrivateRoute isAuth={isAuth} path="/api-keys" component={ApiKeysContainer} />
-        <PrivateRoute
-          exact
-          isAuth={isAuth}
-          path="/connector-hub"
-          component={ConntectorHubContainer}
-        />
-        <PrivateRoute
-          isAuth={isAuth}
-          path="/connector-hub/:connectorId/connections"
-          component={ConnectionsContainer}
-        />
+        <Route exact path="/" component={HomeContainer} />
+        <Route path="/api-keys" component={ApiKeysContainer} />
+        <Route exact path="/connector-hub" component={ConntectorHubContainer} />
+        <Route path="/connector-hub/:connectorId/connections" component={ConnectionsContainer} />
       </Switch>
     </MainLayoutContainer>
+  ) : (
+    <Redirect to="/login" push />
   );
 };
 
