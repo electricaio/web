@@ -5,10 +5,9 @@ import { Api } from '../../modules/utils/api';
 import { withAuth } from '../util';
 import {
   createApiKeysAsyncActions,
-  refreshKeysAsyncActions,
   removeKeysAsyncActions,
   fetchApiKeysAsyncActions,
-  getApiKeyAsyncActions,
+  fetchApiKeyAsyncActions,
 } from './actions';
 
 export const createKey = (data: ApiKeyModal) =>
@@ -22,10 +21,10 @@ export const createKey = (data: ApiKeyModal) =>
 
 export const refreshKey = (accessKeyId: number) =>
   withAuth((dispatch: Dispatch, api: Api) => {
-    dispatch(refreshKeysAsyncActions.request());
+    dispatch(fetchApiKeyAsyncActions.request());
 
     return api.refreshAccessKey(accessKeyId).then((result: AxiosResponse) => {
-      dispatch(refreshKeysAsyncActions.success(result.data));
+      dispatch(fetchApiKeyAsyncActions.success(result.data));
     });
   });
 export const removeKey = (accessKeyId: number) =>
@@ -46,8 +45,8 @@ export const fetchKeys = (userId: number) =>
 
 export const getKey = (accessKeyId: number) =>
   withAuth((dispatch: Dispatch, api: Api) => {
-    dispatch(getApiKeyAsyncActions.request());
+    dispatch(fetchApiKeyAsyncActions.request());
     return api.getAccessKey(accessKeyId).then((result: AxiosResponse) => {
-      dispatch(getApiKeyAsyncActions.success(result.data));
+      dispatch(fetchApiKeyAsyncActions.success(result.data));
     });
   });

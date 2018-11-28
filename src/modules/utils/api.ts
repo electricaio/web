@@ -42,7 +42,7 @@ export class Api {
     bodyFormData.set('client_secret', 'change_me');
     bodyFormData.set('refresh_token', refreshToken);
     bodyFormData.set('grant_type', 'refresh_token');
-    return this.apiInstance.post(`/oauth/token`, bodyFormData);
+    return this.apiInstance.post('/oauth/token', bodyFormData);
   }
 
   getConnectors(): AxiosPromise {

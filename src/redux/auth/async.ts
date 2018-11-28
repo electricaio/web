@@ -9,31 +9,33 @@ import { AxiosResponse, AxiosError } from 'axios';
 import { withAuth } from '../util';
 import { signupUserAsyncActions, authAsyncActions, getUserAsyncActions } from './actions';
 
-export const signupUser = (signupParams: SignupParamsType) => async (dispatch: Dispatch) => {
+export const signupUser = (signupParams: SignupParamsType) => (dispatch: Dispatch) => {
   const api = new Api();
 
   dispatch(signupUserAsyncActions.request(signupParams));
-  try {
-    const result: AxiosResponse = await api.createUser(signupParams);
-    dispatch(signupUserAsyncActions.success(result.data));
-    dispatch(push('/login'));
-  } catch (error) {
-    dispatch(
-      signupUserAsyncActions.failure(get(<AxiosError>error, 'response.data.error_description'))
-    );
-  }
+  return api
+    .createUser(signupParams)
+    .then((result: AxiosResponse) => {
+      dispatch(signupUserAsyncActions.success(result.data));
+      dispatch(push('/login'));
+    })
+    .catch((error: AxiosError) => {
+      dispatch(signupUserAsyncActions.failure(get(error, 'response.data.error_description')));
+    });
 };
 
-export const loginUser = (username: string, password: string) => async (dispatch: Dispatch) => {
+export const loginUser = (username: string, password: string) => (dispatch: Dispatch) => {
   const api = new Api();
   dispatch(authAsyncActions.request());
-  try {
-    const result: AxiosResponse<TokenState> = await api.login(username, password);
-    dispatch(authAsyncActions.success(result.data));
-    dispatch(push('/api-keys'));
-  } catch (error) {
-    dispatch(authAsyncActions.failure(get(error, 'response.data.error_description')));
-  }
+  return api
+    .login(username, password)
+    .then((result: AxiosResponse<TokenState>) => {
+      dispatch(authAsyncActions.success(result.data));
+      dispatch(push('/api-keys'));
+    })
+    .catch((error: AxiosError) => {
+      dispatch(authAsyncActions.failure(get(error, 'response.data.error_description')));
+    });
 };
 
 export const logoutUser = () => (dispatch: Dispatch) => {

@@ -2,6 +2,7 @@ import { shallow } from 'enzyme';
 import React from 'react';
 import { API_KEYS_TABLE_DATA } from '../../../../../fixtures/api-keys-table-data';
 import { ApiKeysTable } from '../../table/table';
+import { ButtonActionModal } from '../../modal-button-action/modal-button-action';
 import { ApiKeys } from '../api-keys';
 import { ApiIcon } from '../api-keys.css';
 import { Header } from '../../../../ui-kit/header';
@@ -36,6 +37,10 @@ describe('ApiKeys', () => {
 
   it('Has Table', () => {
     expect(this.component.find(ApiKeysTable)).toHaveLength(1);
+  });
+
+  it('Has ButtonActionModal', () => {
+    expect(this.component.find(ButtonActionModal)).toHaveLength(1);
   });
 
   describe('table', () => {

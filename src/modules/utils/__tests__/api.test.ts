@@ -1,4 +1,5 @@
 import { Api, PREFIX } from '../api';
+
 import axios from 'axios';
 jest.mock('axios');
 
@@ -100,6 +101,48 @@ describe('api', () => {
     it('uses access-keys route', () => {
       api.getAccessKeys(1);
       expect(getMock.mock.calls[0][0]).toEqual(`/v1/users/1/access-keys`);
+    });
+  });
+
+  describe('getAccessKey', () => {
+    const accessKeyId = 1;
+
+    beforeEach(() => {
+      api.getAccessKey(accessKeyId);
+    });
+
+    it('uses get method', () => {
+      expect(getMock).toBeCalled();
+    });
+
+    it('uses access-keys route with access key id', () => {
+      expect(getMock.mock.calls[0][0]).toEqual(
+        `/v1/access-keys/${accessKeyId}`
+      );
+    });
+  });
+
+  describe('refreshToken', () => {
+    const refreshToken = "refresh";
+
+    beforeEach(() => {
+      api.refreshToken(refreshToken);
+    });
+
+    it('uses post method', () => {
+      expect(postMock).toBeCalled();
+    });
+
+    it('uses access-keys route with access key id', () => {
+      expect(postMock.mock.calls[0][0]).toEqual('/oauth/token');
+    });
+
+    it('passes form data with client_id, client_secret, refresh_token and grant type', () => {
+      const formData = postMock.mock.calls[0][1];
+      expect(formData.get('client_id')).toEqual('frontend-test');
+      expect(formData.get('client_secret')).toEqual('change_me');
+      expect(formData.get('refresh_token')).toEqual(refreshToken);
+      expect(formData.get('grant_type')).toEqual('refresh_token');
     });
   });
 

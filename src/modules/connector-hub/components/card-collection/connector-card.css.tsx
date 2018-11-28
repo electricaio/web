@@ -33,7 +33,7 @@ export const ErnCol = styled(Col as any)`
 
 export const ButtonContainer = styled.div`
   text-align: center;
-  margin: 20px;
+  margin-top: 20px;
 `;
 
 export const ErnValue = styled.span`

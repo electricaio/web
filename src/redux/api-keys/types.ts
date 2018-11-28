@@ -3,7 +3,10 @@ export type ApiKeyModal = {
   userId?: number;
   name: string;
   key?: string;
+  jti?: string;
+  revisionVersion?: number;
   createdAt?: string;
+  updatedAt?: string;
 };
 
 export const enum ApiKeysTypes {

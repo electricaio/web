@@ -29,7 +29,7 @@ type AllProps = PropsFromState & PropsFromDispatch;
 
 export class ConnectorHub extends Component<AllProps> {
   componentDidMount = () => {
-    //   this.props.fetchConnectors();
+    this.props.fetchConnectors();
   };
 
   public render() {
