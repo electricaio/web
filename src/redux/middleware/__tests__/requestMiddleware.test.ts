@@ -42,14 +42,14 @@ const TEST_RESULT = 'TEST_RESULT';
 const TEST_RESULT_FAILED = 'TEST_RESULT_FAILED';
 
 export const fetchLoggedInUser = () =>
-  withAuth((dispatch: Dispatch, api: Api) => {
+  withAuth((api: Api, dispatch: Dispatch) => {
     dispatch({
       type: TEST_RESULT,
     });
     return Promise.resolve();
   });
 export const fetchLoggedOutUser = () =>
-  withAuth((dispatch: Dispatch, api: Api) => {
+  withAuth((api: Api, dispatch: Dispatch) => {
     dispatch({
       type: TEST_RESULT_FAILED,
     });

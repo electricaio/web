@@ -36,25 +36,25 @@ describe('ConnectorHub Actions', () => {
         };
         dispatchMock = jest.fn();
         (withAuth as any).mockImplementation((callback: any) => {
-          callback(dispatchMock, mockApi);
+          callback(mockApi, dispatchMock);
         });
       });
 
-      it('dispatches FETCH_CONNECTORS action, async', async () => {
-        await fetchConnectors();
+      it('dispatches FETCH_CONNECTORS action', async () => {
+        await fetchConnectors()(dispatchMock);
         const firstDispatchCall = dispatchMock.mock.calls[0][0];
 
         expect(firstDispatchCall.type).toEqual(ConnectorHubTypes.FETCH_CONNECTORS);
       });
 
       it('dispatch FETCH_CONNECTORS_SUCCESS action', async () => {
-        await fetchConnectors();
+        await fetchConnectors()(dispatchMock);
         const successDispatchCall = dispatchMock.mock.calls[1][0];
         expect(successDispatchCall.type).toEqual(ConnectorHubTypes.FETCH_CONNECTORS_SUCCESS);
       });
 
       it('dispatch response payload to reducers', async () => {
-        await fetchConnectors();
+        await fetchConnectors()(dispatchMock);
         const successDispatchCall = dispatchMock.mock.calls[1][0];
         expect(successDispatchCall.payload).toEqual(connectorHubTesData);
       });

@@ -25,7 +25,7 @@ describe('Api Key Actions', () => {
     };
     dispatchMock = jest.fn();
     (withAuth as any).mockImplementation((callback: any) => {
-      callback(dispatchMock, mockApi);
+      callback(mockApi, dispatchMock);
     });
   });
 
@@ -84,19 +84,19 @@ describe('Api Key Actions', () => {
   describe('getKey', () => {
     describe('on api success', () => {
       it('dispatches FETCH_ACCESS_KEY action', async () => {
-        await getKey(1);
+        await getKey(1)(dispatchMock);
         const firstDispatchCall = dispatchMock.mock.calls[0][0];
         expect(firstDispatchCall.type).toEqual(ApiKeysTypes.FETCH_ACCESS_KEY);
       });
 
       it('dispatch FETCH_ACCESS_KEY_SUCCESS action', async () => {
-        await getKey(1);
+        await getKey(1)(dispatchMock);
         const successDispatchCall = dispatchMock.mock.calls[1][0];
         expect(successDispatchCall.type).toEqual(ApiKeysTypes.FETCH_ACCESS_KEY_SUCCESS);
       });
 
       it('dispatch new access key response payload to reducers', async () => {
-        await getKey(1);
+        await getKey(1)(dispatchMock);
         const successDispatchCall = dispatchMock.mock.calls[1][0];
         expect(successDispatchCall.payload).toEqual(testAccessKey);
       });

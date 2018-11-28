@@ -33,7 +33,6 @@ class SignupForm extends Component<AllProps> {
     e.preventDefault();
     form.validateFields((err: string, values: SignupParamsType) => {
       if (!err) {
-        console.log('Received values of form: ', values);
         values.organizationId = 1;
         signup(values);
       }

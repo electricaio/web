@@ -116,14 +116,12 @@ describe('api', () => {
     });
 
     it('uses access-keys route with access key id', () => {
-      expect(getMock.mock.calls[0][0]).toEqual(
-        `/v1/access-keys/${accessKeyId}`
-      );
+      expect(getMock.mock.calls[0][0]).toEqual(`/v1/access-keys/${accessKeyId}`);
     });
   });
 
   describe('refreshToken', () => {
-    const refreshToken = "refresh";
+    const refreshToken = 'refresh';
 
     beforeEach(() => {
       api.refreshToken(refreshToken);

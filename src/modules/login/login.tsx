@@ -26,7 +26,6 @@ class LoginForm extends Component<AllProps> {
     e.preventDefault();
     form.validateFields((err: string, values: any) => {
       if (!err) {
-        console.log('Received values of form: ', values);
         login(values.username, values.password);
       }
     });

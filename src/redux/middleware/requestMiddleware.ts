@@ -7,7 +7,7 @@ import { authAsyncActions } from '../auth/actions';
 import { push } from 'connected-react-router';
 
 interface RequestAction extends Action {
-  request: (dispatch: Dispatch, api: Api) => AxiosPromise;
+  request: (api: Api, dispatch: Dispatch) => AxiosPromise;
 }
 
 export default function requestMiddleware() {
@@ -28,12 +28,12 @@ export default function requestMiddleware() {
 }
 
 export const refreshTokenPromise = (
-  request: (dispatch: Dispatch, api: Api) => AxiosPromise,
+  request: (api: Api, dispatch: Dispatch) => AxiosPromise,
   dispatch: Dispatch,
   tokens: TokenState
 ) => {
   // Attempt to make the request
-  return request(dispatch, new Api(tokens)).catch((error: AxiosError) => {
+  return request(new Api(tokens), dispatch).catch((error: AxiosError) => {
     if (error.response === undefined) {
       dispatch(
         authAsyncActions.failure('There is a problem with your connection. Please try again')
@@ -46,7 +46,7 @@ export const refreshTokenPromise = (
         .refreshToken(tokens.refresh_token)
         .then((result: AxiosResponse<TokenState>) => {
           dispatch(authAsyncActions.success(result.data));
-          return request(dispatch, new Api(result.data));
+          return request(new Api(result.data), dispatch);
         })
         .catch(() => {
           // if there is a failure getting an access token then we just redirect to the login page

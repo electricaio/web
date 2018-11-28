@@ -145,26 +145,26 @@ describe('Auth', () => {
   });
 
   describe('fetchUser', () => {
-    let dispatchMock: any;
+    let dispatchMock: jest.Mock;
     let mockApi: any;
     beforeEach(() => {
       mockApi = {
         getUser: () => Promise.resolve({ data: { name: 'chris' } }),
       };
       dispatchMock = jest.fn();
-      (withAuth as any).mockImplementation((com: any) => {
-        com(dispatchMock, mockApi);
+      (withAuth as jest.Mock).mockImplementation((com: any) => {
+        com(mockApi);
       });
     });
 
     it('dispatches FETCH_USER action user with a username and password', async () => {
-      await fetchUser();
+      await fetchUser()(dispatchMock);
       const firstDispatchCall = dispatchMock.mock.calls[0][0];
       expect(firstDispatchCall.type).toEqual(AuthActionTypes.FETCH_USER);
     });
 
     it('dispatch TOKEN_RECEIVED action', async () => {
-      await fetchUser();
+      await fetchUser()(dispatchMock);
       const successDispatchCall = dispatchMock.mock.calls[1][0];
       expect(successDispatchCall.type).toEqual(AuthActionTypes.FETCH_USER_SUCCESS);
       expect(successDispatchCall.payload).toEqual({ name: 'chris' });
