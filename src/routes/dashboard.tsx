@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Route, Switch, RouteProps, Redirect } from 'react-router-dom';
 import { isAuthenticated } from '../redux/auth/actions';
 import { MainLayoutContainer } from '../components/layouts/main-layout/main-layout';
+import { HomeContainer } from '../modules/home/containers/home.container';
 import { ApiKeysContainer } from '../modules/api-keys/containers/api-keys/api-keys.container';
 import { ConntectorHubContainer } from '../modules/connector-hub/containers/connector-hub.container';
 import { ConnectionsContainer } from '../modules/connections/containers/connections.container';
@@ -21,31 +22,18 @@ export interface TAppRouter extends AllProps {
   component: React.ComponentType<RouteProps>;
 }
 
-export const PrivateRoute: React.SFC<TAppRouter> = ({ component: Component, isAuth, ...rest }) => (
-  <Route
-    {...rest}
-    render={props => (isAuth() ? <Component {...props} /> : <Redirect to="/login" />)}
-  />
-);
-
 export const PrivateDashboard: React.SFC<PropsFromDispatch> = ({ isAuth }) => {
-  return (
+  return isAuth() ? (
     <MainLayoutContainer>
       <Switch>
-        <PrivateRoute isAuth={isAuth} path="/api-keys" component={ApiKeysContainer} />
-        <PrivateRoute
-          exact
-          isAuth={isAuth}
-          path="/connector-hub"
-          component={ConntectorHubContainer}
-        />
-        <PrivateRoute
-          isAuth={isAuth}
-          path="/connector-hub/:connectorId/connections"
-          component={ConnectionsContainer}
-        />
+        <Route exact path="/" component={HomeContainer} />
+        <Route path="/api-keys" component={ApiKeysContainer} />
+        <Route exact path="/connector-hub" component={ConntectorHubContainer} />
+        <Route path="/connector-hub/:connectorId/connections" component={ConnectionsContainer} />
       </Switch>
     </MainLayoutContainer>
+  ) : (
+    <Redirect to="/login" push />
   );
 };
 
