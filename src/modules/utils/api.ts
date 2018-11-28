@@ -12,7 +12,8 @@ export type AUTH_TOKEN_TYPE = {
 };
 
 const createAuthHeader = () => ({
-  Authorization: `Bearer ${JSON.parse(localStorage.getItem(AUTH_TOKENS_STORAGE_KEY)).access_token}`,
+  Authorization: `Bearer ${localStorage.getItem(AUTH_TOKENS_STORAGE_KEY) &&
+    JSON.parse(localStorage.getItem(AUTH_TOKENS_STORAGE_KEY)).access_token}`,
 });
 
 export function login(username: string, password: string): AxiosPromise {

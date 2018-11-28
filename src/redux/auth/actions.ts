@@ -51,7 +51,7 @@ export const loginUser = (username: string, password: string) => (dispatch: Disp
     .then((result: AxiosResponse<AUTH_TOKEN_TYPE>) => {
       localStorage.setItem(AUTH_TOKENS_STORAGE_KEY, JSON.stringify(result.data));
       dispatch(loginUserAsyncActions.success(result.data));
-      dispatch(push('/api-keys'));
+      dispatch(push('/'));
     })
     .catch(error => {
       dispatch(loginUserAsyncActions.failure(get(error, 'response.data.error_description')));

@@ -1,13 +1,12 @@
-import React, { SFC } from 'react';
-import { match } from 'react-router';
-import { MainLayoutContainer } from '../../../../components/layouts/main-layout/main-layout';
+import React, { Component, Fragment } from 'react';
 
-type THomeProps = {
-  match: match;
-};
+interface PropsFromState {
+  userName: string;
+}
 
-export const Home: SFC<THomeProps> = ({ match }) => (
-  <MainLayoutContainer>
-    <div>Home Module</div>
-  </MainLayoutContainer>
-);
+export class Home extends Component<PropsFromState> {
+  render() {
+    const { userName } = this.props;
+    return <Fragment>Welcome {userName}!</Fragment>;
+  }
+}
