@@ -91,13 +91,13 @@ describe('Api Key Actions', () => {
 
       it('dispatch FETCH_ACCESS_KEY_SUCCESS action', async () => {
         await getKey(1)(dispatchMock);
-        const successDispatchCall = dispatchMock.mock.calls[1][0];
+        const successDispatchCall = dispatchMock.mock.calls[2][0];
         expect(successDispatchCall.type).toEqual(ApiKeysTypes.FETCH_ACCESS_KEY_SUCCESS);
       });
 
       it('dispatch new access key response payload to reducers', async () => {
         await getKey(1)(dispatchMock);
-        const successDispatchCall = dispatchMock.mock.calls[1][0];
+        const successDispatchCall = dispatchMock.mock.calls[2][0];
         expect(successDispatchCall.payload).toEqual(testAccessKey);
       });
     });

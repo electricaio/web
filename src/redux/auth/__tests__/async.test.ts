@@ -165,7 +165,7 @@ describe('Auth', () => {
 
     it('dispatch TOKEN_RECEIVED action', async () => {
       await fetchUser()(dispatchMock);
-      const successDispatchCall = dispatchMock.mock.calls[1][0];
+      const successDispatchCall = dispatchMock.mock.calls[2][0];
       expect(successDispatchCall.type).toEqual(AuthActionTypes.FETCH_USER_SUCCESS);
       expect(successDispatchCall.payload).toEqual({ name: 'chris' });
     });

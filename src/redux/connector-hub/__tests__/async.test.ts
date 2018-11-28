@@ -49,13 +49,13 @@ describe('ConnectorHub Actions', () => {
 
       it('dispatch FETCH_CONNECTORS_SUCCESS action', async () => {
         await fetchConnectors()(dispatchMock);
-        const successDispatchCall = dispatchMock.mock.calls[1][0];
+        const successDispatchCall = dispatchMock.mock.calls[2][0];
         expect(successDispatchCall.type).toEqual(ConnectorHubTypes.FETCH_CONNECTORS_SUCCESS);
       });
 
       it('dispatch response payload to reducers', async () => {
         await fetchConnectors()(dispatchMock);
-        const successDispatchCall = dispatchMock.mock.calls[1][0];
+        const successDispatchCall = dispatchMock.mock.calls[2][0];
         expect(successDispatchCall.payload).toEqual(connectorHubTesData);
       });
     });
