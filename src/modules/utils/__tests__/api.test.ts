@@ -5,10 +5,10 @@ jest.mock('axios');
 
 describe('api', () => {
   let api: Api;
-  let postMock: any;
-  let putMock: any;
-  let getMock: any;
-  let deleteMock: any;
+  let postMock: jest.Mock;
+  let putMock: jest.Mock;
+  let getMock: jest.Mock;
+  let deleteMock: jest.Mock;
   beforeEach(() => {
     this.mockAxiosInstance = jest.spyOn(axios, 'create');
     postMock = jest.fn();

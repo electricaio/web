@@ -12,7 +12,7 @@ describe('Api Key Actions', () => {
     userId: 2,
   };
 
-  let dispatchMock: any;
+  let dispatchMock: jest.Mock;
   let mockApi: any;
 
   beforeEach(() => {

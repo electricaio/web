@@ -10,7 +10,7 @@ jest.mock('../../util');
 
 describe('Auth', () => {
   describe('loginUser', () => {
-    let dispatchMock: any = null;
+    let dispatchMock: jest.Mock = null;
     const username = 'some user';
     const password = 'password';
 
@@ -63,7 +63,7 @@ describe('Auth', () => {
   });
 
   describe('signupUser', () => {
-    let dispatchMock: any = null;
+    let dispatchMock: jest.Mock = null;
     const params: SignupParamsType = {
       email: 'test@test.com',
       firstName: 'First',

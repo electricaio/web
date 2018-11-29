@@ -72,6 +72,7 @@ describe('Request API middlware', () => {
         connectors: { data: [] },
         connections: { data: [] },
         auth: {
+          user: { email: '', firstName: '', id: 0, lastName: '', organizationId: 0 },
           loading: false,
           tokens: {
             access_token: '200',

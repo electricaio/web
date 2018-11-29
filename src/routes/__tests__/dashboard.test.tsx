@@ -1,4 +1,3 @@
-
 import React, { SFC } from 'react';
 import { shallow, ReactWrapper } from 'enzyme';
 import { Route, Redirect } from 'react-router-dom';
@@ -26,7 +25,10 @@ describe('Dashboard', () => {
   });
 
   it('home route contains exact property', () => {
-    const homeRoute =  this.component.find(PrivateRoute).findWhere((comp: ReactWrapper) => comp.prop('path') === '/').first();
+    const homeRoute = this.component
+      .find(PrivateRoute)
+      .findWhere((comp: ReactWrapper) => comp.prop('path') === '/')
+      .first();
     expect(homeRoute.prop('exact')).toBeTruthy();
   });
 

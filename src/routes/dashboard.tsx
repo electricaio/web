@@ -37,12 +37,7 @@ export const PrivateDashboard: React.SFC<PropsFromDispatch> = ({ isAuthenticated
   return (
     <MainLayoutContainer>
       <Switch>
-        <PrivateRoute
-          isAuthenticated={isAuthenticated}
-          path="/"
-          exact
-          component={HomeContainer}
-        />
+        <PrivateRoute isAuthenticated={isAuthenticated} path="/" exact component={HomeContainer} />
         <PrivateRoute
           isAuthenticated={isAuthenticated}
           path="/api-keys"

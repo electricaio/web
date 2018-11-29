@@ -48,7 +48,7 @@ export interface AuthState {
   readonly tokens: TokenState;
   readonly loading: boolean;
   readonly errors?: string;
-  readonly user?: UserDto;
+  readonly user: UserDto;
 }
 
 export interface SignupState {

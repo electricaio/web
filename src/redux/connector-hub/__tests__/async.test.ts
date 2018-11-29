@@ -8,7 +8,7 @@ jest.mock('../../util');
 describe('ConnectorHub Actions', () => {
   describe('fetchConnectors', () => {
     describe('on api success', () => {
-      let dispatchMock: any;
+      let dispatchMock: jest.Mock;
       let mockApi: any;
       const connectorHubTesData: ConnectorModal[] = [
         {
