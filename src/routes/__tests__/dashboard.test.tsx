@@ -1,20 +1,20 @@
-import React from 'react';
+import React, { SFC } from 'react';
 import { shallow, ReactWrapper } from 'enzyme';
-import { Route } from 'react-router-dom';
-import { PrivateDashboard } from '../dashboard';
-import { HomeContainer } from '../../modules/home/containers/home.container';
+import { Route, Redirect } from 'react-router-dom';
+import { PrivateDashboard, PrivateRoute } from '../dashboard';
 import { ApiKeysContainer } from '../../modules/api-keys/containers/api-keys/api-keys.container';
 import { ConntectorHubContainer } from '../../modules/connector-hub/containers/connector-hub.container';
 import { ConnectionsContainer } from '../../modules/connections/containers/connections.container';
+import { HomeContainer } from '../../modules/home/containers/home.container';
 
 describe('Dashboard', () => {
   beforeEach(() => {
-    this.component = shallow(<PrivateDashboard isAuth={() => true} />);
+    this.component = shallow(<PrivateDashboard isAuthenticated />);
   });
 
   const routeComponent = (path: string) => {
     return this.component
-      .find(Route)
+      .find(PrivateRoute)
       .findWhere((comp: ReactWrapper) => comp.prop('path') === path)
       .first()
       .prop('component');
@@ -22,6 +22,14 @@ describe('Dashboard', () => {
 
   it('routes / to HomeContainer', () => {
     expect(routeComponent('/')).toBe(HomeContainer);
+  });
+
+  it('home route contains exact property', () => {
+    const homeRoute = this.component
+      .find(PrivateRoute)
+      .findWhere((comp: ReactWrapper) => comp.prop('path') === '/')
+      .first();
+    expect(homeRoute.prop('exact')).toBeTruthy();
   });
 
   it('routes /api-keys to ApiKeysContainer', () => {
@@ -34,5 +42,19 @@ describe('Dashboard', () => {
 
   it('routes /connector-hub/:connectorId/connections to ConnectionsContainer', () => {
     expect(routeComponent('/connector-hub/:connectorId/connections')).toBe(ConnectionsContainer);
+  });
+
+  describe('PrivateRoute', () => {
+    const TestComponent: SFC = () => <div>content</div>;
+
+    it('redirects to login if auth failed', () => {
+      const component = shallow(<PrivateRoute component={TestComponent} isAuthenticated={false} />);
+      expect(component.find(Route).prop('render')()).toEqual(<Redirect to="/login" />);
+    });
+
+    it('render component if auth passed', () => {
+      const component = shallow(<PrivateRoute component={TestComponent} isAuthenticated />);
+      expect(component.find(Route).prop('render')()).toEqual(<TestComponent />);
+    });
   });
 });

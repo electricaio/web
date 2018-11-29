@@ -6,7 +6,7 @@ import { ForgotPassword } from './login.css';
 import { StyledButton } from '../ui-kit/button';
 import { StyledInput } from '../ui-kit/input';
 import { Header } from '../../components/header';
-import { loginUser } from '../../redux/auth/actions';
+import { loginUser } from '../../redux/auth/async';
 
 const FormItem = Form.Item;
 
@@ -26,7 +26,6 @@ class LoginForm extends Component<AllProps> {
     e.preventDefault();
     form.validateFields((err: string, values: any) => {
       if (!err) {
-        console.log('Received values of form: ', values);
         login(values.username, values.password);
       }
     });

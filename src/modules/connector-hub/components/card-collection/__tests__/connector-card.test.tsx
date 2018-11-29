@@ -64,7 +64,8 @@ describe('ConnectorCard', () => {
     const tags = this.connectorCard.find(Tag);
     expect(this.connectorCard.find(Card)).toHaveLength(1);
     expect(tags).toHaveLength(1);
-    expect(tags.at(0).text()).toEqual(TYPE_NAMES_DATA.find(myObj => myObj.id === connector().typeId).name);
+    expect(tags.at(0).text()).toEqual(
+      TYPE_NAMES_DATA.find(myObj => myObj.id === connector().typeId).name
+    );
   });
-  
 });

@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { ConnectorHubComponent } from '../components/connector-hub/connector-hub';
 import { ApplicationState } from '../../../redux/store';
-import { fetchConnectors } from '../../../redux/connector-hub/actions';
 import { ConnectorModal } from '../../../redux/connector-hub/types';
 import { Spin } from 'antd';
+import { fetchConnectors } from '../../../redux/connector-hub/async';
 
 const mapStateToProps = ({ connectors }: ApplicationState) => ({
   connectors: connectors.data,
@@ -29,7 +29,7 @@ type AllProps = PropsFromState & PropsFromDispatch;
 
 export class ConnectorHub extends Component<AllProps> {
   componentDidMount = () => {
-      this.props.fetchConnectors();
+    this.props.fetchConnectors();
   };
 
   public render() {

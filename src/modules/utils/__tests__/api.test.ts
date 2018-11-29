@@ -1,23 +1,32 @@
-import {
-  login,
-  createUser,
-  PREFIX,
-  getConnectors,
-  createAccessKey,
-  refreshAccessKey,
-  removeAccessKey,
-  getAccessKeys,
-  getAccessKey,
-  getUser,
-} from '../api';
+import { Api, PREFIX } from '../api';
+
 import axios from 'axios';
 jest.mock('axios');
 
 describe('api', () => {
+  let api: Api;
+  let postMock: jest.Mock;
+  let putMock: jest.Mock;
+  let getMock: jest.Mock;
+  let deleteMock: jest.Mock;
   beforeEach(() => {
-    process.env.AUTH_TOKEN = '123';
+    this.mockAxiosInstance = jest.spyOn(axios, 'create');
+    postMock = jest.fn();
+    putMock = jest.fn();
+    getMock = jest.fn();
+    deleteMock = jest.fn();
+    this.mockAxiosInstance.mockImplementation(() => ({
+      post: postMock,
+      put: putMock,
+      get: getMock,
+      delete: deleteMock,
+    }));
+
+    const accessToken = '123';
+    api = new Api({ access_token: '123', expires_in: 1234, refresh_token: '123' });
+
+    process.env.AUTH_TOKEN = accessToken;
     process.env.API_ENDPOINT = 'api-endpoint.com';
-    (localStorage.getItem as any).mockReturnValue(JSON.stringify({ access_token: 123 }));
   });
 
   describe('login', () => {
@@ -25,31 +34,26 @@ describe('api', () => {
     const password = 'secret';
 
     beforeEach(() => {
-      this.postSpy = jest.spyOn(axios, 'post');
-      login(username, password);
-    });
-
-    afterEach(() => {
-      this.postSpy.mockReset();
+      api.login(username, password);
     });
 
     it('uses post method', () => {
-      expect(this.postSpy).toBeCalled();
+      expect(postMock).toBeCalled();
     });
 
     it('passes oauth url with endpoint env var', () => {
-      expect(this.postSpy.mock.calls[0][0]).toEqual(`${process.env.API_ENDPOINT}/oauth/token`);
+      expect(postMock.mock.calls[0][0]).toEqual(`/oauth/token`);
     });
 
     it('passes form data with username, password and grant type', () => {
-      const formData = this.postSpy.mock.calls[0][1];
+      const formData = postMock.mock.calls[0][1];
       expect(formData.get('username')).toEqual(`${PREFIX}${username}`);
       expect(formData.get('password')).toEqual(password);
       expect(formData.get('grant_type')).toEqual('password');
     });
 
     it('passes auth token in header', () => {
-      expect(this.postSpy.mock.calls[0][2].headers['Authorization']).toEqual(
+      expect(postMock.mock.calls[0][2].headers['Authorization']).toEqual(
         `Basic ${process.env.AUTH_TOKEN}`
       );
     });
@@ -65,60 +69,38 @@ describe('api', () => {
     };
 
     beforeEach(() => {
-      this.postSpy = jest.spyOn(axios, 'post');
-      createUser(params);
-    });
-
-    afterEach(() => {
-      this.postSpy.mockReset();
+      api.createUser(params);
     });
 
     it('uses post method', () => {
-      expect(this.postSpy).toBeCalled();
+      expect(postMock).toBeCalled();
     });
 
     it('passes oauth url with endpoint env var', () => {
-      expect(this.postSpy.mock.calls[0][0]).toEqual(`${process.env.API_ENDPOINT}/public/v1/users`);
+      expect(postMock.mock.calls[0][0]).toEqual(`/public/v1/users`);
     });
 
     it('passes form data with username, password and grant type', () => {
-      const formData = this.postSpy.mock.calls[0][1];
+      const formData = postMock.mock.calls[0][1];
       expect(formData).toEqual(params);
     });
 
     it('passes auth token in header', () => {
-      expect(this.postSpy.mock.calls[0][2].headers['Authorization']).toEqual(
+      expect(postMock.mock.calls[0][2].headers['Authorization']).toEqual(
         `Basic ${process.env.AUTH_TOKEN}`
       );
     });
   });
 
   describe('getAccessKeys', () => {
-    beforeEach(() => {
-      this.getSpy = jest.spyOn(axios, 'get');
-    });
-
-    afterEach(() => {
-      this.getSpy.mockReset();
-    });
-
     it('uses get method', () => {
-      getAccessKeys(1);
-      expect(this.getSpy).toBeCalled();
+      api.getAccessKeys(1);
+      expect(getMock).toBeCalled();
     });
 
     it('uses access-keys route', () => {
-      getAccessKeys(1);
-      expect(this.getSpy.mock.calls[0][0]).toEqual(
-        `${process.env.API_ENDPOINT}/v1/users/1/access-keys`
-      );
-    });
-
-    it('passes auth token in header', () => {
-      getAccessKeys(1);
-      expect(this.getSpy.mock.calls[0][1].headers['Authorization']).toEqual(
-        `Bearer ${process.env.AUTH_TOKEN}`
-      );
+      api.getAccessKeys(1);
+      expect(getMock.mock.calls[0][0]).toEqual(`/v1/users/1/access-keys`);
     });
   });
 
@@ -126,92 +108,67 @@ describe('api', () => {
     const accessKeyId = 1;
 
     beforeEach(() => {
-      this.getSpy = jest.spyOn(axios, 'get');
-    });
-
-    afterEach(() => {
-      this.getSpy.mockReset();
+      api.getAccessKey(accessKeyId);
     });
 
     it('uses get method', () => {
-      getAccessKey(accessKeyId);
-      expect(this.getSpy).toBeCalled();
+      expect(getMock).toBeCalled();
     });
 
     it('uses access-keys route with access key id', () => {
-      getAccessKey(accessKeyId);
-      expect(this.getSpy.mock.calls[0][0]).toEqual(
-        `${process.env.API_ENDPOINT}/v1/access-keys/${accessKeyId}`
-      );
+      expect(getMock.mock.calls[0][0]).toEqual(`/v1/access-keys/${accessKeyId}`);
+    });
+  });
+
+  describe('refreshToken', () => {
+    const refreshToken = 'refresh';
+
+    beforeEach(() => {
+      api.refreshToken(refreshToken);
     });
 
-    it('passes auth token in header', () => {
-      getAccessKey(accessKeyId);
-      expect(this.getSpy.mock.calls[0][1].headers['Authorization']).toEqual(
-        `Bearer ${process.env.AUTH_TOKEN}`
-      );
+    it('uses post method', () => {
+      expect(postMock).toBeCalled();
+    });
+
+    it('uses access-keys route with access key id', () => {
+      expect(postMock.mock.calls[0][0]).toEqual('/oauth/token');
+    });
+
+    it('passes form data with client_id, client_secret, refresh_token and grant type', () => {
+      const formData = postMock.mock.calls[0][1];
+      expect(formData.get('client_id')).toEqual('frontend-test');
+      expect(formData.get('client_secret')).toEqual('change_me');
+      expect(formData.get('refresh_token')).toEqual(refreshToken);
+      expect(formData.get('grant_type')).toEqual('refresh_token');
     });
   });
 
   describe('removeAccessKey', () => {
     const accessKeyId = 1;
 
-    beforeEach(() => {
-      this.deleteSpy = jest.spyOn(axios, 'delete');
-    });
-
-    afterEach(() => {
-      this.deleteSpy.mockReset();
-    });
-
     it('uses delete method', () => {
-      removeAccessKey(accessKeyId);
-      expect(this.deleteSpy).toBeCalled();
+      api.removeAccessKey(accessKeyId);
+      expect(deleteMock).toBeCalled();
     });
 
     it('uses access-keys route with access key id', () => {
-      removeAccessKey(accessKeyId);
-      expect(this.deleteSpy.mock.calls[0][0]).toEqual(
-        `${process.env.API_ENDPOINT}/v1/access-keys/${accessKeyId}`
-      );
-    });
-
-    it('passes auth token in header', () => {
-      removeAccessKey(accessKeyId);
-      expect(this.deleteSpy.mock.calls[0][1].headers['Authorization']).toEqual(
-        `Bearer ${process.env.AUTH_TOKEN}`
-      );
+      api.removeAccessKey(accessKeyId);
+      expect(deleteMock.mock.calls[0][0]).toEqual(`/v1/access-keys/${accessKeyId}`);
     });
   });
 
   describe('refreshAccessKey', () => {
     const accessKeyId = 1;
 
-    beforeEach(() => {
-      this.putSpy = jest.spyOn(axios, 'put');
-    });
-
-    afterEach(() => {
-      this.putSpy.mockReset();
-    });
-
-    it('uses put method', () => {
-      refreshAccessKey(accessKeyId);
-      expect(this.putSpy).toBeCalled();
+    it('uses post method', () => {
+      api.refreshAccessKey(accessKeyId);
+      expect(putMock).toBeCalled();
     });
 
     it('uses access-keys route with access key id', () => {
-      refreshAccessKey(accessKeyId);
-      expect(this.putSpy.mock.calls[0][0]).toEqual(
-        `${process.env.API_ENDPOINT}/v1/access-keys/${accessKeyId}/refresh`
-      );
-    });
-
-    it('passes auth token in header', () => {
-      refreshAccessKey(accessKeyId);
-      expect(this.putSpy.mock.calls[0][2].headers['Authorization']).toEqual(
-        `Bearer ${process.env.AUTH_TOKEN}`
-      );
+      api.refreshAccessKey(accessKeyId);
+      expect(putMock.mock.calls[0][0]).toEqual(`/v1/access-keys/${accessKeyId}/refresh`);
     });
   });
 
@@ -221,83 +178,43 @@ describe('api', () => {
       name: 'development access key',
     };
 
-    beforeEach(() => {
-      this.postSpy = jest.spyOn(axios, 'post');
-    });
-
-    afterEach(() => {
-      this.postSpy.mockReset();
-    });
-
     it('uses post method', () => {
-      createAccessKey(accessKetData);
-      expect(this.postSpy).toBeCalled();
+      api.createAccessKey(accessKetData);
+      expect(postMock).toBeCalled();
     });
 
     it('uses access-keys route', () => {
-      createAccessKey(accessKetData);
-      expect(this.postSpy.mock.calls[0][0]).toEqual(`${process.env.API_ENDPOINT}/v1/access-keys`);
+      api.createAccessKey(accessKetData);
+      expect(postMock.mock.calls[0][0]).toEqual(`/v1/access-keys`);
     });
 
     it('passes new access key data to post', () => {
-      createAccessKey(accessKetData);
-      expect(this.postSpy.mock.calls[0][1]).toEqual(accessKetData);
-    });
-
-    it('passes auth token in header', () => {
-      createAccessKey(accessKetData);
-      expect(this.postSpy.mock.calls[0][2].headers['Authorization']).toEqual(
-        `Bearer ${process.env.AUTH_TOKEN}`
-      );
+      api.createAccessKey(accessKetData);
+      expect(postMock.mock.calls[0][1]).toEqual(accessKetData);
     });
   });
 
   describe('getConnectors', () => {
-    beforeEach(() => {
-      this.getSpy = jest.spyOn(axios, 'get');
-    });
-
-    afterEach(() => {
-      this.getSpy.mockReset();
-    });
-
     it('uses post method', () => {
-      getConnectors();
-      expect(this.getSpy).toBeCalled();
+      api.getConnectors();
+      expect(getMock).toBeCalled();
     });
 
     it('passes oauth url with endpoint env var', () => {
-      getConnectors();
-      expect(this.getSpy.mock.calls[0][0]).toEqual(
-        `${process.env.API_ENDPOINT}/public/v1/connectors`
-      );
+      api.getConnectors();
+      expect(getMock.mock.calls[0][0]).toEqual(`/public/v1/connectors`);
     });
   });
 
   describe('getUser', () => {
-    beforeEach(() => {
-      this.getSpy = jest.spyOn(axios, 'get');
-    });
-
-    afterEach(() => {
-      this.getSpy.mockReset();
-    });
-
     it('uses get method', () => {
-      getUser();
-      expect(this.getSpy).toBeCalled();
+      api.getUser();
+      expect(getMock).toBeCalled();
     });
 
     it('calls user me path', () => {
-      getUser();
-      expect(this.getSpy.mock.calls[0][0]).toEqual(`${process.env.API_ENDPOINT}/v1/me/user`);
-    });
-
-    it('passes auth token in header', () => {
-      getUser();
-      expect(this.getSpy.mock.calls[0][1].headers['Authorization']).toEqual(
-        `Bearer ${process.env.AUTH_TOKEN}`
-      );
+      api.getUser();
+      expect(getMock.mock.calls[0][0]).toEqual(`v1/me/user`);
     });
   });
 });

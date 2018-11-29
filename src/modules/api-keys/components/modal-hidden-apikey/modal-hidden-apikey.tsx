@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { Input, Modal, Spin } from 'antd';
 import { ApplicationState } from '../../../../redux/store';
-import { getKey } from '../../../../redux/api-keys/actions';
 import { ApiKeyModal } from '../../../../redux/api-keys/types';
 import { StyledButton } from '../../../ui-kit/button';
 import { MaskStyle } from './modal-hidden-apikey.css';
+import { getKey } from '../../../../redux/api-keys/async';
 
 const { TextArea } = Input;
 const mapStateToProps = ({ apiKeys }: ApplicationState, { entity }: THiddenApiKeyProps) => ({

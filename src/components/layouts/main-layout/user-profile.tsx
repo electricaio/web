@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { Dispatch, bindActionCreators } from 'redux';
 import { Dropdown, Icon, Menu } from 'antd';
 
-import { logoutUser } from '../../../redux/auth/actions';
 import { Name, Profile, StyledIcon } from './user-profile.css';
+import { logoutUser } from '../../../redux/auth/async';
 
 interface ProfileMenuProps {
   onLogoutUser: typeof logoutUser;

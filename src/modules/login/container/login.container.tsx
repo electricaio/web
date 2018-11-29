@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { Dispatch, bindActionCreators } from 'redux';
 import { LoginFormComponent } from '../login';
 import { ApplicationState } from '../../../redux/store';
-import { loginUser, fetchUser } from '../../../redux/auth/actions';
 import { Spin, message } from 'antd';
+import { loginUser, fetchUser } from '../../../redux/auth/async';
 
 const mapStateToProps = ({ auth }: ApplicationState) => ({
   errors: auth.errors,

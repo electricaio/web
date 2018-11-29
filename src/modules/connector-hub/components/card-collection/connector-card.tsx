@@ -50,7 +50,11 @@ export class ConnectorCard extends React.Component<ConnectorCardProps> {
         hoverable
         title={connector.name}
         cover={<CompanyImageComponent image={companyImageMockUrl} />}
-        extra={<Tag color="green">{TYPE_NAMES_DATA.find(myObj => myObj.id === connector.typeId).name}</Tag>}
+        extra={
+          <Tag color="green">
+            {TYPE_NAMES_DATA.find(myObj => myObj.id === connector.typeId).name}
+          </Tag>
+        }
       >
         <StyledMeta description={connector.properties.description} />
         <Row>
@@ -60,7 +64,9 @@ export class ConnectorCard extends React.Component<ConnectorCardProps> {
           </Col>
         </Row>
         <ButtonContainer>
-          <Button type="primary" size="large">Configure</Button>
+          <Button type="primary" size="large">
+            Configure
+          </Button>
         </ButtonContainer>
       </StyledCard>
     );

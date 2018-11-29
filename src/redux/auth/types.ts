@@ -31,12 +31,24 @@ export const enum AuthActionTypes {
   SIGNUP_USER = '@@user/SIGNUP_USER',
   SIGNUP_USER_SUCCESS = '@@user/SIGNUP_USER_SUCCESS',
   SIGNUP_USER_ERROR = '@@user/SIGNUP_USER_ERROR',
+
+  TOKEN_REQUEST = '@@token/TOKEN_REQUEST',
+  TOKEN_RECEIVED = '@@token/TOKEN_RECEIVED',
+  TOKEN_FAILURE = '@@token/TOKEN_FAILURE',
 }
 
-export interface LoginState {
+export interface TokenState {
+  readonly access_token: string;
+  readonly refresh_token: string;
+  readonly token_type?: string;
+  readonly expires_in: number;
+}
+
+export interface AuthState {
+  readonly tokens: TokenState;
   readonly loading: boolean;
   readonly errors?: string;
-  readonly user?: UserDto;
+  readonly user: UserDto;
 }
 
 export interface SignupState {

@@ -1,21 +1,26 @@
-import { loginUser, signupUser, isAuthenticated, logoutUser, fetchUser } from '../actions';
+import { loginUser, signupUser, logoutUser, fetchUser } from '../async';
 
-import * as api from '../../../modules/utils/api';
+import { Api } from '../../../modules/utils/api';
 import { AuthActionTypes, SignupParamsType } from '../types';
 import { CALL_HISTORY_METHOD } from 'connected-react-router';
+import { withAuth } from '../../util';
 
 jest.mock('../../../modules/utils/api');
+jest.mock('../../util');
 
 describe('Auth', () => {
   describe('loginUser', () => {
-    let dispatchMock: any = null;
+    let dispatchMock: jest.Mock = null;
     const username = 'some user';
     const password = 'password';
 
     const mockDispatchAndLoginUser = (apiResponse: () => void) => {
       dispatchMock = jest.fn();
-      const loginMock = jest.spyOn(api, 'login');
-      loginMock.mockImplementation((username: string, password: string) => apiResponse());
+      (Api as any).mockImplementation(() => {
+        return {
+          login: apiResponse,
+        };
+      });
       return loginUser(username, password)(dispatchMock);
     };
 
@@ -32,20 +37,13 @@ describe('Auth', () => {
         await successfulApiResponse();
         const firstDispatchCall = dispatchMock.mock.calls[0][0];
 
-        expect(firstDispatchCall.type).toEqual(AuthActionTypes.LOGIN_USER);
-        expect(firstDispatchCall.payload).toEqual({ username, password });
+        expect(firstDispatchCall.type).toEqual(AuthActionTypes.TOKEN_REQUEST);
       });
 
       it('dispatch LOGIN_SUCCESS action', async () => {
         await successfulApiResponse();
         const successDispatchCall = dispatchMock.mock.calls[1][0];
-        expect(successDispatchCall.type).toEqual(AuthActionTypes.LOGIN_USER_SUCCESS);
-      });
-
-      it('updates local storage', async () => {
-        await successfulApiResponse();
-
-        expect(localStorage.setItem).toBeCalled();
+        expect(successDispatchCall.type).toEqual(AuthActionTypes.TOKEN_RECEIVED);
       });
 
       it('routes to the home page  ', async () => {
@@ -56,16 +54,16 @@ describe('Auth', () => {
     });
 
     describe('on api error', () => {
-      it('dispatches LOGIN_USER_ERROR action', async () => {
+      it('dispatches TOKEN_FAILURE action', async () => {
         await errorApiResponse();
         const errorDispatchCall = dispatchMock.mock.calls[1][0];
-        expect(errorDispatchCall.type).toEqual(AuthActionTypes.LOGIN_USER_ERROR);
+        expect(errorDispatchCall.type).toEqual(AuthActionTypes.TOKEN_FAILURE);
       });
     });
   });
 
   describe('signupUser', () => {
-    let dispatchMock: any = null;
+    let dispatchMock: jest.Mock = null;
     const params: SignupParamsType = {
       email: 'test@test.com',
       firstName: 'First',
@@ -76,8 +74,11 @@ describe('Auth', () => {
 
     const mockDispatchAndSignupUser = (apiResponse: () => void) => {
       dispatchMock = jest.fn();
-      const sinupMock = jest.spyOn(api, 'createUser');
-      sinupMock.mockImplementation((parmas: any) => apiResponse());
+      (Api as any).mockImplementation(() => {
+        return {
+          createUser: apiResponse,
+        };
+      });
       return signupUser(params)(dispatchMock);
     };
 
@@ -121,52 +122,50 @@ describe('Auth', () => {
   });
 
   describe('logoutUser', () => {
-    it('remove auth token from local storage', () => {
-      const dispatchMock = jest.fn();
-      logoutUser()(dispatchMock);
-      expect(localStorage.removeItem).toBeCalled();
-      expect(localStorage.removeItem).toBeCalledWith(api.AUTH_TOKENS_STORAGE_KEY);
-    });
     it('routes to login page', () => {
       const dispatchMock = jest.fn();
       logoutUser()(dispatchMock);
       expect(dispatchMock).toBeCalled();
-      const routeToLoginDispatch = dispatchMock.mock.calls[0][0];
+      const routeToLoginDispatch = dispatchMock.mock.calls[1][0];
       expect(routeToLoginDispatch.type).toEqual(CALL_HISTORY_METHOD);
       expect(routeToLoginDispatch.payload).toEqual({ method: 'push', args: ['/login'] });
     });
-  });
 
-  describe('isAuthenticated', () => {
-    it('returns true if token is in local storage', () => {
-      (localStorage.getItem as any).mockReturnValue('1234');
-      expect(isAuthenticated()).toBeTruthy();
-    });
-    it('returns false if token is not in local storage', () => {
-      (localStorage.getItem as any).mockReturnValue('');
-      expect(isAuthenticated()).toBeFalsy();
+    it('calls TOKEN_RECEIVED with undefined token value', () => {
+      const dispatchMock = jest.fn();
+      logoutUser()(dispatchMock);
+      const tokenReceivedDispatch = dispatchMock.mock.calls[0][0];
+      expect(tokenReceivedDispatch.type).toEqual(AuthActionTypes.TOKEN_RECEIVED);
+      expect(tokenReceivedDispatch.payload).toEqual({
+        access_token: undefined,
+        expires_in: undefined,
+        refresh_token: undefined,
+      });
     });
   });
 
   describe('fetchUser', () => {
-    let dispatchMock: any;
-
-    const mockDispatchAndGetUser = () => {
+    let dispatchMock: jest.Mock;
+    let mockApi: any;
+    beforeEach(() => {
+      mockApi = {
+        getUser: () => Promise.resolve({ data: { name: 'chris' } }),
+      };
       dispatchMock = jest.fn();
-      const loginMock = jest.spyOn(api, 'getUser');
-      loginMock.mockImplementation(() => Promise.resolve({ data: { name: 'chris' } }));
-      return fetchUser()(dispatchMock);
-    };
+      (withAuth as jest.Mock).mockImplementation((com: any) => {
+        com(mockApi);
+      });
+    });
 
     it('dispatches FETCH_USER action user with a username and password', async () => {
-      await mockDispatchAndGetUser();
+      await fetchUser()(dispatchMock);
       const firstDispatchCall = dispatchMock.mock.calls[0][0];
       expect(firstDispatchCall.type).toEqual(AuthActionTypes.FETCH_USER);
     });
 
-    it('dispatch LOGIN_SUCCESS action', async () => {
-      await mockDispatchAndGetUser();
-      const successDispatchCall = dispatchMock.mock.calls[1][0];
+    it('dispatch TOKEN_RECEIVED action', async () => {
+      await fetchUser()(dispatchMock);
+      const successDispatchCall = dispatchMock.mock.calls[2][0];
       expect(successDispatchCall.type).toEqual(AuthActionTypes.FETCH_USER_SUCCESS);
       expect(successDispatchCall.payload).toEqual({ name: 'chris' });
     });

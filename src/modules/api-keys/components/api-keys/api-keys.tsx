@@ -5,7 +5,7 @@ import React, { Component, Fragment } from 'react';
 import { ButtonActionModal } from '../modal-button-action/modal-button-action';
 import { NewApiButton } from '../modal-button-action/modal-button-action.css';
 import { ApiKeyModal } from '../../../../redux/api-keys/types';
-import { removeKey, createKey, refreshKey } from '../../../../redux/api-keys/actions';
+import { removeKey, createKey, refreshKey } from '../../../../redux/api-keys/async';
 
 // Separate state props + dispatch props to their own interfaces.
 interface PropsFromState {

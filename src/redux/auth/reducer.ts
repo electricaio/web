@@ -1,24 +1,23 @@
 import { Reducer } from 'redux';
-import { LoginState } from './types';
+import { AuthState } from './types';
 import { ActionType, getType } from 'typesafe-actions';
 
 import * as authActions from './actions';
 export type AuthActions = ActionType<typeof authActions>;
 
-const initialState: LoginState = {
+const initialState: AuthState = {
+  tokens: { access_token: null, refresh_token: null, expires_in: null, token_type: null },
   errors: '',
   loading: false,
+  user: { email: '', firstName: '', id: 0, lastName: '', organizationId: 0 },
 };
 
-const reducer: Reducer<LoginState> = (state = initialState, action: AuthActions): LoginState => {
+const reducer: Reducer<AuthState> = (state = initialState, action: AuthActions): AuthState => {
   switch (action.type) {
-    case getType(authActions.loginUserAsyncActions.request): {
-      return { ...state, loading: true, errors: '' };
+    case getType(authActions.authAsyncActions.success): {
+      return { ...state, loading: false, tokens: action.payload };
     }
-    case getType(authActions.loginUserAsyncActions.success): {
-      return { ...state, loading: false };
-    }
-    case getType(authActions.loginUserAsyncActions.failure): {
+    case getType(authActions.authAsyncActions.failure): {
       return { ...state, loading: false, errors: action.payload };
     }
     case getType(authActions.getUserAsyncActions.success): {

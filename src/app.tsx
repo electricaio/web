@@ -5,18 +5,21 @@ import { createHashHistory } from 'history';
 import configureStore from './redux/configureStore';
 import { Routes } from './routes/routes';
 import { ConnectedRouter } from 'connected-react-router';
+import { PersistGate } from 'redux-persist/integration/react';
 
 import './theme.less';
 
 const history = createHashHistory();
-const store = configureStore(history);
+const { store, persistor } = configureStore(history);
 
 class App extends Component {
   render() {
     return (
       <Provider store={store}>
         <ConnectedRouter history={history}>
-          <Routes />
+          <PersistGate loading={null} persistor={persistor}>
+            <Routes />
+          </PersistGate>
         </ConnectedRouter>
       </Provider>
     );

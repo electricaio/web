@@ -10,11 +10,7 @@ describe('Connector Hub Container', () => {
 
   beforeEach(() => {
     this.container = mount(
-      <ConnectorHub 
-        loading
-        connectors={CONNECTOR_HUB_DATA}
-        fetchConnectors={fetchConnectorsMock}
-      />
+      <ConnectorHub loading connectors={CONNECTOR_HUB_DATA} fetchConnectors={fetchConnectorsMock} />
     );
   });
 
@@ -38,5 +34,4 @@ describe('Connector Hub Container', () => {
         .prop('connectors')
     ).toEqual(CONNECTOR_HUB_DATA);
   });
-
 });
