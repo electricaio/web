@@ -1,7 +1,7 @@
 export type ConnectionModal = {
   accessKeyId: number;
   connectorId: number;
-  id: number;
+  id?: number;
   token?: string;
   name: string;
 };
