@@ -13,6 +13,7 @@ phases:
       - aws s3 sync --acl public-read ./dist s3://${DeployBucket}/ --delete
       - >
         aws s3 cp s3://${DeployBucket}/index.html s3://${DeployBucket}/index.html --metadata-directive REPLACE --cache-control max-age=0
+      - aws cloudfront create-invalidation --distribution-id ${DISTRIBUTION_ID} --paths '/*'
 artifacts:
   files:
     - '**/*'
