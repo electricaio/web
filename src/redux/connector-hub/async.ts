@@ -7,9 +7,11 @@ import { connectorHubAsyncActions } from './actions';
 
 export const fetchConnectors = () => (dispatch: Dispatch) => {
   dispatch(connectorHubAsyncActions.request());
-  dispatch(withAuth((api: Api, dispatch: Dispatch) => {
-    return api.getConnectors().then((result: AxiosResponse<ConnectorModal[]>) => {
-      dispatch(connectorHubAsyncActions.success(result.data));
-    });
-  }));
+  dispatch(
+    withAuth((api: Api, dispatch: Dispatch) => {
+      return api.getConnectors().then((result: AxiosResponse<ConnectorModal[]>) => {
+        dispatch(connectorHubAsyncActions.success(result.data));
+      });
+    })
+  );
 };

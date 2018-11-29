@@ -30,7 +30,7 @@ export const loginUser = (username: string, password: string) => async (dispatch
   try {
     const result: AxiosResponse<TokenState> = await api.login(username, password);
     dispatch(authAsyncActions.success(result.data));
-    dispatch(push('/api-keys'));
+    dispatch(push('/'));
   } catch (error) {
     dispatch(authAsyncActions.failure(get(error, 'response.data.error_description')));
   }
@@ -50,9 +50,11 @@ export const logoutUser = () => (dispatch: Dispatch) => {
 export const fetchUser = () => (dispatch: Dispatch) => {
   dispatch(getUserAsyncActions.request());
 
-  return dispatch(withAuth((api: Api) => {
-    return api.getUser().then((result: AxiosResponse<UserDto>) => {
-      dispatch(getUserAsyncActions.success(result.data));
-    });
-  }));
+  return dispatch(
+    withAuth((api: Api) => {
+      return api.getUser().then((result: AxiosResponse<UserDto>) => {
+        dispatch(getUserAsyncActions.success(result.data));
+      });
+    })
+  );
 };

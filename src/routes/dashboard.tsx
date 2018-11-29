@@ -6,6 +6,7 @@ import { ApiKeysContainer } from '../modules/api-keys/containers/api-keys/api-ke
 import { ConntectorHubContainer } from '../modules/connector-hub/containers/connector-hub.container';
 import { ConnectionsContainer } from '../modules/connections/containers/connections.container';
 import { ApplicationState } from '../redux/store';
+import { HomeContainer } from '../modules/home/containers/home.container';
 
 interface PropsFromDispatch {
   isAuthenticated: boolean;
@@ -36,6 +37,12 @@ export const PrivateDashboard: React.SFC<PropsFromDispatch> = ({ isAuthenticated
   return (
     <MainLayoutContainer>
       <Switch>
+        <PrivateRoute
+          isAuthenticated={isAuthenticated}
+          path="/"
+          exact
+          component={HomeContainer}
+        />
         <PrivateRoute
           isAuthenticated={isAuthenticated}
           path="/api-keys"
