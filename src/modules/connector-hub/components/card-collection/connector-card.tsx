@@ -1,5 +1,6 @@
 import React from 'react';
 import { Col, Row, Tag, Button } from 'antd';
+import { Link } from 'react-router-dom';
 
 import {
   CompanyImage,
@@ -65,7 +66,7 @@ export class ConnectorCard extends React.Component<ConnectorCardProps> {
         </Row>
         <ButtonContainer>
           <Button type="primary" size="large">
-            Configure
+            <Link to={`/connector-hub/${connector.id}/connections`}>Configure</Link>
           </Button>
         </ButtonContainer>
       </StyledCard>

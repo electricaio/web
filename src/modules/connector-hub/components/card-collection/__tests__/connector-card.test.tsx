@@ -2,8 +2,10 @@ import { mount } from 'enzyme';
 import React from 'react';
 import { ConnectorCard } from '../connector-card';
 import { StyledCard, StyledMeta } from '../connector-card.css';
-import { Row, Col, Tag, Card } from 'antd';
+import { Row, Col, Tag, Card, Button } from 'antd';
 import { ConnectorModal } from '../../../../../redux/connector-hub/types';
+import { MemoryRouter } from 'react-router';
+import { Link } from 'react-router-dom';
 
 interface TypeModel {
   id: number;
@@ -16,6 +18,7 @@ export const TYPE_NAMES_DATA: TypeModel[] = [
 ];
 
 describe('ConnectorCard', () => {
+  const connectorId = 4;
   const connector = (overrides: object = {}): ConnectorModal => ({
     typeId: 1,
     authorizationType: 'None',
@@ -29,14 +32,18 @@ describe('ConnectorCard', () => {
       image_url: 'string',
       description: 'This connector allows you to connect to SalesForce CRM system.',
     },
-    id: 4,
+    id: connectorId,
     ern: 'ern://salesforce:customer:2_0',
     revisionVersion: 0,
     ...overrides,
   });
 
   beforeEach(() => {
-    this.connectorCard = mount(<ConnectorCard connector={connector()} />);
+    this.connectorCard = mount(
+      <MemoryRouter>
+        <ConnectorCard connector={connector()} />
+      </MemoryRouter>
+    );
   });
 
   it('card contains connector name as a title', () => {
@@ -66,6 +73,13 @@ describe('ConnectorCard', () => {
     expect(tags).toHaveLength(1);
     expect(tags.at(0).text()).toEqual(
       TYPE_NAMES_DATA.find(myObj => myObj.id === connector().typeId).name
+    );
+  });
+
+  it('renders a Link in the button for routing to the connections page', () => {
+    const configureButton = this.connectorCard.find(Button);
+    expect(configureButton.find(Link).prop('to')).toEqual(
+      `/connector-hub/${connectorId}/connections`
     );
   });
 });
