@@ -51,7 +51,7 @@ export const PrivateDashboard: React.SFC<PropsFromDispatch> = ({ isAuthenticated
         />
         <PrivateRoute
           isAuthenticated={isAuthenticated}
-          path="/connector-hub/:connectorId/connections"
+          path="/connector-hub/:connectorId"
           component={ConnectionsContainer}
         />
       </Switch>

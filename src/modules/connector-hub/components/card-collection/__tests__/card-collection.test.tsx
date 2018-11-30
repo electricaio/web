@@ -4,6 +4,7 @@ import times from 'lodash/times';
 import { CardCollection } from '../card-collection';
 import { ConnectorCard } from '../connector-card';
 import { ConnectorModal } from '../../../../../redux/connector-hub/types';
+import { MemoryRouter } from 'react-router';
 
 describe('CardCollection', () => {
   const connectorCount = 3;
@@ -29,7 +30,11 @@ describe('CardCollection', () => {
   }
 
   beforeEach(() => {
-    this.CardCollection = mount(<CardCollection connectors={createConnectors(connectorCount)} />);
+    this.CardCollection = mount(
+      <MemoryRouter>
+        <CardCollection connectors={createConnectors(connectorCount)} />
+      </MemoryRouter>
+    );
   });
 
   it('should show number of cards as connectors', () => {

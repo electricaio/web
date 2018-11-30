@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import { Spin } from 'antd';
 import { ConnectorHub } from '../connector-hub.container';
 import { ConnectorHubComponent } from '../../components/connector-hub/connector-hub';
@@ -9,7 +9,7 @@ describe('Connector Hub Container', () => {
   const fetchConnectorsMock = jest.fn();
 
   beforeEach(() => {
-    this.container = mount(
+    this.container = shallow(
       <ConnectorHub loading connectors={CONNECTOR_HUB_DATA} fetchConnectors={fetchConnectorsMock} />
     );
   });
