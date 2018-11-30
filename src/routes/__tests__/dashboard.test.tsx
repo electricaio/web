@@ -40,8 +40,8 @@ describe('Dashboard', () => {
     expect(routeComponent('/connector-hub')).toBe(ConntectorHubContainer);
   });
 
-  it('routes /connector-hub/:connectorId/connections to ConnectionsContainer', () => {
-    expect(routeComponent('/connector-hub/:connectorId/connections')).toBe(ConnectionsContainer);
+  it('routes /connector-hub/:connectorId to ConnectionsContainer', () => {
+    expect(routeComponent('/connector-hub/:connectorId')).toBe(ConnectionsContainer);
   });
 
   describe('PrivateRoute', () => {

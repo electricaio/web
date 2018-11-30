@@ -66,7 +66,7 @@ export class ConnectorCard extends React.Component<ConnectorCardProps> {
         </Row>
         <ButtonContainer>
           <Button type="primary" size="large">
-            <Link to={`/connector-hub/${connector.id}/connections`}>Configure</Link>
+            <Link to={`/connector-hub/${connector.id}`}>Configure</Link>
           </Button>
         </ButtonContainer>
       </StyledCard>
