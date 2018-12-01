@@ -24,7 +24,7 @@ class ConnectionFormComponent extends Component<ConnectionComponentProps> {
       connectionName,
       authorizationType,
       accessKeys,
-      // accessKeyId,
+      accessKeyId,
       username,
       password,
       token,
@@ -41,7 +41,7 @@ class ConnectionFormComponent extends Component<ConnectionComponentProps> {
         </FormItem>
         <FormItem>
           {getFieldDecorator('accessKeyId', {
-            initialValue: "123",
+            initialValue: accessKeyId,
             rules: [
               { required: true, message: 'Please select an access key', type: 'number' },
             ],
