@@ -17,7 +17,8 @@ export class ConnectionsComponent extends Component<PropsFromState> {
   handleCommit = (connection: ConnectionModal) => {
   };
   render() {
-    const { connector } = this.props;
+    const { connector, accessKeys, connections } = this.props;
+
     return (
       <Fragment>
         <Header>
@@ -26,12 +27,16 @@ export class ConnectionsComponent extends Component<PropsFromState> {
         </Header>
         <ConnectionsTable
           onRemove={() => {}}
-          accessKeys={this.props.accessKeys}
-          connections={this.props.connections}
+          accessKeys={accessKeys}
+          connections={connections}
         />
         <ButtonActionModal
           title="Add Connection"
           submitText="Create"
+          accessKeys={accessKeys}
+          accessKeyId={1}
+          connectorId={connector.id}
+          authorizationType={connector.authorizationType}
           onCommit={this.handleCommit}
         >
           <Button type="primary" size="large">
