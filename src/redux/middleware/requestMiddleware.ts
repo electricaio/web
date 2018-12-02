@@ -51,7 +51,6 @@ export const refreshTokenPromise = (
         .catch(() => {
           // if there is a failure getting an access token then we just redirect to the login page
           dispatch(push('/login'));
-          dispatch(authAsyncActions.failure('Could not establish a session. Please login again'));
         });
     }
     // any other error just send back to the function that made the request
