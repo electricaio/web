@@ -78,8 +78,6 @@ describe('ConnectorCard', () => {
 
   it('renders a Link in the button for routing to the connections page', () => {
     const configureButton = this.connectorCard.find(Button);
-    expect(configureButton.find(Link).prop('to')).toEqual(
-      `/connector-hub/${connectorId}`
-    );
+    expect(configureButton.find(Link).prop('to')).toEqual(`/connector-hub/${connectorId}`);
   });
 });

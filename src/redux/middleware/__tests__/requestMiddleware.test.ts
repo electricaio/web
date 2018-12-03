@@ -163,7 +163,6 @@ describe('Request API middlware', () => {
     const mockRequest = jest.fn(() => Promise.reject(error));
     await refreshTokenPromise(mockRequest, mockDispatch, newToken);
     expect(mockDispatch.mock.calls[1][0].type).toEqual(CALL_HISTORY_METHOD);
-    expect(mockDispatch.mock.calls[2][0].type).toEqual(AuthActionTypes.TOKEN_FAILURE);
   });
   it('request fails with a 500 so just reject the call', async () => {
     const newToken: TokenState = {
@@ -186,7 +185,7 @@ describe('Request API middlware', () => {
     }
   });
 
-  it('rejects the promise and fails the auth actions if an unknown error occirs', async () => {
+  it('rejects the promise and fails the auth actions if an unknown error occurs', async () => {
     const tokens: TokenState = {
       access_token: 'new token',
       refresh_token: 'new refresh key',
