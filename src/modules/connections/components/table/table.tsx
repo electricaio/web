@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import get from 'lodash/get';
-import { Table, Select, Icon } from 'antd';
+import { Table, Select } from 'antd';
 import { FilterDropdown, AccessKeyName } from './table.css';
 import { ColumnProps } from 'antd/lib/table';
 import { ConnectionModal } from '../../../../redux/connections/types';
 import { ApiKeyModal } from '../../../../redux/api-keys/types';
 import { ActionButtons } from '../../../../components/action-buttons/action-buttons';
+import { SelectValue } from 'antd/lib/select';
+import { DateComponent } from '../../../ui-kit/date';
 
 const Option = Select.Option;
 
@@ -20,6 +21,12 @@ export class ConnectionsTable extends Component<TableProps> {
     this.props.onRemove(id);
   };
 
+  getAccessKey = (entity: ConnectionModal): ApiKeyModal => {
+    return this.props.accessKeys.find(
+      (accessKey: ApiKeyModal) => accessKey.id === entity.accessKeyId
+    );
+  };
+
   handleEdit = (id: number) => () => {};
 
   getColumns(): ColumnProps<ConnectionModal>[] {
@@ -32,41 +39,42 @@ export class ConnectionsTable extends Component<TableProps> {
       {
         title: 'Access Key',
         key: 'accessKeyId',
-        width: '35%',
-        filterDropdown: () => (
-          <FilterDropdown>
-            <Select
-              showSearch
-              style={{ width: 200 }}
-              placeholder="Select an Access key"
-              optionFilterProp="children"
-            >
-              <Option value="prod">Production</Option>
-              <Option value="dev">Development</Option>
-              <Option value="test">Testing</Option>
-            </Select>
-          </FilterDropdown>
-        ),
-        render: (entity: ConnectionModal) => {
-          const accessKey = this.props.accessKeys.find(
-            (accessKey: ApiKeyModal) => accessKey.id === entity.accessKeyId
+        onFilter: (value, record: ConnectionModal) => {
+          return this.getAccessKey(record)
+            .name.toLowerCase()
+            .includes(value.toLowerCase());
+        },
+        filterDropdown: ({ setSelectedKeys, confirm }: any) => {
+          return (
+            <FilterDropdown>
+              <Select
+                onChange={(e: SelectValue) => {
+                  setSelectedKeys(e ? [e] : []);
+                  confirm();
+                }}
+                showSearch
+                style={{ width: 200 }}
+                placeholder="Filter by Access key"
+                optionFilterProp="children"
+              >
+                {this.props.accessKeys.map((accessKey: ApiKeyModal) => (
+                  <Option key={accessKey.id.toString()} value={accessKey.name}>
+                    {accessKey.name}
+                  </Option>
+                ))}
+              </Select>
+            </FilterDropdown>
           );
-          return <AccessKeyName>{get(accessKey, 'name', '')}</AccessKeyName>;
+        },
+        render: (entity: ConnectionModal) => {
+          const accessKey = this.getAccessKey(entity);
+          return <AccessKeyName>{accessKey ? accessKey.name : 'N/A'}</AccessKeyName>;
         },
       },
       {
-        title: 'Token',
-        key: 'token',
-        render: (entity: ConnectionModal) => <span>{entity.token}</span>,
-      },
-      {
         title: 'Date Created',
-        key: 'createdAt',
-      },
-      {
-        title: 'Status',
-        key: 'status',
-        render: () => <Icon type="stop" />,
+        key: 'created',
+        render: (entity: ApiKeyModal) => <DateComponent date={entity.createdAt} />,
       },
       {
         title: 'Webhooks',
@@ -77,11 +85,7 @@ export class ConnectionsTable extends Component<TableProps> {
         title: 'Action',
         key: 'action',
         render: (entity: ConnectionModal) => (
-          <ActionButtons
-            name={entity.name}
-            onRemove={this.handleRemove(entity.id)}
-            onEdit={this.handleEdit(entity.id)}
-          />
+          <ActionButtons name={entity.name} onRemove={this.handleRemove(entity.id)} />
         ),
       },
     ];
@@ -90,6 +94,13 @@ export class ConnectionsTable extends Component<TableProps> {
   render() {
     const { connections } = this.props;
     const columns = this.getColumns();
-    return <Table<ConnectionModal> pagination={false} columns={columns} dataSource={connections} />;
+    return (
+      <Table<ConnectionModal>
+        loading={false}
+        pagination={false}
+        columns={columns}
+        dataSource={connections}
+      />
+    );
   }
 }

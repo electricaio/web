@@ -68,6 +68,7 @@ describe('Request API middlware', () => {
     return createStoreMock({
       actions,
       initialState: {
+        error: { message: '' },
         apiKeys: { data: [] },
         connectors: { data: [] },
         connections: { data: [] },

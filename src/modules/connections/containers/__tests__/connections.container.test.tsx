@@ -8,10 +8,20 @@ import { ConnectorModal } from '../../../../redux/connector-hub/types';
 import { Spin } from 'antd';
 import { ConnectionsComponent } from '../../components/connections';
 import { MemoryRouter } from 'react-router';
+import { UserDto } from '../../../../redux/auth/types';
 
 describe('Connections Container', () => {
   const connectorId = 1;
   const connectorName = 'Salesforce Customer API 2.0';
+
+  const user: UserDto = {
+    firstName: 'admin',
+    email: 'admin@electrica.io',
+    id: 1,
+    lastName: 'admin',
+    organizationId: 0,
+  };
+
   const connections: ConnectionModal[] = [
     {
       connectorId,
@@ -52,9 +62,11 @@ describe('Connections Container', () => {
 
   beforeEach(() => {
     const actions = {
-      fetchConnectionsAction: jest.fn(),
-      getKeyAction: jest.fn(),
+      fetchConnections: jest.fn(),
+      fetchKeys: jest.fn(),
+      createConnection: jest.fn(),
     };
+
     const matchProps = {
       params: { connectorId: connectorId.toString() },
       isExact: true,
@@ -65,6 +77,7 @@ describe('Connections Container', () => {
     this.component = mount(
       <MemoryRouter>
         <Connections
+          user={user}
           match={matchProps}
           accessKeys={accessKeys}
           connections={connections}

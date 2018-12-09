@@ -16,11 +16,14 @@ const reducer: Reducer<ConnectionsState> = (
   action: ConnectionsActionType
 ): ConnectionsState => {
   switch (action.type) {
-    case getType(actions.connectionsAsyncActions.request): {
+    case getType(actions.fetchConnectionsAsyncActions.request): {
+      return { ...state, loading: true };
+    }
+    case getType(actions.fetchConnectionsAsyncActions.success): {
       return { ...state, loading: false };
     }
-    case getType(actions.connectionsAsyncActions.success): {
-      return { ...state, loading: false };
+    case getType(actions.createConnectionAsyncActions.success): {
+      return { ...state, loading: false, data: state.data.concat(action.payload) };
     }
 
     default: {

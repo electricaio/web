@@ -9,7 +9,7 @@ const initialState: AuthState = {
   tokens: { access_token: null, refresh_token: null, expires_in: null, token_type: null },
   errors: '',
   loading: false,
-  user: { email: '', firstName: '', id: 0, lastName: '', organizationId: 0 },
+  user: { email: null, firstName: null, id: null, lastName: null, organizationId: null },
 };
 
 const reducer: Reducer<AuthState> = (state = initialState, action: AuthActions): AuthState => {

@@ -1,21 +1,26 @@
 import { shallow } from 'enzyme';
-import React from 'react';
+import React, { SFC } from 'react';
 import { ButtonActionModal } from '../modal-button-action';
-import { MainModal } from '../../../../../components/modal';
-import { ApiKeyForm } from '../../api-key-form/api-key-form';
+import { MainModal } from '../../../../components/modal';
 
-describe('New Key Modal', () => {
+describe('Modal Button Action', () => {
+  const TestComponent: SFC = () => <div>content</div>;
+
   beforeEach(() => {
     this.newKeyComponent = shallow(
-      <ButtonActionModal submitText="" title="" onCommit={() => {}}>
+      <ButtonActionModal
+        submitText=""
+        title=""
+        onCommit={() => {}}
+        formComponent={<TestComponent />}
+      >
         <span className="clickable">Testing</span>
       </ButtonActionModal>
     );
   });
 
   const formFields = {
-    apiKeyName: 'test',
-    apiKey: '1234',
+    connectionName: 'test',
   };
 
   const mockFormRef = ({ resetFields = jest.fn(), validateFields = jest.fn() }) => {
@@ -47,7 +52,7 @@ describe('New Key Modal', () => {
     expect(modal.prop('visible')).toBeTruthy();
   });
 
-  it('validates fields on save', () => {
+  it('calls form validation on save', () => {
     const validateFieldsMock = jest.fn();
     this.newKeyComponent.instance().formRef = mockFormRef({ validateFields: validateFieldsMock });
     const modal = this.newKeyComponent.find(MainModal);
@@ -58,8 +63,7 @@ describe('New Key Modal', () => {
   it('resets fields on after validation', () => {
     const resetFieldsMock = jest.fn();
     const formFields = {
-      apiKeyName: 'test',
-      apiKey: '1234',
+      connectionName: 'test',
     };
     this.newKeyComponent.instance().formRef = mockFormRef({
       validateFields: jest.fn(cb => cb(null, formFields)),
@@ -82,8 +86,8 @@ describe('New Key Modal', () => {
     expect(this.newKeyComponent.find(MainModal).prop('visible')).toBeFalsy();
   });
 
-  it('renders ApiKeyForm', () => {
-    const apiKeyForm = this.newKeyComponent.find(ApiKeyForm);
-    expect(apiKeyForm).toHaveLength(1);
+  it('renders ConnectionForm', () => {
+    const connectionForm = this.newKeyComponent.find(TestComponent);
+    expect(connectionForm).toHaveLength(1);
   });
 });

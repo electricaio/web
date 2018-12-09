@@ -1,11 +1,11 @@
 import { ApiKeysTable } from '../table/table';
-import { ApiIcon } from './api-keys.css';
+import { ApiIcon, NewApiButton } from './api-keys.css';
 import { Header } from '../../../ui-kit/header';
 import React, { Component, Fragment } from 'react';
-import { ButtonActionModal } from '../modal-button-action/modal-button-action';
-import { NewApiButton } from '../modal-button-action/modal-button-action.css';
 import { ApiKeyModal } from '../../../../redux/api-keys/types';
 import { removeKey, createKey, refreshKey } from '../../../../redux/api-keys/async';
+import { ButtonActionModal } from '../../../ui-kit/modal-button-action/modal-button-action';
+import { ApiKeyForm } from '../api-key-form/api-key-form';
 
 // Separate state props + dispatch props to their own interfaces.
 interface PropsFromState {
@@ -33,8 +33,8 @@ export class ApiKeys extends Component<AllProps> {
   };
 
   handleCommit = (apiKey: ApiKeyModal) => {
-    const { createKey } = this.props;
-    createKey({ name: apiKey.name, userId: this.props.userId });
+    const { createKey, userId } = this.props;
+    createKey({ ...apiKey, userId });
   };
 
   render() {
@@ -52,6 +52,7 @@ export class ApiKeys extends Component<AllProps> {
           title="Generate New API Key"
           submitText="Create"
           onCommit={this.handleCommit}
+          formComponent={<ApiKeyForm name={name} />}
         >
           <NewApiButton type="primary">Generate New API Key</NewApiButton>
         </ButtonActionModal>

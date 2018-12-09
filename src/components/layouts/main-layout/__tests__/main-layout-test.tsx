@@ -21,7 +21,7 @@ describe('Main Layout', () => {
     };
 
     this.mainComponent = shallow(
-      <MainLayout user={user} fetchUserDetails={fetchUserDetailsMock}>
+      <MainLayout errorMessage="" user={user} fetchUserDetails={fetchUserDetailsMock}>
         <TestContentComponent />
       </MainLayout>
     );
@@ -43,9 +43,16 @@ describe('Main Layout', () => {
     expect(this.mainComponent.find(TestContentComponent)).toHaveLength(1);
   });
 
-  it('does not render children if user is undefined', () => {
+  it('does not render children if user id is not defiend', () => {
+    const user: UserDto = {
+      id: null,
+      organizationId: null,
+      firstName: null,
+      lastName: null,
+      email: null,
+    };
     const noUserComponent = shallow(
-      <MainLayout user={undefined} fetchUserDetails={fetchUserDetailsMock}>
+      <MainLayout errorMessage="" user={user} fetchUserDetails={fetchUserDetailsMock}>
         <TestContentComponent />
       </MainLayout>
     );

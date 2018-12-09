@@ -2,7 +2,6 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { ApplicationState } from '../../../redux/store';
-import { fetchConnections } from '../../../redux/connections/actions';
 import { Spin } from 'antd';
 import { ConnectionsComponent } from '../components/connections';
 import { BreadcrumbComponent } from '../../../components/breadcrumb/breadcrumb';
@@ -10,30 +9,36 @@ import { ConnectionModal } from '../../../redux/connections/types';
 import { ApiKeyModal } from '../../../redux/api-keys/types';
 import { ConnectorModal } from '../../../redux/connector-hub/types';
 import { RouteComponentProps } from 'react-router';
-import { getKey } from '../../../redux/api-keys/async';
+import { fetchKeys } from '../../../redux/api-keys/async';
+import { fetchConnections, createConnection } from '../../../redux/connections/async';
+import { UserDto } from '../../../redux/auth/types';
 
-const mapStateToProps = ({ connections, apiKeys, connectors }: ApplicationState) => ({
+const mapStateToProps = ({ connections, apiKeys, connectors, auth }: ApplicationState) => ({
   connections: connections.data,
   accessKeys: apiKeys.data,
   loading: connections.loading,
   connectors: connectors.data,
+  user: auth.user,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  fetchConnectionsAction: bindActionCreators(fetchConnections, dispatch),
-  getKeyAction: bindActionCreators(getKey, dispatch),
+  fetchConnections: bindActionCreators(fetchConnections, dispatch),
+  createConnection: bindActionCreators(createConnection, dispatch),
+  fetchKeys: bindActionCreators(fetchKeys, dispatch),
 });
 
 interface PropsFromState {
   connections: ConnectionModal[];
   accessKeys: ApiKeyModal[];
   connectors: ConnectorModal[];
+  user: UserDto;
   loading: boolean;
 }
 
 interface PropsFromDispatch {
-  fetchConnectionsAction: typeof fetchConnections;
-  getKeyAction: typeof getKey;
+  fetchConnections: typeof fetchConnections;
+  fetchKeys: typeof fetchKeys;
+  createConnection: typeof createConnection;
 }
 
 interface MatchParams {
@@ -46,15 +51,18 @@ type AllProps = PropsFromState & PropsFromDispatch & RouterProps;
 
 export class Connections extends Component<AllProps> {
   componentDidMount = () => {
-    /*
-      const { fetchConnectionsAction, getKeyAction, fetchConnector  } = this.props;
-      We need to call these three calls. We can just call them all here for this now
-      */
+    const { fetchKeys, user } = this.props;
+    //  const connectorId = parseInt(match.params.connectorId, 10);
+    fetchKeys(user.id);
+    //  fetchConnector(connectorId);
+    //  fetchConnections(connectorId);
   };
 
   public render() {
-    const { loading, connectors, connections, accessKeys, match } = this.props;
-    const connector = connectors.find(con => con.id === parseInt(match.params.connectorId, 10));
+    const { loading, connectors, connections, accessKeys, match, createConnection } = this.props;
+    const connector = connectors.find(
+      connector => connector.id === parseInt(match.params.connectorId, 10)
+    );
     const breadcrumbNameMap = {
       '/connector-hub': 'Connector Hub',
       [`/connector-hub/${match.params.connectorId}`]: connector.name,
@@ -64,6 +72,7 @@ export class Connections extends Component<AllProps> {
         <BreadcrumbComponent breadcrumbNameMap={breadcrumbNameMap} />
         <Spin spinning={loading}>
           <ConnectionsComponent
+            createConnection={createConnection}
             connector={connector}
             accessKeys={accessKeys}
             connections={connections}

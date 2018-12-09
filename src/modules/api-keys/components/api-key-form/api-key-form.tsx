@@ -7,20 +7,20 @@ import { StyledInput } from '../../../ui-kit/input';
 const FormItem = Form.Item;
 
 interface ApiKeyFormComponentProps extends FormComponentProps {
-  apiKeyName?: string;
+  name?: string;
 }
 
 class ApiKeyFormComponent extends Component<ApiKeyFormComponentProps> {
   render() {
     const {
-      apiKeyName,
+      name,
       form: { getFieldDecorator },
     } = this.props;
     return (
       <Form>
         <FormItem>
-          {getFieldDecorator('apiKeyName', {
-            initialValue: apiKeyName,
+          {getFieldDecorator('name', {
+            initialValue: name,
             rules: [{ required: true, message: 'Please input a name for this key' }],
           })(<StyledInput placeholder="e.g. Production" />)}
         </FormItem>

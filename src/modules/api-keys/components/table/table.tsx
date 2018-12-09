@@ -1,16 +1,10 @@
-import React, { Component, SFC } from 'react';
+import React, { Component } from 'react';
 import { Table } from 'antd';
 import { ActionButtons } from './action-buttons';
-import { format } from 'date-fns';
 import { StyledEye } from './table.css';
-import { HiddenAPIKeyModal } from '../modal-hidden-apikey/modal-hidden-apikey';
+import { HiddenAPIKeyModal } from '../modal-hidden-apikey/modal-hidden-api-key';
 import { ApiKeyModal } from '../../../../redux/api-keys/types';
-
-type TDateProps = {
-  date: string;
-};
-
-export const Date: SFC<TDateProps> = ({ date }) => <div>{format(date, 'DD.MM.YYYY')}</div>;
+import { DateComponent } from '../../../ui-kit/date';
 
 export type TTableProps = {
   data: ApiKeyModal[];
@@ -46,7 +40,7 @@ export class ApiKeysTable extends Component<TTableProps> {
       {
         title: 'Date Created',
         key: 'created',
-        render: (entity: ApiKeyModal) => <Date date={entity.createdAt} />,
+        render: (entity: ApiKeyModal) => <DateComponent date={entity.createdAt} />,
       },
       {
         title: 'Action',

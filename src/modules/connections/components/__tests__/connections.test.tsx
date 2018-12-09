@@ -1,12 +1,14 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { shallow, ShallowWrapper } from 'enzyme';
 import { ConnectionsComponent } from '../connections';
 import { Header } from '../../../ui-kit/header';
 import { ConnectionsTable } from '../table/table';
-import { Button } from 'antd';
 import { ApiKeyModal } from '../../../../redux/api-keys/types';
 import { ConnectionModal } from '../../../../redux/connections/types';
 import { ConnectorModal } from '../../../../redux/connector-hub/types';
+import { ButtonActionModal } from '../../../ui-kit/modal-button-action/modal-button-action';
+import { ConnectionForm } from '../connection-form/connection-form';
+import { StyledButton } from '../../../ui-kit/button';
 
 describe('connections', () => {
   const connections: ConnectionModal[] = [
@@ -27,9 +29,9 @@ describe('connections', () => {
     },
   ];
 
-  const connector: ConnectorModal = {
+  const connectorBasic: ConnectorModal = {
     typeId: 1,
-    authorizationType: 'None',
+    authorizationType: 'Basic',
     name: 'SalesForce CRM API 2.0',
     resource: 'customer',
     version: '2.0',
@@ -45,18 +47,33 @@ describe('connections', () => {
     revisionVersion: 0,
   };
 
-  beforeEach(() => {
-    this.component = mount(
+  const connectorToken: ConnectorModal = {
+    ...connectorBasic,
+    authorizationType: 'Token',
+  };
+
+  const connectionName = 'Test Connection';
+
+  let createConnectionMock: jest.Mock;
+  const createConnectionComponent = (props = {}): ShallowWrapper => {
+    return shallow(
       <ConnectionsComponent
+        createConnection={createConnectionMock}
         accessKeys={accessKeys}
         connections={connections}
-        connector={connector}
+        connector={connectorBasic}
+        {...props}
       />
     );
+  };
+
+  beforeEach(() => {
+    createConnectionMock = jest.fn();
+    this.component = createConnectionComponent();
   });
 
-  it('uses connector name in Header', () => {
-    expect(this.component.find(Header).text()).toContain(connector.name);
+  it('renders a Header', () => {
+    expect(this.component.find(Header)).toHaveLength(1);
   });
 
   it('renders table', () => {
@@ -69,10 +86,71 @@ describe('connections', () => {
     expect(table.prop('accessKeys')).toEqual(accessKeys);
   });
 
+  it('renders ButtonActionModal', () => {
+    const buttonModal = this.component.find(ButtonActionModal);
+    expect(buttonModal).toHaveLength(1);
+  });
+
+  it('passes a connections form to ButtonActionModal', () => {
+    const buttonModal = this.component.find(ButtonActionModal);
+    expect(buttonModal.prop('formComponent')).toEqual(
+      <ConnectionForm accessKeys={accessKeys} connector={connectorBasic} />
+    );
+  });
+
   it('renders primary button', () => {
-    const btn = this.component.find(Button);
+    const btn = this.component.find(StyledButton);
     expect(btn).toHaveLength(1);
     expect(btn.prop('size')).toEqual('large');
-    expect(btn.text()).toEqual('Add Connection');
+  });
+
+  it('passes handleCommit to ButtonActionModal', () => {
+    const buttonModal = this.component.find(ButtonActionModal);
+    expect(buttonModal.prop('onCommit')).toEqual(this.component.instance().handleCommit);
+  });
+
+  it('handleCommit calls createConnection with new connection and basic authorizationType', () => {
+    const basicCreds = {
+      name: 'Basic',
+      password: 'admin',
+      username: 'admin',
+    };
+
+    const basicFormValue = {
+      connectionName,
+      accessKeyId: 1,
+      authorizationTypeData: basicCreds,
+    };
+    const connectionValue = {
+      accessKeyId: 1,
+      connectorId: connectorBasic.id,
+      name: connectionName,
+    };
+
+    this.component.instance().handleCommit(basicFormValue);
+    expect(createConnectionMock).toBeCalledWith(connectionValue, basicCreds);
+  });
+  it('handleCommit calls createConnection with new connection and token authorizationType', () => {
+    const component = createConnectionComponent({ connector: connectorToken });
+
+    const tokenCreds = {
+      name: 'Token',
+      username: '12345',
+    };
+
+    const tokenFormValue = {
+      accessKeyId: 1,
+      connectionName: 'Test Connection',
+      token: '12345',
+      authorizationTypeData: tokenCreds,
+    };
+    const connectionValue = {
+      accessKeyId: 1,
+      connectorId: connectorBasic.id,
+      name: connectionName,
+    };
+
+    (component.instance() as any).handleCommit(tokenFormValue);
+    expect(createConnectionMock).toBeCalledWith(connectionValue, tokenCreds);
   });
 });
