@@ -5,6 +5,7 @@ import { Api } from '../../modules/utils/api';
 import { AxiosResponse, AxiosPromise, AxiosError } from 'axios';
 import { authAsyncActions } from '../auth/actions';
 import { push } from 'connected-react-router';
+import { createError } from '../error/actions';
 
 interface RequestAction extends Action {
   request: (api: Api, dispatch: Dispatch) => AxiosPromise;
@@ -53,7 +54,8 @@ export const refreshTokenPromise = (
           dispatch(push('/login'));
         });
     }
-    // any other error just send back to the function that made the request
+    // any other error just send back to the function that made the request and dispatch an error to the error reducer
+    dispatch(createError(error.message));
     return Promise.reject(error);
   });
 };

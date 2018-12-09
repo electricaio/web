@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Layout, Spin } from 'antd';
+import { Layout, Spin, notification } from 'antd';
+
 import { Navigation } from './navigation';
 import { StyledLayout, Header, ContainerContent } from './main-layout.css';
 import logo from './../../../assets/logo.svg';
@@ -16,6 +17,7 @@ const { Content } = Layout;
 // Separate state props + dispatch props to their own interfaces.
 type PropsFromState = {
   user: UserDto;
+  errorMessage: string;
 };
 
 type PropsFromDispatch = {
@@ -26,13 +28,21 @@ type TMainLayoutProps = {
   children: JSX.Element;
 };
 
-const mapStateToProps = ({ auth }: ApplicationState) => ({
+const mapStateToProps = ({ auth, error }: ApplicationState) => ({
   user: auth.user,
+  errorMessage: error.message,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   fetchUserDetails: bindActionCreators(fetchUser, dispatch),
 });
+
+const errorNotification = (message: string) => {
+  notification['error']({
+    message: 'There was a problem',
+    description: message,
+  });
+};
 
 type AllProps = PropsFromState & PropsFromDispatch & TMainLayoutProps;
 
@@ -43,9 +53,12 @@ export class MainLayout extends Component<AllProps> {
   };
 
   render() {
-    const { children } = this.props;
-    const isLoadingUser = this.props.user === undefined;
+    const { children, errorMessage } = this.props;
+    const isLoadingUser = !this.props.user.id;
 
+    if (errorMessage) {
+      errorNotification(errorMessage);
+    }
     return (
       <StyledLayout>
         <Header>

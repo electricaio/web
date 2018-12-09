@@ -1,6 +1,6 @@
 import { mount } from 'enzyme';
 import React from 'react';
-import { HiddenAPIKeyModalComponent } from '../modal-hidden-apikey';
+import { HiddenAPIKeyModalComponent } from '../modal-hidden-api-key';
 import { Modal } from 'antd';
 
 describe('New Key Modal', () => {

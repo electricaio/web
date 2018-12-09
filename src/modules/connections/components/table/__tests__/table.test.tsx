@@ -50,9 +50,9 @@ describe('Connections Table', () => {
     );
   });
 
-  it('renders 7 columns', () => {
+  it('renders 5 columns', () => {
     const columns = this.component.find(Table).prop('columns');
-    expect(columns).toHaveLength(7);
+    expect(columns).toHaveLength(5);
   });
 
   it('passes in data to table', () => {
@@ -100,9 +100,11 @@ describe('Connections Table', () => {
       .find(Table)
       .prop('columns')
       .find((col: ColumnProps<ConnectionModal>) => col.key === 'accessKeyId');
-    const filterDropdown = new ReactWrapper(accessKeysFilter.filterDropdown());
+    const filterDropdown = new ReactWrapper(
+      accessKeysFilter.filterDropdown({ setSelectedKeys: jest.fn(), confirm: jest.fn() })
+    );
     const selectComponent = filterDropdown.find(Select);
     expect(selectComponent.prop('showSearch')).toBeTruthy();
-    expect(selectComponent.prop('placeholder')).toEqual('Select an Access key');
+    expect(selectComponent.prop('placeholder')).toEqual('Filter by Access key');
   });
 });

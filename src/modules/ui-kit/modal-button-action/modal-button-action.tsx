@@ -1,34 +1,29 @@
 import React, { Component, Fragment, ReactElement } from 'react';
+import { MainModal } from '../../../components/modal';
 
-import { MainModal } from '../../../../components/modal';
-import { ApiKeyModal } from '../../../../redux/api-keys/types';
-import { ApiKeyForm } from '../api-key-form/api-key-form';
-
-export type TApiKeysProps = {
-  onCommit: (apiKey: ApiKeyModal) => void;
+export type TConnectionsProps = {
+  onCommit: (values: any) => void;
   submitText: string;
   title: string;
   children: ReactElement<any>;
-  name?: string;
+  formComponent: ReactElement<any>;
 };
 
-export type TApiKeysState = {
+export type TConnectionsState = {
   visible: boolean;
 };
 
-type FormFields = {
-  apiKeyName: string;
-};
-
-export class ButtonActionModal extends Component<TApiKeysProps, TApiKeysState> {
+export class ButtonActionModal extends Component<TConnectionsProps, TConnectionsState> {
   formRef: any = null;
 
-  readonly state: TApiKeysState = {
+  readonly state: TConnectionsState = {
     visible: false,
   };
 
   showModal = () => {
-    this.setState({ visible: true });
+    this.setState({
+      visible: true,
+    });
   };
 
   closeModal = () => {
@@ -42,12 +37,14 @@ export class ButtonActionModal extends Component<TApiKeysProps, TApiKeysState> {
 
   handleCreate = () => {
     const form = this.formRef.props.form;
-    form.validateFields((err: string, values: FormFields) => {
+
+    form.validateFields((err: string, values: any) => {
       if (err) {
         return;
       }
       form.resetFields();
-      this.props.onCommit({ name: values.apiKeyName });
+
+      this.props.onCommit(values);
       this.setState({ visible: false });
     });
   };
@@ -58,7 +55,7 @@ export class ButtonActionModal extends Component<TApiKeysProps, TApiKeysState> {
 
   render() {
     const { visible } = this.state;
-    const { title, submitText, children, name } = this.props;
+    const { title, submitText, children, formComponent } = this.props;
     return (
       <Fragment>
         <MainModal
@@ -68,7 +65,9 @@ export class ButtonActionModal extends Component<TApiKeysProps, TApiKeysState> {
           handleCancel={this.closeModal}
           handleSave={this.handleCreate}
         >
-          <ApiKeyForm apiKeyName={name} wrappedComponentRef={this.saveFormRef} />
+          {React.cloneElement(formComponent, {
+            wrappedComponentRef: this.saveFormRef,
+          })}
         </MainModal>
         {React.cloneElement(children, {
           onClick: this.showModal,

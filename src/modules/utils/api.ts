@@ -1,5 +1,6 @@
 import axios, { AxiosPromise, AxiosInstance } from 'axios';
 import { SignupParamsType, TokenState } from '../../redux/auth/types';
+import { ConnectionModal, AuthorizationType } from '../../redux/connections/types';
 
 export const PREFIX = '@e:';
 export const AUTH_TOKENS_STORAGE_KEY = 'auth.tokens';
@@ -71,5 +72,23 @@ export class Api {
 
   getUser(): AxiosPromise {
     return this.apiInstance.get('v1/me/user');
+  }
+
+  fetchConnections(connectorId: number): AxiosPromise {
+    return this.apiInstance.get(`/v1/connections/${connectorId}`);
+  }
+
+  createConnection(connection: ConnectionModal): AxiosPromise {
+    return this.apiInstance.post(`/v1/connections/`, { ...connection, properties: {} });
+  }
+
+  createConnectionAuthorization(
+    connection: ConnectionModal,
+    authorizationType: AuthorizationType
+  ): AxiosPromise {
+    return this.apiInstance.post(
+      `/v1/connections/${connection.id}/authorizations/${authorizationType.name.toLowerCase()}`,
+      authorizationType
+    );
   }
 }

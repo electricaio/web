@@ -1,9 +1,10 @@
 import { shallow, mount } from 'enzyme';
 import React from 'react';
 import { API_KEYS_TABLE_DATA } from '../../../../../fixtures/api-keys-table-data';
-import { ApiKeysTable, Date } from '../table';
+import { ApiKeysTable } from '../table';
 import { Table } from 'antd';
 import { ApiKeyModal } from '../../../../../redux/api-keys/types';
+import { DateComponent } from '../../../../ui-kit/date';
 
 describe('ApiKeys | table Component', () => {
   const data: ApiKeyModal[] = [
@@ -52,8 +53,8 @@ describe('ApiKeys | table Component', () => {
       key: '1234567',
       createdAt: '2018-11-10T18:42:08.552',
     };
-    const formattedDate = mount(<Date date={entity.createdAt} />);
-    expect(formattedDate.find(Date).text()).toEqual('10.11.2018');
+    const formattedDate = mount(<DateComponent date={entity.createdAt} />);
+    expect(formattedDate.find(DateComponent).text()).toEqual('10.11.2018');
   });
 
   it('passes entity to HiddenAPIKeyModal', () => {

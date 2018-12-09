@@ -15,3 +15,14 @@ export const fetchConnectors = () => (dispatch: Dispatch) => {
     })
   );
 };
+
+// export const fetchConnector = (connectorId: number) => (dispatch: Dispatch) => {
+//   dispatch(connectorHubAsyncActions.request());
+//   dispatch(
+//     withAuth((api: Api, dispatch: Dispatch) => {
+//       return api.getConnectors().then((result: AxiosResponse<ConnectorModal[]>) => {
+//         dispatch(connectorHubAsyncActions.success(result.data));
+//       });
+//     })
+//   );
+// };

@@ -16,7 +16,7 @@ describe('Action Buttons', () => {
   });
 
   it('shows edit icon with hint text', () => {
-    const tooltip = this.component.find(Tooltip);
+    const tooltip = this.component.find(Tooltip).at(0);
     const icon = tooltip.find(Icon);
     expect(tooltip.prop('placement')).toEqual('top');
     expect(icon.prop('type')).toEqual('edit');

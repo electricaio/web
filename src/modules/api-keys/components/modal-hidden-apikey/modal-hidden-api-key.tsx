@@ -5,7 +5,7 @@ import { Input, Modal, Spin } from 'antd';
 import { ApplicationState } from '../../../../redux/store';
 import { ApiKeyModal } from '../../../../redux/api-keys/types';
 import { StyledButton } from '../../../ui-kit/button';
-import { MaskStyle } from './modal-hidden-apikey.css';
+import { MaskStyle } from './modal-hidden-api-key.css';
 import { getKey } from '../../../../redux/api-keys/async';
 
 const { TextArea } = Input;
