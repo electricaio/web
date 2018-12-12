@@ -41,29 +41,25 @@ const createStoreMock = ({ initialState, actions }: storeMockType): Store => {
 const TEST_RESULT = 'TEST_RESULT';
 const TEST_RESULT_FAILED = 'TEST_RESULT_FAILED';
 
-export const fetchLoggedInUser = () =>
-  withAuth((api: Api, dispatch: Dispatch) => {
+export const fetchLoggedInUser = () => (dispatch: Dispatch) => {
+  return withAuth(dispatch, (api: Api, dispatch: Dispatch) => {
     dispatch({
       type: TEST_RESULT,
     });
     return Promise.resolve();
   });
-export const fetchLoggedOutUser = () =>
-  withAuth((api: Api, dispatch: Dispatch) => {
+};
+export const fetchLoggedOutUser = () => (dispatch: Dispatch) => {
+  return withAuth(dispatch, (api: Api, dispatch: Dispatch) => {
     dispatch({
       type: TEST_RESULT_FAILED,
     });
     const error = { response: { status: 401 } };
     return Promise.reject(error);
   });
+};
 
 describe('Request API middlware', () => {
-  it('should convert an API action properly', () => {
-    const action = fetchLoggedInUser();
-    expect(action.type).toEqual(AuthActionTypes.TOKEN_REQUEST);
-    expect(action.request).toBeDefined();
-  });
-
   const goodStore = ({ actions }: ActionsType) => {
     return createStoreMock({
       actions,
@@ -86,8 +82,7 @@ describe('Request API middlware', () => {
   };
   it('should convert an API action properly', () => {
     const actions: Action[] = [];
-
-    goodStore({ actions }).dispatch(fetchLoggedInUser());
+    goodStore({ actions }).dispatch(fetchLoggedInUser() as any);
     expect(actions).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
@@ -98,7 +93,7 @@ describe('Request API middlware', () => {
   });
   it('passes tokens to api class', () => {
     const actions: Action[] = [];
-    goodStore({ actions }).dispatch(fetchLoggedInUser());
+    goodStore({ actions }).dispatch(fetchLoggedInUser() as any);
     expect(Api).toBeCalledWith({
       access_token: '200',
       refresh_token: '0',

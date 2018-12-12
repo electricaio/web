@@ -47,7 +47,11 @@ export class Api {
   }
 
   getConnectors(): AxiosPromise {
-    return this.apiInstance.get(`/public/v1/connectors`);
+    return this.apiInstance.get(`/v1/connectors`);
+  }
+
+  getConnector(connectorId: number): AxiosPromise {
+    return this.apiInstance.get(`/v1/connectors/${connectorId}`);
   }
 
   getAccessKeys(userId: number): AxiosPromise {
@@ -74,20 +78,21 @@ export class Api {
     return this.apiInstance.get('v1/me/user');
   }
 
-  fetchConnections(connectorId: number): AxiosPromise {
-    return this.apiInstance.get(`/v1/connections/${connectorId}`);
+  fetchConnections(userId: number, connectorId: number): AxiosPromise {
+    return this.apiInstance.get(`/v1/users/${userId}/connections?connectorId=${connectorId}`);
   }
 
   createConnection(connection: ConnectionModal): AxiosPromise {
-    return this.apiInstance.post(`/v1/connections/`, { ...connection, properties: {} });
+    return this.apiInstance.post(`/v1/connections/`, connection);
   }
 
   createConnectionAuthorization(
     connection: ConnectionModal,
+    authorizationTypeName: string,
     authorizationType: AuthorizationType
   ): AxiosPromise {
     return this.apiInstance.post(
-      `/v1/connections/${connection.id}/authorizations/${authorizationType.name.toLowerCase()}`,
+      `/v1/connections/${connection.id}/authorizations/${authorizationTypeName.toLowerCase()}`,
       authorizationType
     );
   }

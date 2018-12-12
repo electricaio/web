@@ -50,11 +50,9 @@ export const logoutUser = () => (dispatch: Dispatch) => {
 export const fetchUser = () => (dispatch: Dispatch) => {
   dispatch(getUserAsyncActions.request());
 
-  return dispatch(
-    withAuth((api: Api) => {
-      return api.getUser().then((result: AxiosResponse<UserDto>) => {
-        dispatch(getUserAsyncActions.success(result.data));
-      });
-    })
-  );
+  return withAuth(dispatch, (api: Api) => {
+    return api.getUser().then((result: AxiosResponse<UserDto>) => {
+      dispatch(getUserAsyncActions.success(result.data));
+    });
+  });
 };

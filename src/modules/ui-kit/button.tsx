@@ -7,7 +7,7 @@ export const StyledButton = styled(Button as any)`
     text-transform: uppercase;
   }
 
-  margin-top: ${props => (props as any).withTopMargin && '10px'};
+  margin-top: 10px;
 
   height: 50px;
   text-transform: uppercase;

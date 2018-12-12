@@ -5,7 +5,7 @@ export const fetchConnectionsAsyncActions = createAsyncAction(
   ConnectionTypes.FETCH_CONNECTIONS,
   ConnectionTypes.FETCH_CONNECTIONS_SUCCESS,
   ConnectionTypes.FETCH_CONNECTIONS_ERROR
-)<void, ConnectionModal, string>();
+)<void, ConnectionModal[], string>();
 
 export const createConnectionAsyncActions = createAsyncAction(
   ConnectionTypes.CREATE_CONNECTION,

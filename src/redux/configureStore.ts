@@ -3,7 +3,8 @@ import { persistStore } from 'redux-persist';
 
 import { History } from 'history';
 
-import promiseMiddleware from 'redux-promise-middleware';
+import promiseMiddleware from 'redux-promise';
+
 import thunk from 'redux-thunk';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
 
@@ -15,7 +16,7 @@ export default (history: History, initialState?: ApplicationState) => {
   const store: Store<ApplicationState> = createStore(
     connectRouter(history)(rootReducer),
     initialState,
-    applyMiddleware(thunk, requestMiddleware(), routerMiddleware(history), promiseMiddleware())
+    applyMiddleware(requestMiddleware(), thunk, routerMiddleware(history), promiseMiddleware)
   );
   const persistor = persistStore(store);
 

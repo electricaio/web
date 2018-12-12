@@ -4,29 +4,31 @@ import { AxiosResponse } from 'axios';
 import { Api } from '../../modules/utils/api';
 import { withAuth } from '../util';
 import { createConnectionAsyncActions, fetchConnectionsAsyncActions } from './actions';
+import { ConnectorModal } from '../connector-hub/types';
 
-export const fetchConnections = (connectionId: number) => (dispatch: Dispatch) => {
+export const fetchConnections = (userId: number, connectorId: number) => (dispatch: Dispatch) => {
   dispatch(fetchConnectionsAsyncActions.request());
-  return dispatch(
-    withAuth((api: Api) => {
-      return api.fetchConnections(connectionId).then((result: AxiosResponse) => {
-        dispatch(fetchConnectionsAsyncActions.success(result.data));
-      });
-    })
-  );
+  return withAuth(dispatch, (api: Api) => {
+    return api.fetchConnections(userId, connectorId).then((result: AxiosResponse) => {
+      dispatch(fetchConnectionsAsyncActions.success(result.data));
+    });
+  });
 };
 
 export const createConnection = (
   connection: ConnectionModal,
+  connector: ConnectorModal,
   authorizationType: AuthorizationType
 ) => (dispatch: Dispatch) => {
   dispatch(createConnectionAsyncActions.request());
-  return dispatch(
-    withAuth((api: Api) => {
-      return api.createConnection(connection).then((result: AxiosResponse<ConnectionModal>) => {
-        dispatch(createConnectionAsyncActions.success(result.data));
-        api.createConnectionAuthorization(connection, authorizationType);
-      });
-    })
-  );
+  withAuth(dispatch, (api: Api) => {
+    return api.createConnection(connection).then((result: AxiosResponse<ConnectionModal>) => {
+      dispatch(createConnectionAsyncActions.success(result.data));
+      return api.createConnectionAuthorization(
+        result.data,
+        connector.authorizationType,
+        authorizationType
+      );
+    });
+  });
 };
