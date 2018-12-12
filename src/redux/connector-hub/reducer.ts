@@ -15,9 +15,6 @@ const reducer: Reducer<ConnectorHubState> = (
   action: ConnectorHubActionType
 ): ConnectorHubState => {
   switch (action.type) {
-    case getType(actions.connectorHubAsyncActions.request): {
-      return { ...state, loading: true };
-    }
     case getType(actions.connectorHubAsyncActions.success): {
       return { ...state, loading: false, data: action.payload };
     }

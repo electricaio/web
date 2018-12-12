@@ -111,7 +111,6 @@ describe('connections', () => {
 
   it('handleCommit calls createConnection with new connection and basic authorizationType', () => {
     const basicCreds = {
-      name: 'Basic',
       password: 'admin',
       username: 'admin',
     };
@@ -119,38 +118,37 @@ describe('connections', () => {
     const basicFormValue = {
       connectionName,
       accessKeyId: 1,
-      authorizationTypeData: basicCreds,
+      ...basicCreds,
     };
-    const connectionValue = {
+    const connectionValue: ConnectionModal = {
       accessKeyId: 1,
       connectorId: connectorBasic.id,
       name: connectionName,
     };
 
     this.component.instance().handleCommit(basicFormValue);
-    expect(createConnectionMock).toBeCalledWith(connectionValue, basicCreds);
+    expect(createConnectionMock).toBeCalledWith(connectionValue, connectorBasic, basicCreds);
   });
+
   it('handleCommit calls createConnection with new connection and token authorizationType', () => {
     const component = createConnectionComponent({ connector: connectorToken });
 
     const tokenCreds = {
-      name: 'Token',
-      username: '12345',
+      token: '12345',
     };
 
     const tokenFormValue = {
+      connectionName,
       accessKeyId: 1,
-      connectionName: 'Test Connection',
-      token: '12345',
-      authorizationTypeData: tokenCreds,
+      ...tokenCreds,
     };
-    const connectionValue = {
+    const connectionValue: ConnectionModal = {
       accessKeyId: 1,
       connectorId: connectorBasic.id,
       name: connectionName,
     };
 
     (component.instance() as any).handleCommit(tokenFormValue);
-    expect(createConnectionMock).toBeCalledWith(connectionValue, tokenCreds);
+    expect(createConnectionMock).toBeCalledWith(connectionValue, connectorToken, tokenCreds);
   });
 });

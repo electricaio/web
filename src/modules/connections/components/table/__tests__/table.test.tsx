@@ -95,16 +95,55 @@ describe('Connections Table', () => {
     ).toBeTruthy();
   });
 
-  it('renders dropdown menu to filter access keys', () => {
-    const accessKeysFilter = this.component
-      .find(Table)
-      .prop('columns')
-      .find((col: ColumnProps<ConnectionModal>) => col.key === 'accessKeyId');
-    const filterDropdown = new ReactWrapper(
-      accessKeysFilter.filterDropdown({ setSelectedKeys: jest.fn(), confirm: jest.fn() })
-    );
-    const selectComponent = filterDropdown.find(Select);
-    expect(selectComponent.prop('showSearch')).toBeTruthy();
-    expect(selectComponent.prop('placeholder')).toEqual('Filter by Access key');
+  describe('onFilter', () => {
+    beforeEach(() => {
+      this.accessKeysFilter = this.component
+        .find(Table)
+        .prop('columns')
+        .find((col: ColumnProps<ConnectionModal>) => col.key === 'accessKeyId');
+    });
+
+    it('returns true if the value if equal to the record that is being rendered', () => {
+      expect(this.accessKeysFilter.onFilter(accessKeyName, connectionsData[0])).toBeTruthy();
+    });
+
+    it('returns false if the record does not include the access key name that will be filtered', () => {
+      expect(
+        this.accessKeysFilter.onFilter(
+          'access key not related to record passed',
+          connectionsData[0]
+        )
+      ).toBeFalsy();
+    });
+  });
+
+  describe('FilterDropdown', () => {
+    let setSelectedKeys: jest.Mock;
+    let confirm: jest.Mock;
+    beforeEach(() => {
+      setSelectedKeys = jest.fn();
+      confirm = jest.fn();
+      const accessKeysFilter = this.component
+        .find(Table)
+        .prop('columns')
+        .find((col: ColumnProps<ConnectionModal>) => col.key === 'accessKeyId');
+      this.filterDropdown = new ReactWrapper(
+        accessKeysFilter.filterDropdown({ setSelectedKeys, confirm })
+      );
+    });
+
+    it('renders dropdown menu to filter access keys', () => {
+      const selectComponent = this.filterDropdown.find(Select);
+      expect(selectComponent.prop('showSearch')).toBeTruthy();
+      expect(selectComponent.prop('placeholder')).toEqual('Filter by Access key');
+    });
+
+    it('calls setSelectedkeys and confirm when changes the dropdown', () => {
+      const value = 'test';
+      const selectComponent = this.filterDropdown.find(Select);
+      selectComponent.prop('onChange')(value);
+      expect(confirm).toBeCalled();
+      expect(setSelectedKeys).toBeCalledWith([value]);
+    });
   });
 });

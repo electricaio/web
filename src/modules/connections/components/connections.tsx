@@ -26,7 +26,25 @@ export class ConnectionsComponent extends Component<PropsFromState> {
       name: formValues.connectionName,
       accessKeyId: 1,
     };
-    createConnection(connection, formValues.authorizationTypeData);
+    createConnection(
+      connection,
+      connector,
+      this.getAuthType(connector.authorizationType, formValues)
+    );
+  };
+
+  getAuthType = (authorizationType: string, formValues: any): any => {
+    switch (authorizationType.toLowerCase()) {
+      case 'basic':
+        return {
+          password: formValues.password,
+          username: formValues.username,
+        };
+      case 'token':
+        return {
+          token: formValues.token,
+        };
+    }
   };
 
   render() {

@@ -39,7 +39,7 @@ export const refreshTokenPromise = (
       dispatch(
         authAsyncActions.failure('There is a problem with your connection. Please try again')
       );
-      return Promise.reject(error);
+      throw error;
     }
     // if a 401 is returns we need to use the refresh token to get a new access token
     if (error.response.status === 401) {
@@ -55,7 +55,7 @@ export const refreshTokenPromise = (
         });
     }
     // any other error just send back to the function that made the request and dispatch an error to the error reducer
-    dispatch(createError(error.message));
-    return Promise.reject(error);
+    dispatch(createError(error.response.data ? error.response.data.message : 'unknown error'));
+    throw error;
   });
 };

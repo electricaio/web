@@ -1,14 +1,12 @@
 import React from 'react';
-import { mount } from 'enzyme';
-import { Connections } from '../connections.container';
+import { shallow } from 'enzyme';
+import { Connections, PropsFromDispatch } from '../connections.container';
 import { BreadcrumbComponent } from '../../../../components/breadcrumb/breadcrumb';
 import { ConnectionModal } from '../../../../redux/connections/types';
 import { ApiKeyModal } from '../../../../redux/api-keys/types';
 import { ConnectorModal } from '../../../../redux/connector-hub/types';
-import { Spin } from 'antd';
-import { ConnectionsComponent } from '../../components/connections';
-import { MemoryRouter } from 'react-router';
 import { UserDto } from '../../../../redux/auth/types';
+import { ConnectionsComponent } from '../../components/connections';
 
 describe('Connections Container', () => {
   const connectorId = 1;
@@ -60,34 +58,35 @@ describe('Connections Container', () => {
     },
   ];
 
+  const matchProps = {
+    params: { connectorId: connectorId.toString() },
+    isExact: true,
+    path: '',
+    url: '',
+  };
+
+  let actions: PropsFromDispatch;
+
   beforeEach(() => {
-    const actions = {
+    actions = {
+      fetchConnector: jest.fn(),
       fetchConnections: jest.fn(),
       fetchKeys: jest.fn(),
       createConnection: jest.fn(),
     };
 
-    const matchProps = {
-      params: { connectorId: connectorId.toString() },
-      isExact: true,
-      path: '',
-      url: '',
-    };
-
-    this.component = mount(
-      <MemoryRouter>
-        <Connections
-          user={user}
-          match={matchProps}
-          accessKeys={accessKeys}
-          connections={connections}
-          connectors={connectors}
-          loading
-          {...actions}
-        />
-      </MemoryRouter>
+    this.component = shallow(
+      <Connections
+        user={user}
+        match={matchProps}
+        accessKeys={accessKeys}
+        connections={connections}
+        connectors={connectors}
+        {...actions}
+      />
     );
   });
+
   it('Contains a breadcrumb component', () => {
     expect(this.component.find(BreadcrumbComponent)).toHaveLength(1);
   });
@@ -102,24 +101,15 @@ describe('Connections Container', () => {
     );
   });
 
-  it('spinning is rendered if component is loading', () => {
-    expect(
-      this.component
-        .find(Spin)
-        .first()
-        .prop('spinning')
-    ).toBeTruthy();
-  });
-
   it('renders connections component', () => {
-    const connectionsComponent = this.component.find(Spin).find(ConnectionsComponent);
+    const connectionsComponent = this.component.find(ConnectionsComponent);
     expect(connectionsComponent).toHaveLength(1);
     expect(connectionsComponent.prop('accessKeys')).toEqual(accessKeys);
     expect(connectionsComponent.prop('connections')).toEqual(connections);
   });
 
-  it('passes the connector that is loaded from the match param value', () => {
-    const connectionsComponent = this.component.find(Spin).find(ConnectionsComponent);
-    expect(connectionsComponent.prop('connector')).toEqual(connectors[0]);
+  it('passes createConnection to connections component', () => {
+    const connectionsComponent = this.component.find(ConnectionsComponent);
+    expect(connectionsComponent.prop('createConnection')).toEqual(actions.createConnection);
   });
 });

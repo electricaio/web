@@ -14,18 +14,10 @@ const initialState: ApiKeysState = {
       name: 'test2',
     },
   ],
-  loading: false,
 };
 
 describe('api keys reducer', () => {
-  describe('featch api keys', () => {
-    it('handles featch api keys request', () => {
-      expect(apiKeysReducer(initialState, { type: ApiKeysTypes.FETCH_ACCESS_KEYS })).toEqual({
-        ...initialState,
-        loading: true,
-      });
-    });
-
+  describe('fetch api keys', () => {
     it('handles successful featch api keys', () => {
       expect(
         apiKeysReducer(initialState, {
@@ -45,7 +37,6 @@ describe('api keys reducer', () => {
         })
       ).toEqual({
         ...initialState,
-        loading: false,
         data: [
           {
             id: 0,
@@ -63,13 +54,6 @@ describe('api keys reducer', () => {
   });
 
   describe('featch api key', () => {
-    it('handles featch api key request', () => {
-      expect(apiKeysReducer(initialState, { type: ApiKeysTypes.FETCH_ACCESS_KEY })).toEqual({
-        ...initialState,
-        loading: true,
-      });
-    });
-
     it('handles successful featch api key', () => {
       expect(
         apiKeysReducer(initialState, {
@@ -83,7 +67,6 @@ describe('api keys reducer', () => {
         })
       ).toEqual({
         ...initialState,
-        loading: false,
         data: [
           {
             id: 0,
@@ -102,13 +85,6 @@ describe('api keys reducer', () => {
   });
 
   describe('remove api key', () => {
-    it('handles remove api key request', () => {
-      expect(apiKeysReducer(initialState, { type: ApiKeysTypes.REMOVE_ACCESS_KEY })).toEqual({
-        ...initialState,
-        loading: true,
-      });
-    });
-
     it('handles successful 1 remove api key', () => {
       expect(
         apiKeysReducer(initialState, {
@@ -121,7 +97,6 @@ describe('api keys reducer', () => {
         })
       ).toEqual({
         ...initialState,
-        loading: false,
         data: [
           {
             id: 0,

@@ -202,7 +202,7 @@ describe('api', () => {
 
     it('passes oauth url with endpoint env var', () => {
       api.getConnectors();
-      expect(getMock.mock.calls[0][0]).toEqual(`/public/v1/connectors`);
+      expect(getMock.mock.calls[0][0]).toEqual(`/v1/connectors`);
     });
   });
 
@@ -215,6 +215,22 @@ describe('api', () => {
     it('calls user me path', () => {
       api.getUser();
       expect(getMock.mock.calls[0][0]).toEqual(`v1/me/user`);
+    });
+  });
+
+  describe('fetchConnections', () => {
+    const userId = 1;
+    const connectorId = 2;
+    it('uses get method', () => {
+      api.fetchConnections(userId, connectorId);
+      expect(getMock).toBeCalled();
+    });
+
+    it('uses correct path', () => {
+      api.fetchConnections(userId, connectorId);
+      expect(getMock.mock.calls[0][0]).toEqual(
+        `/v1/users/${userId}/connections?connectorId=${connectorId}`
+      );
     });
   });
 });

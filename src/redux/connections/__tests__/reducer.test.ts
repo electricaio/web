@@ -8,15 +8,6 @@ const initialState: ConnectionsState = {
 
 describe('connections reducer', () => {
   describe('fetch connections', () => {
-    it('sets loading to true when requesting connections', () => {
-      expect(connectionsReducer(initialState, { type: ConnectionTypes.FETCH_CONNECTIONS })).toEqual(
-        {
-          ...initialState,
-          loading: true,
-        }
-      );
-    });
-
     it('sets loading to false when successful connections', () => {
       expect(
         connectionsReducer(initialState, {
@@ -25,7 +16,6 @@ describe('connections reducer', () => {
         })
       ).toEqual({
         ...initialState,
-        loading: false,
       });
     });
   });
@@ -54,7 +44,6 @@ describe('connections reducer', () => {
             name: 'connection',
           },
         ],
-        loading: false,
       });
     });
   });

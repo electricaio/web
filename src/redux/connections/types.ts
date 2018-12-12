@@ -7,18 +7,16 @@ export type ConnectionModal = {
   name: string;
 };
 
-export interface AuthorizationType {
-  name: string;
-}
-
-export interface AuthorizationBasicType extends AuthorizationType {
+export interface AuthorizationBasicType {
   username: string;
   password: string;
 }
 
-export interface AuthorizationTokenType extends AuthorizationType {
+export interface AuthorizationTokenType {
   token: string;
 }
+
+export type AuthorizationType = AuthorizationTokenType | AuthorizationBasicType;
 
 export const enum ConnectionTypes {
   FETCH_CONNECTIONS = '@@hub/FETCH_CONNECTIONS',
