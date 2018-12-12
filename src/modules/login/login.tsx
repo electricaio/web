@@ -71,7 +71,6 @@ class LoginForm extends Component<AllProps> {
             <StyledButton type="primary" htmlType="submit" block>
               Log in
             </StyledButton>
-            Or <Link to="/signup">register now!</Link>
           </FormItem>
         </Form>
       </Fragment>
