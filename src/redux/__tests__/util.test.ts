@@ -21,16 +21,16 @@ describe('Util', () => {
     expect(result).toEqual(goodData);
   });
 
-  //   it('promise is rejected when request fails', async () => {
-  //     const badData = 'fail';
-  //     const mockDispatch = jest.fn(action => {
-  //       action.request(badData);
-  //     });
+  it('promise is rejected when request fails', async () => {
+    const badData = 'fail';
+    const mockDispatch = jest.fn(action => {
+      action.request(badData);
+    });
 
-  //     try {
-  //       await withAuth(mockDispatch, data => Promise.reject(data));
-  //     } catch (error) {
-  //       expect(error).toEqual(badData);
-  //     }
-  //   });
+    try {
+      await withAuth(mockDispatch, data => Promise.reject(data));
+    } catch (error) {
+      expect(error).toEqual(badData);
+    }
+  });
 });

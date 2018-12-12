@@ -1,104 +1,125 @@
 import React, { SFC } from 'react';
-import { shallow, ShallowWrapper } from 'enzyme';
+import { mount, ReactWrapper } from 'enzyme';
 import { AsyncComponent } from '../async-component';
-import { Spinner, ErrorIcon } from '../async-component.css';
+import { Spinner } from '../async-component.css';
 
 describe('AsyncComponent', () => {
   const TestContentComponent: SFC = () => <div>content</div>;
 
   describe('promise error', () => {
-    const asyncActionsFailure = (): ShallowWrapper => {
-      return shallow(
+    const asyncActionsFailure = (): ReactWrapper => {
+      return mount(
         <AsyncComponent getAsyncActions={() => [Promise.reject()]}>
           <TestContentComponent />
         </AsyncComponent>
       );
     };
 
-    it('show error indicator', async () => {
+    it('show error indicator', done => {
       const mounted = asyncActionsFailure();
-      await Promise.resolve();
-      expect(
-        mounted
-          .update()
-          .find(Spinner)
-          .prop('indicator')
-      ).toEqual(<ErrorIcon type="frown" />);
+      setImmediate(() => {
+        expect(
+          mounted
+            .update()
+            .find(Spinner)
+            .prop('indicator').props.type
+        ).toEqual('frown');
+        done();
+      });
     });
 
-    it('spinning is true', async () => {
+    it('spinning is true', done => {
       const mounted = asyncActionsFailure();
-      await Promise.resolve();
-      expect(
-        mounted
-          .update()
-          .find(Spinner)
-          .prop('spinning')
-      ).toBeTruthy();
+
+      setImmediate(() => {
+        expect(
+          mounted
+            .update()
+            .find(Spinner)
+            .prop('spinning')
+        ).toBeTruthy();
+        done();
+      });
     });
 
-    it('child component is not displayed', async () => {
+    it('child component is not displayed', done => {
       const mounted = asyncActionsFailure();
-      await Promise.resolve();
-      expect(mounted.update().find(TestContentComponent)).toHaveLength(0);
+      setImmediate(() => {
+        expect(mounted.update().find(TestContentComponent)).toHaveLength(0);
+        done();
+      });
     });
 
-    it('tip show a message', async () => {
+    it('tip show a message', done => {
       const mounted = asyncActionsFailure();
-      await Promise.resolve();
-      expect(
-        mounted
-          .update()
-          .find(Spinner)
-          .prop('tip')
-      ).toBeTruthy();
+      setImmediate(() => {
+        expect(
+          mounted
+            .update()
+            .find(Spinner)
+            .prop('tip')
+        ).toBeTruthy();
+        done();
+      });
     });
-    it('changesloading state to flase and error state to true', async () => {
+    it('changes loading state to false and error state to true', done => {
       const mounted = asyncActionsFailure();
-      await Promise.resolve();
-      expect(mounted.state('loading')).toEqual(false);
-      expect(mounted.state('error')).toEqual(true);
+      setImmediate(() => {
+        expect(mounted.state('loading')).toEqual(false);
+        expect(mounted.state('error')).toEqual(true);
+        done();
+      });
     });
   });
 
   describe('promise success', () => {
     const asyncActionsSuccess = () => {
-      return shallow(
+      return mount(
         <AsyncComponent getAsyncActions={() => [Promise.resolve()]}>
           <TestContentComponent />
         </AsyncComponent>
       );
     };
-    it('spinner is not spinning', async () => {
+    it('spinner is not spinning', done => {
       const mounted = asyncActionsSuccess();
-      await Promise.resolve();
-      expect(
-        mounted
-          .update()
-          .find(Spinner)
-          .prop('spinning')
-      ).toEqual(false);
+      setImmediate(() => {
+        expect(
+          mounted
+            .update()
+            .find(Spinner)
+            .prop('spinning')
+        ).toEqual(false);
+        done();
+      });
     });
-    it('not error indictor', async () => {
+
+    it('not error indictor', done => {
       const mounted = asyncActionsSuccess();
-      await Promise.resolve();
-      expect(
-        mounted
-          .update()
-          .find(Spinner)
-          .prop('indicator')
-      ).toEqual(false);
+      setImmediate(() => {
+        expect(
+          mounted
+            .update()
+            .find(Spinner)
+            .prop('indicator')
+        ).toEqual(false);
+        done();
+      });
     });
-    it('renders the child component', async () => {
+    it('renders the child component', done => {
       const mounted = asyncActionsSuccess();
-      await Promise.resolve();
-      expect(mounted.update().find(TestContentComponent)).toHaveLength(1);
+      setImmediate(() => {
+        expect(mounted.update().find(TestContentComponent)).toHaveLength(1);
+        done();
+      });
     });
-    it('loading state and error state is false', async () => {
+
+    it('loading state and error state is false', done => {
       const mounted = asyncActionsSuccess();
-      await Promise.resolve();
-      expect(mounted.state('loading')).toEqual(false);
-      expect(mounted.state('error')).toEqual(false);
+      setImmediate(() => {
+        expect(mounted.state('loading')).toEqual(false);
+        expect(mounted.state('error')).toEqual(false);
+        done();
+      });
     });
   });
 });

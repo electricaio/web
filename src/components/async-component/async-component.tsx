@@ -21,9 +21,9 @@ export class AsyncComponent extends Component<Props, StateType> {
     };
   }
 
-  componentDidMount = () => {
+  componentDidMount() {
     const { getAsyncActions } = this.props;
-    Promise.all(getAsyncActions())
+    return Promise.all(getAsyncActions())
       .then(e => {
         this.setState({
           loading: false,
@@ -35,16 +35,15 @@ export class AsyncComponent extends Component<Props, StateType> {
           error: true,
         });
       });
-  };
+  }
 
   render() {
-    const errorIcon = <ErrorIcon type="frown" />;
     const loadingOrError = this.state.loading || this.state.error;
     return (
       <Fragment>
         <Spinner
           spinning={loadingOrError}
-          indicator={this.state.error && errorIcon}
+          indicator={this.state.error && <ErrorIcon type="frown" />}
           tip={this.state.error && 'Oops there was a problem!'}
         >
           {!loadingOrError && React.cloneElement(this.props.children)}
