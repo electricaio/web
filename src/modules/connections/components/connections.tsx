@@ -24,7 +24,7 @@ export class ConnectionsComponent extends Component<PropsFromState> {
     const connection: ConnectionModal = {
       connectorId: connector.id,
       name: formValues.connectionName,
-      accessKeyId: 1,
+      accessKeyId: formValues.accessKeyId,
     };
     createConnection(
       connection,
