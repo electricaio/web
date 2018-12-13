@@ -132,18 +132,18 @@ describe('connections', () => {
 
   it('handleCommit calls createConnection with new connection and token authorizationType', () => {
     const component = createConnectionComponent({ connector: connectorToken });
-
+    const accessKeyId = 10;
     const tokenCreds = {
       token: '12345',
     };
 
     const tokenFormValue = {
+      accessKeyId,
       connectionName,
-      accessKeyId: 1,
       ...tokenCreds,
     };
     const connectionValue: ConnectionModal = {
-      accessKeyId: 1,
+      accessKeyId,
       connectorId: connectorBasic.id,
       name: connectionName,
     };
