@@ -13,7 +13,6 @@ import { StyledButton } from '../../../ui-kit/button';
 describe('connections', () => {
   const connections: ConnectionModal[] = [
     {
-      id: 1,
       name: 'Uber',
       accessKeyId: 1,
       connectorId: 1,
@@ -59,7 +58,7 @@ describe('connections', () => {
   const createConnectionComponent = (props = {}): ShallowWrapper => {
     return shallow(
       <ConnectionsComponent
-      deleteConnection={deleteConnectionMock}
+        deleteConnection={deleteConnectionMock}
         createConnection={createConnectionMock}
         accessKeys={accessKeys}
         connections={connections}

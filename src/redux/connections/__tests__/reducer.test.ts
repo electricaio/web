@@ -10,6 +10,7 @@ describe('connections reducer', () => {
     it('sets data to the payload that is enterign', () => {
       const fetchedData: ConnectionModal[] = [
         {
+          id: 123,
           accessKeyId: 1,
           connectorId: 1,
           authorizationId: 1,
@@ -57,9 +58,11 @@ describe('connections reducer', () => {
   });
   describe('delete connection', () => {
     it('removes the connection from the state', () => {
-      const stateWithConnection = {
+      const connectionId = 123;
+      const stateWithConnection: ConnectionsState = {
         data: [
           {
+            id: connectionId,
             accessKeyId: 1,
             connectorId: 1,
             authorizationId: 1,
@@ -70,7 +73,7 @@ describe('connections reducer', () => {
       expect(
         connectionsReducer(stateWithConnection, {
           type: ConnectionTypes.DELETE_CONNECTION_SUCCESS,
-          payload: 1,
+          payload: connectionId,
         })
       ).toEqual({
         ...initialState,

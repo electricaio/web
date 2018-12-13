@@ -9,7 +9,11 @@ import { ApiKeyModal } from '../../../redux/api-keys/types';
 import { ConnectorModal } from '../../../redux/connector-hub/types';
 import { RouteComponentProps } from 'react-router';
 import { fetchKeys } from '../../../redux/api-keys/async';
-import { fetchConnections, createConnection, deleteConnection } from '../../../redux/connections/async';
+import {
+  fetchConnections,
+  createConnection,
+  deleteConnection,
+} from '../../../redux/connections/async';
 import { UserDto } from '../../../redux/auth/types';
 import { fetchConnector } from '../../../redux/connector-hub/async';
 import { AsyncComponent } from '../../../components/async-component/async-component';
@@ -96,7 +100,7 @@ export class Connections extends Component<AllProps, StateType> {
           <BreadcrumbComponent breadcrumbNameMap={breadcrumbNameMap} />
 
           <ConnectionsComponent
-          deleteConnection={deleteConnection}
+            deleteConnection={deleteConnection}
             createConnection={createConnection}
             connector={connector}
             accessKeys={accessKeys}

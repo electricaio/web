@@ -8,7 +8,7 @@ const initialState: ErrorsState = {
 describe('errors reducer', () => {
   describe('create error', () => {
     it('sets data to the payload that is enterign', () => {
-        const message = 'error';
+      const message = 'error';
       expect(
         errorReducer(initialState, {
           type: ErrorTypes.CREATE_ERROR,

@@ -23,7 +23,7 @@ const reducer: Reducer<ConnectionsState> = (
     case getType(actions.deleteConnectionAsyncActions.success): {
       return {
         ...state,
-        data: state.data.filter((connection: ConnectionModal) => connection.id === action.payload),
+        data: state.data.filter((connection: ConnectionModal) => connection.id !== action.payload),
       };
     }
 

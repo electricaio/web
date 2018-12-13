@@ -1,9 +1,5 @@
 import { withAuth } from '../../util';
-import {
-  ConnectionModal,
-  ConnectionTypes,
-  AuthorizationBasicType,
-} from '../types';
+import { ConnectionModal, ConnectionTypes, AuthorizationBasicType } from '../types';
 import { createConnection, fetchConnections, deleteConnection } from '../async';
 import { ConnectorModal } from '../../connector-hub/types';
 

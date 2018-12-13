@@ -39,11 +39,6 @@ describe('LoginContainer', () => {
   });
 
   it('passes login action to login component', () => {
-    expect(
-      this.loginContainer
-        .find(Spin)
-        .find(LoginFormComponent)
-        .prop('login')
-    ).toEqual(loginMock);
+    expect(this.loginContainer.find(LoginFormComponent).prop('login')).toEqual(loginMock);
   });
 });
