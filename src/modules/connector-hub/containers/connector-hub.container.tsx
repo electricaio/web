@@ -4,12 +4,10 @@ import { bindActionCreators, Dispatch } from 'redux';
 import { ConnectorHubComponent } from '../components/connector-hub/connector-hub';
 import { ApplicationState } from '../../../redux/store';
 import { ConnectorModal } from '../../../redux/connector-hub/types';
-import { Spin } from 'antd';
 import { fetchConnectors } from '../../../redux/connector-hub/async';
 
 const mapStateToProps = ({ connectors }: ApplicationState) => ({
   connectors: connectors.data,
-  loading: connectors.loading,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -18,7 +16,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 interface PropsFromState {
   connectors: ConnectorModal[];
-  loading: boolean;
 }
 
 interface PropsFromDispatch {
@@ -33,12 +30,8 @@ export class ConnectorHub extends Component<AllProps> {
   };
 
   public render() {
-    const { connectors, loading } = this.props;
-    return (
-      <Spin spinning={loading}>
-        <ConnectorHubComponent connectors={connectors} />
-      </Spin>
-    );
+    const { connectors } = this.props;
+    return <ConnectorHubComponent connectors={connectors} />;
   }
 }
 

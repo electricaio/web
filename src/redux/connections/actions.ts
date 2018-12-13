@@ -12,3 +12,9 @@ export const createConnectionAsyncActions = createAsyncAction(
   ConnectionTypes.CREATE_CONNECTION_SUCCESS,
   ConnectionTypes.CREATE_CONNECTION_ERROR
 )<void, ConnectionModal, string>();
+
+export const deleteConnectionAsyncActions = createAsyncAction(
+  ConnectionTypes.DELETE_CONNECTION,
+  ConnectionTypes.DELETE_CONNECTION_SUCCESS,
+  ConnectionTypes.DELETE_CONNECTION_ERROR
+)<void, number, string>();

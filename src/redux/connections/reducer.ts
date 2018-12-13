@@ -1,5 +1,5 @@
 import { Reducer } from 'redux';
-import { ConnectionsState } from './types';
+import { ConnectionsState, ConnectionModal } from './types';
 import { ActionType, getType } from 'typesafe-actions';
 import * as actions from './actions';
 
@@ -19,6 +19,12 @@ const reducer: Reducer<ConnectionsState> = (
     }
     case getType(actions.fetchConnectionsAsyncActions.success): {
       return { ...state, data: action.payload };
+    }
+    case getType(actions.deleteConnectionAsyncActions.success): {
+      return {
+        ...state,
+        data: state.data.filter((connection: ConnectionModal) => connection.id !== action.payload),
+      };
     }
 
     default: {

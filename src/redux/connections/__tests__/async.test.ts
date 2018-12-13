@@ -1,6 +1,6 @@
 import { withAuth } from '../../util';
 import { ConnectionModal, ConnectionTypes, AuthorizationBasicType } from '../types';
-import { createConnection, fetchConnections } from '../async';
+import { createConnection, fetchConnections, deleteConnection } from '../async';
 import { ConnectorModal } from '../../connector-hub/types';
 
 jest.mock('../../../modules/utils/api');
@@ -41,9 +41,10 @@ describe('Connection Async Actions', () => {
 
   beforeEach(() => {
     mockApi = {
-      createConnection: (data: ConnectionModal) => Promise.resolve({ data }),
-      fetchConnections: jest.fn(() => Promise.resolve({ data: testConnection })),
-      createConnectionAuthorization: () => Promise.resolve(),
+      createConnection: jest.fn(() => Promise.resolve({ data: testConnection })),
+      fetchConnections: jest.fn(() => Promise.resolve({ data: [testConnection] })),
+      deleteConnection: jest.fn(() => Promise.resolve()),
+      createConnectionAuthorization: jest.fn(() => Promise.resolve()),
     };
     dispatchMock = jest.fn();
     (withAuth as any).mockImplementation((_: any, callback: any) => {
@@ -70,6 +71,33 @@ describe('Connection Async Actions', () => {
       const successDispatchCall = dispatchMock.mock.calls[1][0];
       expect(successDispatchCall.payload).toEqual(testConnection);
     });
+
+    it('calls createConnectionAuthorization with the result of the createConnection', async () => {
+      await createConnection(testConnection, testConnector, testAuthType)(dispatchMock);
+      expect(mockApi.createConnectionAuthorization).toBeCalledWith(
+        testConnection,
+        testConnector.authorizationType,
+        testAuthType
+      );
+      const successDispatchCall = dispatchMock.mock.calls[1][0];
+
+      expect(successDispatchCall.payload).toEqual(testConnection);
+    });
+  });
+
+  describe('deleteConnection', () => {
+    it('dispatch DELETE_CONNECTION_SUCCESS action', async () => {
+      await deleteConnection(testConnection.id)(dispatchMock);
+      const successDispatchCall = dispatchMock.mock.calls[0][0];
+
+      expect(successDispatchCall.type).toEqual(ConnectionTypes.DELETE_CONNECTION_SUCCESS);
+    });
+
+    it('dispatch connection id payload to reducers', async () => {
+      await deleteConnection(testConnection.id)(dispatchMock);
+      const successDispatchCall = dispatchMock.mock.calls[0][0];
+      expect(successDispatchCall.payload).toEqual(testConnection.id);
+    });
   });
 
   describe('fetchConnections', () => {
@@ -82,7 +110,7 @@ describe('Connection Async Actions', () => {
     it('dispatches access keys to reducer', async () => {
       await fetchConnections(1, 1)(dispatchMock);
       const firstDispatchCall = dispatchMock.mock.calls[1][0];
-      expect(firstDispatchCall.payload).toEqual(testConnection);
+      expect(firstDispatchCall.payload).toEqual([testConnection]);
     });
 
     it('dispatch FETCH_CONNECTORS_SUCCESS action', async () => {

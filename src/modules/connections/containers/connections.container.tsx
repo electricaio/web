@@ -9,7 +9,11 @@ import { ApiKeyModal } from '../../../redux/api-keys/types';
 import { ConnectorModal } from '../../../redux/connector-hub/types';
 import { RouteComponentProps } from 'react-router';
 import { fetchKeys } from '../../../redux/api-keys/async';
-import { fetchConnections, createConnection } from '../../../redux/connections/async';
+import {
+  fetchConnections,
+  createConnection,
+  deleteConnection,
+} from '../../../redux/connections/async';
 import { UserDto } from '../../../redux/auth/types';
 import { fetchConnector } from '../../../redux/connector-hub/async';
 import { AsyncComponent } from '../../../components/async-component/async-component';
@@ -24,6 +28,7 @@ const mapStateToProps = ({ connections, apiKeys, connectors, auth }: Application
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   fetchConnections: bindActionCreators(fetchConnections, dispatch),
   createConnection: bindActionCreators(createConnection, dispatch),
+  deleteConnection: bindActionCreators(deleteConnection, dispatch),
   fetchKeys: bindActionCreators(fetchKeys, dispatch),
   fetchConnector: bindActionCreators(fetchConnector, dispatch),
 });
@@ -40,6 +45,7 @@ export interface PropsFromDispatch {
   fetchConnections: typeof fetchConnections;
   fetchConnector: typeof fetchConnector;
   createConnection: typeof createConnection;
+  deleteConnection: typeof deleteConnection;
 }
 
 interface MatchParams {
@@ -72,6 +78,7 @@ export class Connections extends Component<AllProps, StateType> {
       fetchConnections,
       fetchConnector,
       createConnection,
+      deleteConnection,
       user,
       match,
     } = this.props;
@@ -93,6 +100,7 @@ export class Connections extends Component<AllProps, StateType> {
           <BreadcrumbComponent breadcrumbNameMap={breadcrumbNameMap} />
 
           <ConnectionsComponent
+            deleteConnection={deleteConnection}
             createConnection={createConnection}
             connector={connector}
             accessKeys={accessKeys}

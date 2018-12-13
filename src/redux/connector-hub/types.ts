@@ -23,6 +23,5 @@ export const enum ConnectorHubTypes {
 }
 
 export interface ConnectorHubState {
-  readonly loading?: boolean;
   readonly data: ConnectorModal[];
 }

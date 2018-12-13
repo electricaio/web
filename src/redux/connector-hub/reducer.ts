@@ -7,7 +7,6 @@ export type ConnectorHubActionType = ActionType<typeof actions>;
 
 const initialState: ConnectorHubState = {
   data: [],
-  loading: false,
 };
 
 const reducer: Reducer<ConnectorHubState> = (
@@ -16,7 +15,7 @@ const reducer: Reducer<ConnectorHubState> = (
 ): ConnectorHubState => {
   switch (action.type) {
     case getType(actions.connectorHubAsyncActions.success): {
-      return { ...state, loading: false, data: action.payload };
+      return { ...state, data: action.payload };
     }
 
     default: {
