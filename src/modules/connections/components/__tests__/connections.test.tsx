@@ -55,9 +55,11 @@ describe('connections', () => {
   const connectionName = 'Test Connection';
 
   let createConnectionMock: jest.Mock;
+  let deleteConnectionMock: jest.Mock;
   const createConnectionComponent = (props = {}): ShallowWrapper => {
     return shallow(
       <ConnectionsComponent
+      deleteConnection={deleteConnectionMock}
         createConnection={createConnectionMock}
         accessKeys={accessKeys}
         connections={connections}
@@ -69,6 +71,7 @@ describe('connections', () => {
 
   beforeEach(() => {
     createConnectionMock = jest.fn();
+    deleteConnectionMock = jest.fn();
     this.component = createConnectionComponent();
   });
 
@@ -150,5 +153,12 @@ describe('connections', () => {
 
     (component.instance() as any).handleCommit(tokenFormValue);
     expect(createConnectionMock).toBeCalledWith(connectionValue, connectorToken, tokenCreds);
+  });
+
+  it('handleDelete calls deleteConnection with connection id', () => {
+    const component = createConnectionComponent({ connector: connectorToken });
+    const connectionId = 100;
+    (component.instance() as any).handleDelete(connectionId);
+    expect(deleteConnectionMock).toBeCalledWith(connectionId);
   });
 });

@@ -1,21 +1,29 @@
 import { connectionsReducer } from '../reducer';
-import { ConnectionTypes, ConnectionsState } from '../types';
+import { ConnectionTypes, ConnectionsState, ConnectionModal } from '../types';
 
 const initialState: ConnectionsState = {
   data: [],
-  loading: false,
 };
 
 describe('connections reducer', () => {
   describe('fetch connections', () => {
-    it('sets loading to false when successful connections', () => {
+    it('sets data to the payload that is enterign', () => {
+      const fetchedData: ConnectionModal[] = [
+        {
+          accessKeyId: 1,
+          connectorId: 1,
+          authorizationId: 1,
+          name: 'connection',
+        },
+      ];
       expect(
         connectionsReducer(initialState, {
           type: ConnectionTypes.FETCH_CONNECTIONS_SUCCESS,
-          payload: [],
+          payload: fetchedData,
         })
       ).toEqual({
         ...initialState,
+        data: fetchedData,
       });
     });
   });
@@ -44,6 +52,29 @@ describe('connections reducer', () => {
             name: 'connection',
           },
         ],
+      });
+    });
+  });
+  describe('delete connection', () => {
+    it('removes the connection from the state', () => {
+      const stateWithConnection = {
+        data: [
+          {
+            accessKeyId: 1,
+            connectorId: 1,
+            authorizationId: 1,
+            name: 'connection',
+          },
+        ],
+      };
+      expect(
+        connectionsReducer(stateWithConnection, {
+          type: ConnectionTypes.DELETE_CONNECTION_SUCCESS,
+          payload: 1,
+        })
+      ).toEqual({
+        ...initialState,
+        data: [],
       });
     });
   });

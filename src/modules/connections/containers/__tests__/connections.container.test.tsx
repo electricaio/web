@@ -73,6 +73,7 @@ describe('Connections Container', () => {
       fetchConnections: jest.fn(),
       fetchKeys: jest.fn(),
       createConnection: jest.fn(),
+      deleteConnection: jest.fn(),
     };
 
     this.component = shallow(
@@ -111,5 +112,9 @@ describe('Connections Container', () => {
   it('passes createConnection to connections component', () => {
     const connectionsComponent = this.component.find(ConnectionsComponent);
     expect(connectionsComponent.prop('createConnection')).toEqual(actions.createConnection);
+  });
+  it('passes deleteConnection to connections component', () => {
+    const connectionsComponent = this.component.find(ConnectionsComponent);
+    expect(connectionsComponent.prop('deleteConnection')).toEqual(actions.deleteConnection);
   });
 });

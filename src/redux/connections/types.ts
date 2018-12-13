@@ -26,9 +26,12 @@ export const enum ConnectionTypes {
   CREATE_CONNECTION = '@@hub/CREATE_CONNECTION',
   CREATE_CONNECTION_SUCCESS = '@@hub/CREATE_CONNECTION_SUCCESS',
   CREATE_CONNECTION_ERROR = '@@hub/CREATE_CONNECTION_ERROR',
+
+  DELETE_CONNECTION = '@@hub/DELETE_CONNECTION',
+  DELETE_CONNECTION_SUCCESS = '@@hub/DELETE_CONNECTION_SUCCESS',
+  DELETE_CONNECTION_ERROR = '@@hub/DELETE_CONNECTION_ERROR',
 }
 
 export interface ConnectionsState {
-  readonly loading?: boolean;
   readonly data: ConnectionModal[];
 }

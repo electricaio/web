@@ -8,7 +8,7 @@ import { Tooltip } from 'antd';
 import { ConnectorModal } from '../../../redux/connector-hub/types';
 import { ButtonActionModal } from '../../ui-kit/modal-button-action/modal-button-action';
 import { ConnectionForm } from './connection-form/connection-form';
-import { createConnection } from '../../../redux/connections/async';
+import { createConnection, deleteConnection } from '../../../redux/connections/async';
 import { StyledButton } from '../../ui-kit/button';
 
 interface PropsFromState {
@@ -16,9 +16,15 @@ interface PropsFromState {
   connector: ConnectorModal;
   accessKeys: ApiKeyModal[];
   createConnection: typeof createConnection;
+  deleteConnection: typeof deleteConnection;
 }
 
 export class ConnectionsComponent extends Component<PropsFromState> {
+  handleDelete = (connectionId: number) => {
+    const { deleteConnection } = this.props;
+    deleteConnection(connectionId);
+  };
+
   handleCommit = (formValues: any) => {
     const { connector, createConnection } = this.props;
     const connection: ConnectionModal = {
@@ -57,7 +63,11 @@ export class ConnectionsComponent extends Component<PropsFromState> {
         <Header>
           {connector.name} uses {connector.authorizationType} Authorization
         </Header>
-        <ConnectionsTable onRemove={() => {}} accessKeys={accessKeys} connections={connections} />
+        <ConnectionsTable
+          onRemove={this.handleDelete}
+          accessKeys={accessKeys}
+          connections={connections}
+        />
         <ButtonActionModal
           title="Add a new Connection"
           submitText="Create"

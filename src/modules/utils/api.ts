@@ -86,6 +86,10 @@ export class Api {
     return this.apiInstance.post(`/v1/connections/`, connection);
   }
 
+  deleteConnection(connectionId: number): AxiosPromise {
+    return this.apiInstance.delete(`/v1/connections/${connectionId}`);
+  }
+
   createConnectionAuthorization(
     connection: ConnectionModal,
     authorizationTypeName: string,
