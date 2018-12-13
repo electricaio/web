@@ -78,8 +78,8 @@ export class HiddenAPIKeyModalComponent extends Component<AllProps, THiddenApiKe
             </StyledButton>
           }
         >
-          <Spin tip={`Loading ${this.props.entity.name} Access Key`} spinning={!hiddenApiKey}>
-            <TextArea autosize value={hiddenApiKey} id={`text-area-${this.props.entity.name}`} />
+          <Spin tip={`Fetching ${this.props.entity.name} Access Key`} spinning={!hiddenApiKey}>
+            <TextArea autosize value={hiddenApiKey} />
           </Spin>
         </Modal>
         {React.cloneElement(children, {

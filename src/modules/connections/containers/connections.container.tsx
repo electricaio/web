@@ -95,7 +95,7 @@ export class Connections extends Component<AllProps, StateType> {
     };
 
     return (
-      <AsyncComponent getAsyncActions={asyncActions}>
+      <AsyncComponent getAsyncActions={asyncActions} message="Fetching your connections">
         <Fragment>
           <BreadcrumbComponent breadcrumbNameMap={breadcrumbNameMap} />
 

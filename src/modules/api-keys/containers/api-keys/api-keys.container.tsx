@@ -5,6 +5,7 @@ import { ApiKeys } from '../../components/api-keys/api-keys';
 import { ApplicationState } from '../../../../redux/store';
 import { ApiKeyModal } from '../../../../redux/api-keys/types';
 import { removeKey, createKey, refreshKey, fetchKeys } from '../../../../redux/api-keys/async';
+import { AsyncComponent } from '../../../../components/async-component/async-component';
 
 const mapStateToProps = ({ apiKeys, auth }: ApplicationState) => ({
   apiKeys: apiKeys.data,
@@ -33,20 +34,21 @@ interface PropsFromDispatch {
 type AllProps = PropsFromState & PropsFromDispatch;
 
 export class ApiKeysComponent extends Component<AllProps> {
-  componentDidMount = () => {
-    this.props.fetchKeys(this.props.userId);
-  };
-
   render() {
-    const { removeKey, createKey, refreshKey, apiKeys, userId } = this.props;
+    const { removeKey, createKey, refreshKey, apiKeys, userId, fetchKeys } = this.props;
     return (
-      <ApiKeys
-        removeKey={removeKey}
-        createKey={createKey}
-        refreshKey={refreshKey}
-        apiKeys={apiKeys}
-        userId={userId}
-      />
+      <AsyncComponent
+        message="Fetching your access keys"
+        getAsyncActions={() => [fetchKeys(userId)]}
+      >
+        <ApiKeys
+          removeKey={removeKey}
+          createKey={createKey}
+          refreshKey={refreshKey}
+          apiKeys={apiKeys}
+          userId={userId}
+        />
+      </AsyncComponent>
     );
   }
 }
