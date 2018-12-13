@@ -1,10 +1,15 @@
 import React, { Component, Fragment, ReactElement } from 'react';
 
-import { Spinner, ErrorIcon } from './async-component.css';
+import { Spinner, ErrorIcon, LoadingIcon } from './async-component.css';
 
-interface Props {
+export interface AsyncComponentProps {
   getAsyncActions: () => any[];
   children: ReactElement<any>;
+  message: string;
+  showError?: boolean;
+}
+interface DefaultProps {
+  showError: boolean;
 }
 
 interface StateType {
@@ -12,8 +17,11 @@ interface StateType {
   error: boolean;
 }
 
-export class AsyncComponent extends Component<Props, StateType> {
-  constructor(props: Props) {
+export class AsyncComponent extends Component<AsyncComponentProps, StateType> {
+  static defaultProps: DefaultProps = {
+    showError: true,
+  };
+  constructor(props: AsyncComponentProps) {
     super(props);
     this.state = {
       loading: true,
@@ -32,22 +40,26 @@ export class AsyncComponent extends Component<Props, StateType> {
       .catch(() => {
         this.setState({
           loading: false,
-          error: true,
+          error: this.props.showError,
         });
       });
   }
 
   render() {
+    const { message, children } = this.props;
     const loadingOrError = this.state.loading || this.state.error;
     return (
       <Fragment>
         <Spinner
+          size="large"
+          delay={300}
           spinning={loadingOrError}
-          indicator={this.state.error && <ErrorIcon type="frown" />}
-          tip={this.state.error && 'Oops there was a problem!'}
-        >
-          {!loadingOrError && React.cloneElement(this.props.children)}
-        </Spinner>
+          indicator={
+            this.state.error ? <ErrorIcon type="frown" /> : <LoadingIcon type="loading" spin />
+          }
+          tip={this.state.error ? 'Oops there was a problem!' : message}
+        />
+        {!loadingOrError && React.cloneElement(children)}
       </Fragment>
     );
   }

@@ -4,12 +4,13 @@ import { shallow } from 'enzyme';
 import { MainLayout } from '../main-layout';
 import { Header } from '../main-layout.css';
 import { UserDto } from '../../../../redux/auth/types';
+import { AsyncComponent } from '../../../async-component/async-component';
 
 const { Content } = Layout;
 
 describe('Main Layout', () => {
   const TestContentComponent = () => <div>content</div>;
-  const fetchUserDetailsMock = jest.fn();
+  const fetchUserMock = jest.fn();
 
   beforeEach(() => {
     const user: UserDto = {
@@ -21,7 +22,7 @@ describe('Main Layout', () => {
     };
 
     this.mainComponent = shallow(
-      <MainLayout errorMessage="" user={user} fetchUserDetails={fetchUserDetailsMock}>
+      <MainLayout errorMessage="" user={user} fetchUser={fetchUserMock}>
         <TestContentComponent />
       </MainLayout>
     );
@@ -35,27 +36,24 @@ describe('Main Layout', () => {
     expect(this.mainComponent.find(Content)).toHaveLength(1);
   });
 
-  it('calls fetchUserDetails on mount', () => {
-    expect(fetchUserDetailsMock).toBeCalled();
-  });
-
   it('renders children if user has been loaded', () => {
     expect(this.mainComponent.find(TestContentComponent)).toHaveLength(1);
   });
 
-  it('does not render children if user id is not defiend', () => {
-    const user: UserDto = {
-      id: null,
-      organizationId: null,
-      firstName: null,
-      lastName: null,
-      email: null,
-    };
-    const noUserComponent = shallow(
-      <MainLayout errorMessage="" user={user} fetchUserDetails={fetchUserDetailsMock}>
-        <TestContentComponent />
-      </MainLayout>
-    );
-    expect(noUserComponent.find(TestContentComponent)).toHaveLength(0);
+  describe('async component', () => {
+    it('renders the component', () => {
+      expect(this.mainComponent.find(AsyncComponent)).toHaveLength(1);
+    });
+
+    it('show error should be false since we are redirecting to login screen on error anyway', () => {
+      const showErrorProp = this.mainComponent.find(AsyncComponent).prop('showError');
+      expect(showErrorProp).toEqual(false);
+    });
+
+    it('passes fetchConnectors action', () => {
+      const actions = this.mainComponent.find(AsyncComponent).prop('getAsyncActions');
+      actions();
+      expect(fetchUserMock).toBeCalled();
+    });
   });
 });

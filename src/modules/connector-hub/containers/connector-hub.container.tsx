@@ -5,6 +5,7 @@ import { ConnectorHubComponent } from '../components/connector-hub/connector-hub
 import { ApplicationState } from '../../../redux/store';
 import { ConnectorModal } from '../../../redux/connector-hub/types';
 import { fetchConnectors } from '../../../redux/connector-hub/async';
+import { AsyncComponent } from '../../../components/async-component/async-component';
 
 const mapStateToProps = ({ connectors }: ApplicationState) => ({
   connectors: connectors.data,
@@ -25,13 +26,13 @@ interface PropsFromDispatch {
 type AllProps = PropsFromState & PropsFromDispatch;
 
 export class ConnectorHub extends Component<AllProps> {
-  componentDidMount = () => {
-    this.props.fetchConnectors();
-  };
-
-  public render() {
-    const { connectors } = this.props;
-    return <ConnectorHubComponent connectors={connectors} />;
+  render() {
+    const { connectors, fetchConnectors } = this.props;
+    return (
+      <AsyncComponent getAsyncActions={() => [fetchConnectors()]} message="Fetching Connectors">
+        <ConnectorHubComponent connectors={connectors} />
+      </AsyncComponent>
+    );
   }
 }
 

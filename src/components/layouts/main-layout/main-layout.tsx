@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Layout, Spin, notification } from 'antd';
+import { Layout, notification } from 'antd';
 
 import { Navigation } from './navigation';
 import { StyledLayout, Header, ContainerContent } from './main-layout.css';
@@ -11,6 +11,7 @@ import { ApplicationState } from '../../../redux/store';
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { fetchUser } from '../../../redux/auth/async';
+import { AsyncComponent } from '../../async-component/async-component';
 
 const { Content } = Layout;
 
@@ -21,7 +22,7 @@ type PropsFromState = {
 };
 
 type PropsFromDispatch = {
-  fetchUserDetails: typeof fetchUser;
+  fetchUser: typeof fetchUser;
 };
 
 type TMainLayoutProps = {
@@ -34,7 +35,7 @@ const mapStateToProps = ({ auth, error }: ApplicationState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  fetchUserDetails: bindActionCreators(fetchUser, dispatch),
+  fetchUser: bindActionCreators(fetchUser, dispatch),
 });
 
 const errorNotification = (message: string) => {
@@ -47,33 +48,29 @@ const errorNotification = (message: string) => {
 type AllProps = PropsFromState & PropsFromDispatch & TMainLayoutProps;
 
 export class MainLayout extends Component<AllProps> {
-  componentDidMount = () => {
-    const { fetchUserDetails } = this.props;
-    fetchUserDetails();
-  };
-
   render() {
-    const { children, errorMessage } = this.props;
-    const isLoadingUser = !this.props.user.id;
+    const { errorMessage, fetchUser, children } = this.props;
 
     if (errorMessage) {
       errorNotification(errorMessage);
     }
     return (
-      <StyledLayout>
-        <Header>
-          <Navigation />
-          <Logo src={logo} />
-          <UserProfileContainer />
-        </Header>
-        <ContainerContent>
-          <StyledLayout>
-            <Layout>
-              <Content>{isLoadingUser ? <Spin spinning={isLoadingUser} /> : children}</Content>
-            </Layout>
-          </StyledLayout>
-        </ContainerContent>
-      </StyledLayout>
+      <AsyncComponent showError={false} message="" getAsyncActions={() => [fetchUser()]}>
+        <StyledLayout>
+          <Header>
+            <Navigation />
+            <Logo src={logo} />
+            <UserProfileContainer />
+          </Header>
+          <ContainerContent>
+            <StyledLayout>
+              <Layout>
+                <Content>{children}</Content>
+              </Layout>
+            </StyledLayout>
+          </ContainerContent>
+        </StyledLayout>
+      </AsyncComponent>
     );
   }
 }

@@ -1,11 +1,12 @@
 import { ApiKeysTable } from '../table/table';
-import { ApiIcon, NewApiButton } from './api-keys.css';
+import { ApiIcon } from './api-keys.css';
 import { Header } from '../../../ui-kit/header';
 import React, { Component, Fragment } from 'react';
 import { ApiKeyModal } from '../../../../redux/api-keys/types';
 import { removeKey, createKey, refreshKey } from '../../../../redux/api-keys/async';
 import { ButtonActionModal } from '../../../ui-kit/modal-button-action/modal-button-action';
 import { ApiKeyForm } from '../api-key-form/api-key-form';
+import { StyledButton } from '../../../ui-kit/button';
 
 // Separate state props + dispatch props to their own interfaces.
 interface PropsFromState {
@@ -54,7 +55,7 @@ export class ApiKeys extends Component<AllProps> {
           onCommit={this.handleCommit}
           formComponent={<ApiKeyForm name={name} />}
         >
-          <NewApiButton type="primary">Generate New API Key</NewApiButton>
+          <StyledButton type="primary">Generate New API Key</StyledButton>
         </ButtonActionModal>
       </Fragment>
     );
