@@ -6,6 +6,7 @@ import { ApiKeyModal } from '../../../../../redux/api-keys/types';
 import { ConnectionModal } from '../../../../../redux/connections/types';
 import { ColumnProps } from 'antd/lib/table';
 import { AccessKeyName } from '../table.css';
+import { MemoryRouter } from 'react-router';
 
 describe('Connections Table', () => {
   const accessKeyName = 'Development';
@@ -42,11 +43,13 @@ describe('Connections Table', () => {
   const onRemoveMock = jest.fn();
   beforeEach(() => {
     this.component = mount(
-      <ConnectionsTable
-        accessKeys={accessKeysData}
-        connections={connectionsData}
-        onRemove={onRemoveMock}
-      />
+      <MemoryRouter>
+        <ConnectionsTable
+          accessKeys={accessKeysData}
+          connections={connectionsData}
+          onRemove={onRemoveMock}
+        />
+      </MemoryRouter>
     );
   });
 

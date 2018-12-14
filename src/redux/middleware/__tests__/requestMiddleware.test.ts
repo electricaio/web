@@ -66,6 +66,7 @@ describe('Request API middlware', () => {
       initialState: {
         error: { message: '' },
         apiKeys: { data: [] },
+        webhooks: { data: [] },
         connectors: { data: [] },
         connections: { data: [] },
         auth: {

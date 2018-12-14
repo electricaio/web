@@ -5,9 +5,10 @@ export type ActionButtonsProps = {
   onRemove: () => void;
   onEdit?: () => void;
   name: string;
+  typeName: string;
 };
 
-export const ActionButtons: SFC<ActionButtonsProps> = ({ name, onEdit, onRemove }) => (
+export const ActionButtons: SFC<ActionButtonsProps> = ({ name, onEdit, onRemove, typeName }) => (
   <Fragment>
     {onEdit && (
       <Tooltip placement="top" title="Edit Connection">
@@ -15,11 +16,11 @@ export const ActionButtons: SFC<ActionButtonsProps> = ({ name, onEdit, onRemove 
       </Tooltip>
     )}
 
-    <Tooltip placement="top" title="Delete Connection">
+    <Tooltip placement="top" title={`Delete ${typeName}`}>
       <Popconfirm
         icon={<DeleteIcon type="question-circle-o" />}
         placement="top"
-        title={`Delete ${name} connection?`}
+        title={`Delete ${name} ${typeName}?`}
         onConfirm={onRemove}
         okText="Yes"
         cancelText="No"

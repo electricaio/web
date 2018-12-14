@@ -13,6 +13,8 @@ import { errorReducer } from './error/reducer';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { ErrorsState } from './error/types';
+import { webhooksReducer } from './webhooks/reducer';
+import { WebhooksState } from './webhooks/types';
 
 // The top-level state object
 export interface ApplicationState {
@@ -20,6 +22,7 @@ export interface ApplicationState {
   apiKeys: ApiKeysState;
   connectors: ConnectorHubState;
   connections: ConnectionsState;
+  webhooks: WebhooksState;
   error: ErrorsState;
 }
 
@@ -41,5 +44,6 @@ export const rootReducer = combineReducers<ApplicationState>({
   connectors: connectorHubReducer,
   apiKeys: apiKeysReducer,
   connections: connectionsReducer,
+  webhooks: webhooksReducer,
   error: errorReducer,
 });

@@ -7,6 +7,7 @@ import { ApiKeyModal } from '../../../../redux/api-keys/types';
 import { ActionButtons } from '../../../../components/action-buttons/action-buttons';
 import { SelectValue } from 'antd/lib/select';
 import { DateComponent } from '../../../ui-kit/date';
+import { Link } from 'react-router-dom';
 
 const Option = Select.Option;
 
@@ -74,18 +75,25 @@ export class ConnectionsTable extends Component<TableProps> {
       {
         title: 'Date Created',
         key: 'created',
-        render: (entity: ApiKeyModal) => <DateComponent date={entity.createdAt} />,
+        render: (entity: ConnectionModal) => <DateComponent date={entity.createdAt} />,
       },
       {
         title: 'Webhooks',
         key: 'webhooks',
-        render: () => <span>Configure Webhook</span>,
+        render: (entity: ConnectionModal) => {
+          const webhookLink = `/connector-hub/${entity.connectorId}/connections/${entity.id}`;
+          return <Link to={webhookLink}>Configure Webhook</Link>;
+        },
       },
       {
         title: 'Action',
         key: 'action',
         render: (entity: ConnectionModal) => (
-          <ActionButtons name={entity.name} onRemove={this.handleRemove(entity.id)} />
+          <ActionButtons
+            typeName="Connection"
+            name={entity.name}
+            onRemove={this.handleRemove(entity.id)}
+          />
         ),
       },
     ];

@@ -39,9 +39,12 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 const errorNotification = (message: string) => {
-  notification['error']({
+  notification.error({
     message: 'There was a problem',
     description: message,
+    onClose: () => {
+      console.log('CLOSED!!!');
+    },
   });
 };
 
