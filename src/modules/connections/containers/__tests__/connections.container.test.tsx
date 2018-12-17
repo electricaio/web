@@ -93,13 +93,9 @@ describe('Connections Container', () => {
   });
 
   it('passes in the breadcrumb map with connector id and name', () => {
-    const breadcrumbNameMap = {
-      '/connector-hub': 'Connector Hub',
-      [`/connector-hub/${connectorId}`]: connectorName,
-    };
-    expect(this.component.find(BreadcrumbComponent).prop('breadcrumbNameMap')).toEqual(
-      breadcrumbNameMap
-    );
+    const breadcrumbMap = this.component.find(BreadcrumbComponent).prop('breadcrumbNameMap');
+    expect(breadcrumbMap).toHaveProperty('/connector-hub');
+    expect(breadcrumbMap).toHaveProperty(`/connector-hub/${connectorId}`);
   });
 
   it('renders connections component', () => {

@@ -37,7 +37,7 @@ export class WebhookComponent extends Component<PropsFromState> {
 
     return (
       <Fragment>
-        <Header>Webhooks</Header>
+        <Header>Webhooks let you easily develop push events to Electrica</Header>
         <WebhooksTable onRemove={this.handleDelete} webhooks={webhooks} />
         <ButtonActionModal
           title="Create a new webhook"

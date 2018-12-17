@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Table } from 'antd';
+import { Table, Input } from 'antd';
 import { ColumnProps } from 'antd/lib/table';
-import { ConnectionModal } from '../../../../redux/connections/types';
 import { ActionButtons } from '../../../../components/action-buttons/action-buttons';
 import { DateComponent } from '../../../ui-kit/date';
 import { WebhookModal } from '../../../../redux/webhooks/types';
+import { Copy } from './copy';
 
 export type TableProps = {
   webhooks: WebhookModal[];
@@ -27,8 +27,10 @@ export class WebhooksTable extends Component<TableProps> {
       },
       {
         title: 'Url',
-        dataIndex: 'url',
         key: 'url',
+        render: (entity: WebhookModal) => (
+          <Input size="large" addonAfter={<Copy url={entity.url} />} disabled value={entity.url} />
+        ),
       },
       {
         title: 'Date Created',
@@ -38,7 +40,7 @@ export class WebhooksTable extends Component<TableProps> {
       {
         title: 'Action',
         key: 'action',
-        render: (entity: ConnectionModal) => (
+        render: (entity: WebhookModal) => (
           <ActionButtons
             typeName="Webhook"
             name={entity.name}

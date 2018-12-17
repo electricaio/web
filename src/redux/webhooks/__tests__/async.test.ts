@@ -82,7 +82,6 @@ describe('Webhook Async Actions', () => {
 
     it('dispatch FETCH_WEBHOOKS_SUCCESS action', async () => {
       await fetchWebhooks(connectionId)(dispatchMock);
-      console.log('===========', dispatchMock.mock.calls);
       const successDispatchCall = dispatchMock.mock.calls[1][0];
       expect(successDispatchCall.type).toEqual(WebhookTypes.FETCH_WEBHOOKS_SUCCESS);
     });

@@ -91,7 +91,7 @@ export class Connections extends Component<AllProps, StateType> {
     ];
     const breadcrumbNameMap = {
       '/connector-hub': 'Connector Hub',
-      [`/connector-hub/${match.params.connectorId}`]: connector && connector.name,
+      [`/connector-hub/${match.params.connectorId}`]: `${connector && connector.name} Connections`,
     };
 
     return (

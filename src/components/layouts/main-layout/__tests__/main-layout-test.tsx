@@ -11,6 +11,7 @@ const { Content } = Layout;
 describe('Main Layout', () => {
   const TestContentComponent = () => <div>content</div>;
   const fetchUserMock = jest.fn();
+  const resetErrorMock = jest.fn();
 
   beforeEach(() => {
     const user: UserDto = {
@@ -22,7 +23,7 @@ describe('Main Layout', () => {
     };
 
     this.mainComponent = shallow(
-      <MainLayout errorMessage="" user={user} fetchUser={fetchUserMock}>
+      <MainLayout resetError={resetErrorMock} errorMessage="" user={user} fetchUser={fetchUserMock}>
         <TestContentComponent />
       </MainLayout>
     );
