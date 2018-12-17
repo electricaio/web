@@ -7,6 +7,7 @@ import { ConntectorHubContainer } from '../modules/connector-hub/containers/conn
 import { ConnectionsContainer } from '../modules/connections/containers/connections.container';
 import { ApplicationState } from '../redux/store';
 import { HomeContainer } from '../modules/home/containers/home.container';
+import { WebhooksContainer } from '../modules/webhooks/containers/webhooks.container';
 
 interface PropsFromDispatch {
   isAuthenticated: boolean;
@@ -51,8 +52,15 @@ export const PrivateDashboard: React.SFC<PropsFromDispatch> = ({ isAuthenticated
         />
         <PrivateRoute
           isAuthenticated={isAuthenticated}
+          exact
           path="/connector-hub/:connectorId"
           component={ConnectionsContainer}
+        />
+        <PrivateRoute
+          isAuthenticated={isAuthenticated}
+          exact
+          path="/connector-hub/:connectorId/connections/:connectionId"
+          component={WebhooksContainer}
         />
       </Switch>
     </MainLayoutContainer>

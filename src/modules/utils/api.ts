@@ -1,6 +1,7 @@
 import axios, { AxiosPromise, AxiosInstance } from 'axios';
 import { SignupParamsType, TokenState } from '../../redux/auth/types';
 import { ConnectionModal, AuthorizationType } from '../../redux/connections/types';
+import { WebhookModal } from '../../redux/webhooks/types';
 
 export const PREFIX = '@e:';
 export const AUTH_TOKENS_STORAGE_KEY = 'auth.tokens';
@@ -81,6 +82,9 @@ export class Api {
   fetchConnections(userId: number, connectorId: number): AxiosPromise {
     return this.apiInstance.get(`/v1/users/${userId}/connections?connectorId=${connectorId}`);
   }
+  fetchConnection(connectionId: number): AxiosPromise {
+    return this.apiInstance.get(`/v1/connections/${connectionId}`);
+  }
 
   createConnection(connection: ConnectionModal): AxiosPromise {
     return this.apiInstance.post(`/v1/connections/`, connection);
@@ -99,5 +103,17 @@ export class Api {
       `/v1/connections/${connection.id}/authorizations/${authorizationTypeName.toLowerCase()}`,
       authorizationType
     );
+  }
+
+  fetchWebhooks(connectionId: number): AxiosPromise {
+    return this.apiInstance.get(`/v1/connections/${connectionId}/webhooks`);
+  }
+
+  createWebhook(webhook: WebhookModal): AxiosPromise {
+    return this.apiInstance.post(`/v1/webhooks/connection`, webhook);
+  }
+
+  deleteWebhook(webhookId: number): AxiosPromise {
+    return this.apiInstance.delete(`/v1/webhooks/${webhookId}`);
   }
 }

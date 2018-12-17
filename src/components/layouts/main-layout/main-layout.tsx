@@ -12,6 +12,7 @@ import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { fetchUser } from '../../../redux/auth/async';
 import { AsyncComponent } from '../../async-component/async-component';
+import { resetError } from '../../../redux/error/actions';
 
 const { Content } = Layout;
 
@@ -23,6 +24,7 @@ type PropsFromState = {
 
 type PropsFromDispatch = {
   fetchUser: typeof fetchUser;
+  resetError: typeof resetError;
 };
 
 type TMainLayoutProps = {
@@ -36,12 +38,16 @@ const mapStateToProps = ({ auth, error }: ApplicationState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   fetchUser: bindActionCreators(fetchUser, dispatch),
+  resetError: bindActionCreators(resetError, dispatch),
 });
 
 const errorNotification = (message: string) => {
-  notification['error']({
+  notification.error({
     message: 'There was a problem',
     description: message,
+    onClose: () => {
+      this.props.resetError();
+    },
   });
 };
 

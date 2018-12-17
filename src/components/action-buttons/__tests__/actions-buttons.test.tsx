@@ -11,7 +11,12 @@ describe('Action Buttons', () => {
 
   beforeEach(() => {
     this.component = shallow(
-      <ActionButtons name={name} onEdit={onEditMock} onRemove={onRemoveMock} />
+      <ActionButtons
+        typeName="Connection"
+        name={name}
+        onEdit={onEditMock}
+        onRemove={onRemoveMock}
+      />
     );
   });
 

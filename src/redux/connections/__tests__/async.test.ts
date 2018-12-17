@@ -1,6 +1,6 @@
 import { withAuth } from '../../util';
 import { ConnectionModal, ConnectionTypes, AuthorizationBasicType } from '../types';
-import { createConnection, fetchConnections, deleteConnection } from '../async';
+import { createConnection, fetchConnections, deleteConnection, fetchConnection } from '../async';
 import { ConnectorModal } from '../../connector-hub/types';
 
 jest.mock('../../../modules/utils/api');
@@ -43,6 +43,7 @@ describe('Connection Async Actions', () => {
     mockApi = {
       createConnection: jest.fn(() => Promise.resolve({ data: testConnection })),
       fetchConnections: jest.fn(() => Promise.resolve({ data: [testConnection] })),
+      fetchConnection: jest.fn(() => Promise.resolve({ data: testConnection })),
       deleteConnection: jest.fn(() => Promise.resolve()),
       createConnectionAuthorization: jest.fn(() => Promise.resolve()),
     };
@@ -107,7 +108,7 @@ describe('Connection Async Actions', () => {
       expect(firstDispatchCall.type).toEqual(ConnectionTypes.FETCH_CONNECTIONS);
     });
 
-    it('dispatches access keys to reducer', async () => {
+    it('dispatches the collection of connections to reducer', async () => {
       await fetchConnections(1, 1)(dispatchMock);
       const firstDispatchCall = dispatchMock.mock.calls[1][0];
       expect(firstDispatchCall.payload).toEqual([testConnection]);
@@ -124,6 +125,32 @@ describe('Connection Async Actions', () => {
       const orgId = 1;
       await fetchConnections(userId, orgId)(dispatchMock);
       expect(mockApi.fetchConnections).toBeCalledWith(userId, orgId);
+    });
+  });
+
+  describe('fetchConnection', () => {
+    it('dispatches FETCH_CONNECTIONS action', async () => {
+      await fetchConnection(1)(dispatchMock);
+      const firstDispatchCall = dispatchMock.mock.calls[0][0];
+      expect(firstDispatchCall.type).toEqual(ConnectionTypes.FETCH_CONNECTIONS);
+    });
+
+    it('dispatches connection as an array to the reducer', async () => {
+      await fetchConnection(1)(dispatchMock);
+      const firstDispatchCall = dispatchMock.mock.calls[1][0];
+      expect(firstDispatchCall.payload).toEqual([testConnection]);
+    });
+
+    it('dispatch FETCH_CONNECTORS_SUCCESS action', async () => {
+      await fetchConnection(1)(dispatchMock);
+      const successDispatchCall = dispatchMock.mock.calls[1][0];
+      expect(successDispatchCall.type).toEqual(ConnectionTypes.FETCH_CONNECTIONS_SUCCESS);
+    });
+
+    it('call api with connectionId', async () => {
+      const connectionId = 123;
+      await fetchConnection(connectionId)(dispatchMock);
+      expect(mockApi.fetchConnection).toBeCalledWith(connectionId);
     });
   });
 });

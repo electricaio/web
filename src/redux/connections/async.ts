@@ -19,6 +19,15 @@ export const fetchConnections = (userId: number, connectorId: number) => (dispat
   });
 };
 
+export const fetchConnection = (connectionId: number) => (dispatch: Dispatch) => {
+  dispatch(fetchConnectionsAsyncActions.request());
+  return withAuth(dispatch, (api: Api) => {
+    return api.fetchConnection(connectionId).then((result: AxiosResponse) => {
+      dispatch(fetchConnectionsAsyncActions.success([result.data]));
+    });
+  });
+};
+
 export const deleteConnection = (connectionId: number) => (dispatch: Dispatch) => {
   return withAuth(dispatch, (api: Api) => {
     return api.deleteConnection(connectionId).then(() => {
