@@ -1,7 +1,7 @@
 import { mount } from 'enzyme';
 import React from 'react';
-import { ConnectorCard } from '../connector-card';
-import { StyledCard, StyledMeta } from '../connector-card.css';
+import { ConnectorCard, CompanyImageComponent } from '../connector-card';
+import { StyledCard, StyledMeta, CompanyImage } from '../connector-card.css';
 import { Row, Col, Tag, Card, Button } from 'antd';
 import { ConnectorModal } from '../../../../../redux/connector-hub/types';
 import { MemoryRouter } from 'react-router';
@@ -19,7 +19,9 @@ export const TYPE_NAMES_DATA: TypeModel[] = [
 
 describe('ConnectorCard', () => {
   const connectorId = 4;
+  const imageUrl = 'image-salesforce';
   const connector = (overrides: object = {}): ConnectorModal => ({
+    imageUrl,
     typeId: 1,
     authorizationType: 'None',
     name: 'SalesForce CRM API 2.0',
@@ -76,8 +78,21 @@ describe('ConnectorCard', () => {
     );
   });
 
+  it('passes the connector image url to the cover image', () => {
+    const coverImage = this.connectorCard.find(StyledCard).prop('cover');
+    expect(coverImage.props.image).toEqual(imageUrl);
+  });
+
   it('renders a Link in the button for routing to the connections page', () => {
     const configureButton = this.connectorCard.find(Button);
     expect(configureButton.find(Link).prop('to')).toEqual(`/connector-hub/${connectorId}`);
+  });
+
+  describe('CompanyImageComponent', () => {
+    const image = 'image test';
+    it('sets src from image prop', () => {
+      const imageContainer = mount(<CompanyImageComponent image={image} />);
+      expect(imageContainer.find(CompanyImage).prop('src')).toEqual(image);
+    });
   });
 });

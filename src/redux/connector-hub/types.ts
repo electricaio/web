@@ -4,6 +4,7 @@ export type ConnectorModal = {
   name: string;
   resource: string;
   version: string;
+  imageUrl?: string;
   namespace: string;
   properties: {
     url: string;

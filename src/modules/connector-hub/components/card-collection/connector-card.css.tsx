@@ -13,12 +13,15 @@ export const Description = styled.div`
 export const ImageContainer = styled.div`
   display: flex !important;
   justify-content: center;
+  height: 130px;
+  padding: 20px;
+  padding-bottom: 0px;
 `;
 
 export const CompanyImage = styled.img`
-  height: 200px;
-  width: 100%;
-  padding: 20px;
+  max-width: 95%;
+  max-height: 15em;
+  width: auto !important;
 `;
 
 export const StyledMeta = styled(Meta)`
