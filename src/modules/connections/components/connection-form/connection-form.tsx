@@ -6,6 +6,7 @@ import { ApiKeyModal } from '../../../../redux/api-keys/types';
 import { StyledInput } from '../../../ui-kit/input';
 import { ConnectorModal } from '../../../../redux/connector-hub/types';
 import { SelectProps } from 'antd/lib/select';
+import { PropertiesForm, Properties } from '../../../../components/properties-form/properties-form';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -13,10 +14,23 @@ const Option = Select.Option;
 interface ConnectionComponentProps extends FormComponentProps {
   connector: ConnectorModal;
   accessKeys: ApiKeyModal[];
+  defaultFormValues?: DefaultFormValues;
 }
+
+export type DefaultFormValues = {
+  connectionName: string;
+  accessKeyId: number;
+  username?: string;
+  password?: string;
+  properties: Properties[];
+};
 
 interface SelectAccessKeysProps extends SelectProps {
   accessKeys: ApiKeyModal[];
+}
+
+interface DefaultProps {
+  defaultFormValues: DefaultFormValues;
 }
 
 export class SelectAccessKeys extends Component<SelectAccessKeysProps> {
@@ -35,21 +49,31 @@ export class SelectAccessKeys extends Component<SelectAccessKeysProps> {
 }
 
 class ConnectionFormComponent extends Component<ConnectionComponentProps> {
+  static defaultProps: DefaultProps = {
+    defaultFormValues: {
+      connectionName: '',
+      accessKeyId: undefined,
+      properties: [],
+    },
+  };
   render() {
     const {
       accessKeys,
       connector,
+      defaultFormValues,
       form: { getFieldDecorator },
     } = this.props;
     return (
       <Form>
         <FormItem>
           {getFieldDecorator('connectionName', {
+            initialValue: defaultFormValues.connectionName,
             rules: [{ required: true, message: 'Please input a name for this connection' }],
           })(<StyledInput placeholder="Connection Name" />)}
         </FormItem>
         <FormItem>
           {getFieldDecorator('accessKeyId', {
+            initialValue: defaultFormValues.accessKeyId,
             rules: [{ required: true, message: 'Please select an access key', type: 'number' }],
           })(<SelectAccessKeys accessKeys={accessKeys} />)}
         </FormItem>
@@ -74,6 +98,11 @@ class ConnectionFormComponent extends Component<ConnectionComponentProps> {
             })(<StyledInput placeholder="Token" />)}
           </FormItem>
         )}
+        <FormItem>
+          {getFieldDecorator('properties', {
+            initialValue: defaultFormValues.properties,
+          })(<PropertiesForm />)}
+        </FormItem>
       </Form>
     );
   }

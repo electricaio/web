@@ -10,6 +10,7 @@ import { ButtonActionModal } from '../../ui-kit/modal-button-action/modal-button
 import { ConnectionForm } from './connection-form/connection-form';
 import { createConnection, deleteConnection } from '../../../redux/connections/async';
 import { StyledButton } from '../../ui-kit/button';
+import { Properties } from '../../../components/properties-form/properties-form';
 
 interface PropsFromState {
   connections: ConnectionModal[];
@@ -27,7 +28,12 @@ export class ConnectionsComponent extends Component<PropsFromState> {
 
   handleCommit = (formValues: any) => {
     const { connector, createConnection } = this.props;
+    const properties = formValues.properties.reduce(
+      (result: any, item: Properties) => ({ ...result, [item.name]: item.value }),
+      {}
+    );
     const connection: ConnectionModal = {
+      properties,
       connectorId: connector.id,
       name: formValues.connectionName,
       accessKeyId: formValues.accessKeyId,
@@ -67,6 +73,7 @@ export class ConnectionsComponent extends Component<PropsFromState> {
           onRemove={this.handleDelete}
           accessKeys={accessKeys}
           connections={connections}
+          connector={connector}
         />
         <ButtonActionModal
           title="Add a new Connection"

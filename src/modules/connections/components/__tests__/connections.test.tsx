@@ -117,13 +117,15 @@ describe('connections', () => {
       username: 'admin',
     };
 
-    const basicFormValue = {
+    const basicFormValue: any = {
       connectionName,
+      properties: [],
       accessKeyId: 1,
       ...basicCreds,
     };
     const connectionValue: ConnectionModal = {
       accessKeyId: 1,
+      properties: {},
       connectorId: connectorBasic.id,
       name: connectionName,
     };
@@ -139,13 +141,50 @@ describe('connections', () => {
       token: '12345',
     };
 
-    const tokenFormValue = {
+    const tokenFormValue: any = {
       accessKeyId,
       connectionName,
+      properties: [],
       ...tokenCreds,
     };
     const connectionValue: ConnectionModal = {
       accessKeyId,
+      properties: {},
+      connectorId: connectorBasic.id,
+      name: connectionName,
+    };
+
+    (component.instance() as any).handleCommit(tokenFormValue);
+    expect(createConnectionMock).toBeCalledWith(connectionValue, connectorToken, tokenCreds);
+  });
+
+  it('handleCommit calls createConnection with properties', () => {
+    const component = createConnectionComponent({ connector: connectorToken });
+    const accessKeyId = 10;
+    const tokenCreds = {
+      token: '12345',
+    };
+
+    const properties = {
+      testName: 'value',
+    };
+
+    const formProperties = [
+      {
+        name: 'testName',
+        value: 'value',
+      },
+    ];
+
+    const tokenFormValue = {
+      accessKeyId,
+      connectionName,
+      properties: formProperties,
+      ...tokenCreds,
+    };
+    const connectionValue: ConnectionModal = {
+      accessKeyId,
+      properties,
       connectorId: connectorBasic.id,
       name: connectionName,
     };

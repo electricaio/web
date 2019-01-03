@@ -1,6 +1,7 @@
 export type ConnectionModal = {
   accessKeyId: number;
   connectorId: number;
+  properties?: { [s: string]: string };
   authorizationId?: number;
   createdAt?: string;
   id?: number;

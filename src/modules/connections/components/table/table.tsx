@@ -8,11 +8,14 @@ import { ActionButtons } from '../../../../components/action-buttons/action-butt
 import { SelectValue } from 'antd/lib/select';
 import { DateComponent } from '../../../ui-kit/date';
 import { Link } from 'react-router-dom';
+import { ConnectionForm, DefaultFormValues } from '../connection-form/connection-form';
+import { ConnectorModal } from '../../../../redux/connector-hub/types';
 
 const Option = Select.Option;
 
 export type TableProps = {
   connections: ConnectionModal[];
+  connector: ConnectorModal;
   accessKeys: ApiKeyModal[];
   onRemove: (id: number) => void;
 };
@@ -88,13 +91,33 @@ export class ConnectionsTable extends Component<TableProps> {
       {
         title: 'Action',
         key: 'action',
-        render: (entity: ConnectionModal) => (
-          <ActionButtons
-            typeName="Connection"
-            name={entity.name}
-            onRemove={this.handleRemove(entity.id)}
-          />
-        ),
+        render: (entity: ConnectionModal) => {
+          const properties = Object.keys(entity.properties || {}).map(name => ({
+            name,
+            value: entity.properties[name],
+          }));
+
+          const defaultValues: DefaultFormValues = {
+            properties,
+            connectionName: entity.name,
+            accessKeyId: entity.accessKeyId,
+          };
+          return (
+            <ActionButtons
+              onEdit={this.handleRemove(entity.id)}
+              editForm={
+                <ConnectionForm
+                  accessKeys={this.props.accessKeys}
+                  connector={this.props.connector}
+                  defaultFormValues={defaultValues}
+                />
+              }
+              typeName="Connection"
+              name={entity.name}
+              onRemove={this.handleRemove(entity.id)}
+            />
+          );
+        },
       },
     ];
   }
