@@ -16,9 +16,9 @@ export const updateConnectionSuccess = createStandardAction(
   ConnectionTypes.UPDATE_CONNECTION_SUCCESS
 )<ConnectionModal>();
 
-export const fetchAuthorizationSuccess = createStandardAction(ConnectionTypes.FETCH_AUTHORIZATION_SUCCESS)<
-  AuthorizationType
->();
+export const fetchAuthorizationSuccess = createStandardAction(
+  ConnectionTypes.FETCH_AUTHORIZATION_SUCCESS
+)<AuthorizationType>();
 export const updateAuthorizationSuccess = createStandardAction(
   ConnectionTypes.UPDATE_AUTHORIZATION
 )<AuthorizationType>();
