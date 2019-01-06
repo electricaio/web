@@ -7,6 +7,7 @@ import { StyledInput } from '../../../ui-kit/input';
 import { ConnectorModal } from '../../../../redux/connector-hub/types';
 import { SelectProps } from 'antd/lib/select';
 import { PropertiesForm, Properties } from '../../../../components/properties-form/properties-form';
+import { AuthorizationType } from '../../../../redux/connections/types';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -20,9 +21,8 @@ interface ConnectionComponentProps extends FormComponentProps {
 export type DefaultFormValues = {
   connectionName: string;
   accessKeyId: number;
-  username?: string;
-  password?: string;
   properties: Properties[];
+  authorization: AuthorizationType;
 };
 
 interface SelectAccessKeysProps extends SelectProps {
@@ -54,6 +54,12 @@ class ConnectionFormComponent extends Component<ConnectionComponentProps> {
       connectionName: '',
       accessKeyId: undefined,
       properties: [],
+      authorization: {
+        id: undefined,
+        password: '',
+        username: '',
+        token: '',
+      },
     },
   };
   render() {
@@ -81,11 +87,13 @@ class ConnectionFormComponent extends Component<ConnectionComponentProps> {
           <Fragment>
             <FormItem>
               {getFieldDecorator('username', {
+                initialValue: defaultFormValues.authorization.username,
                 rules: [{ required: true, message: 'Please input username' }],
               })(<StyledInput placeholder="User Name" />)}
             </FormItem>
             <FormItem>
               {getFieldDecorator('password', {
+                initialValue: defaultFormValues.authorization.password,
                 rules: [{ required: true, message: 'Please input password' }],
               })(<StyledInput placeholder="Password" />)}
             </FormItem>
@@ -94,6 +102,7 @@ class ConnectionFormComponent extends Component<ConnectionComponentProps> {
         {connector.authorizationType === 'Token' && (
           <FormItem>
             {getFieldDecorator('token', {
+              initialValue: defaultFormValues.authorization.token,
               rules: [{ required: true, message: `Please input your ${connector.name} token` }],
             })(<StyledInput placeholder="Token" />)}
           </FormItem>

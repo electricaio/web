@@ -10,7 +10,7 @@ import { CALL_HISTORY_METHOD } from 'connected-react-router';
 jest.mock('../../../modules/utils/api');
 
 type storeMockType = {
-  initialState: ApplicationState;
+  initialState: Partial<ApplicationState>;
   actions: Action[];
 };
 type ActionsType = {
@@ -68,7 +68,7 @@ describe('Request API middlware', () => {
         apiKeys: { data: [] },
         webhooks: { data: [] },
         connectors: { data: [] },
-        connections: { data: [] },
+        connections: { data: [], authorizations: [] },
         auth: {
           user: { email: '', firstName: '', id: 0, lastName: '', organizationId: 0 },
           loading: false,

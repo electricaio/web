@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
-import { Icon, Tooltip, Input, Row, Col } from 'antd';
-import { StyledButton } from '../../modules/ui-kit/button';
+import { Icon, Tooltip, Input, Row, Col, Button } from 'antd';
 
 export type PropertiesProps = {
   onChange?: (properties: Properties[]) => void;
@@ -78,9 +77,9 @@ export class PropertiesForm extends React.Component<PropertiesProps, PropertiesS
             </Col>
           </Row>
         ))}
-        <StyledButton type="primary" onClick={this.handleAddProperty}>
-          Add Property
-        </StyledButton>
+        <Button type="dashed" onClick={this.handleAddProperty} style={{ width: '60%' }}>
+          <Icon type="plus" /> Add property
+        </Button>
       </Fragment>
     );
   }

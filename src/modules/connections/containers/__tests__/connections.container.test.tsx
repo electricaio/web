@@ -70,7 +70,9 @@ describe('Connections Container', () => {
   beforeEach(() => {
     actions = {
       fetchConnector: jest.fn(),
+      updateConnection: jest.fn(),
       fetchConnections: jest.fn(),
+      updateAuthorization: jest.fn(),
       fetchKeys: jest.fn(),
       createConnection: jest.fn(),
       deleteConnection: jest.fn(),
@@ -78,6 +80,7 @@ describe('Connections Container', () => {
 
     this.component = shallow(
       <Connections
+        authorizations={[]}
         user={user}
         match={matchProps}
         accessKeys={accessKeys}
@@ -109,6 +112,12 @@ describe('Connections Container', () => {
     const connectionsComponent = this.component.find(ConnectionsComponent);
     expect(connectionsComponent.prop('createConnection')).toEqual(actions.createConnection);
   });
+
+  it('passes updateConnection to connections component', () => {
+    const connectionsComponent = this.component.find(ConnectionsComponent);
+    expect(connectionsComponent.prop('updateConnection')).toEqual(actions.updateConnection);
+  });
+
   it('passes deleteConnection to connections component', () => {
     const connectionsComponent = this.component.find(ConnectionsComponent);
     expect(connectionsComponent.prop('deleteConnection')).toEqual(actions.deleteConnection);

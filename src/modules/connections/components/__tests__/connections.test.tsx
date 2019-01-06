@@ -55,10 +55,16 @@ describe('connections', () => {
 
   let createConnectionMock: jest.Mock;
   let deleteConnectionMock: jest.Mock;
+  let updateConnectionMock: jest.Mock;
+  let updateAuthorizationMock: jest.Mock;
+
   const createConnectionComponent = (props = {}): ShallowWrapper => {
     return shallow(
       <ConnectionsComponent
+        authorizations={[]}
         deleteConnection={deleteConnectionMock}
+        updateAuthorization={updateAuthorizationMock}
+        updateConnection={updateConnectionMock}
         createConnection={createConnectionMock}
         accessKeys={accessKeys}
         connections={connections}
@@ -70,7 +76,9 @@ describe('connections', () => {
 
   beforeEach(() => {
     createConnectionMock = jest.fn();
+    updateAuthorizationMock = jest.fn();
     deleteConnectionMock = jest.fn();
+    updateConnectionMock = jest.fn();
     this.component = createConnectionComponent();
   });
 
@@ -156,6 +164,28 @@ describe('connections', () => {
 
     (component.instance() as any).handleCommit(tokenFormValue);
     expect(createConnectionMock).toBeCalledWith(connectionValue, connectorToken, tokenCreds);
+  });
+
+  it('handleEdit calls updateConnection with updated connection', () => {
+    const component = createConnectionComponent({ connector: connectorToken });
+    const accessKeyId = 10;
+
+    const formValues: any = {
+      accessKeyId,
+      connectionName,
+      properties: [],
+    };
+    const connectionValue: ConnectionModal = {
+      ...connections[0],
+      accessKeyId,
+      properties: {},
+      connectorId: connectorBasic.id,
+      name: connectionName,
+    };
+
+    const connectionId = 123;
+    (component.instance() as any).handleEdit(connectionId, formValues);
+    expect(updateConnectionMock).toBeCalledWith(connectionId, connectionValue);
   });
 
   it('handleCommit calls createConnection with properties', () => {

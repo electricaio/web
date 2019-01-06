@@ -4,7 +4,7 @@ import { bindActionCreators, Dispatch } from 'redux';
 import { ApplicationState } from '../../../redux/store';
 import { ConnectionsComponent } from '../components/connections';
 import { BreadcrumbComponent } from '../../../components/breadcrumb/breadcrumb';
-import { ConnectionModal } from '../../../redux/connections/types';
+import { ConnectionModal, AuthorizationType } from '../../../redux/connections/types';
 import { ApiKeyModal } from '../../../redux/api-keys/types';
 import { ConnectorModal } from '../../../redux/connector-hub/types';
 import { RouteComponentProps } from 'react-router';
@@ -13,6 +13,8 @@ import {
   fetchConnections,
   createConnection,
   deleteConnection,
+  updateConnection,
+  updateAuthorization,
 } from '../../../redux/connections/async';
 import { UserDto } from '../../../redux/auth/types';
 import { fetchConnector } from '../../../redux/connector-hub/async';
@@ -20,6 +22,7 @@ import { AsyncComponent } from '../../../components/async-component/async-compon
 
 const mapStateToProps = ({ connections, apiKeys, connectors, auth }: ApplicationState) => ({
   connections: connections.data,
+  authorizations: connections.authorizations,
   accessKeys: apiKeys.data,
   connectors: connectors.data,
   user: auth.user,
@@ -28,6 +31,8 @@ const mapStateToProps = ({ connections, apiKeys, connectors, auth }: Application
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   fetchConnections: bindActionCreators(fetchConnections, dispatch),
   createConnection: bindActionCreators(createConnection, dispatch),
+  updateConnection: bindActionCreators(updateConnection, dispatch),
+  updateAuthorization: bindActionCreators(updateAuthorization, dispatch),
   deleteConnection: bindActionCreators(deleteConnection, dispatch),
   fetchKeys: bindActionCreators(fetchKeys, dispatch),
   fetchConnector: bindActionCreators(fetchConnector, dispatch),
@@ -35,6 +40,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 interface PropsFromState {
   connections: ConnectionModal[];
+  authorizations: AuthorizationType[];
   accessKeys: ApiKeyModal[];
   connectors: ConnectorModal[];
   user: UserDto;
@@ -46,13 +52,14 @@ export interface PropsFromDispatch {
   fetchConnector: typeof fetchConnector;
   createConnection: typeof createConnection;
   deleteConnection: typeof deleteConnection;
+  updateConnection: typeof updateConnection;
+  updateAuthorization: typeof updateAuthorization;
 }
 
 interface MatchParams {
   connectorId: string;
 }
 interface StateType {
-  loading: boolean;
   error: boolean;
 }
 
@@ -64,7 +71,6 @@ export class Connections extends Component<AllProps, StateType> {
   constructor(props: AllProps) {
     super(props);
     this.state = {
-      loading: true,
       error: false,
     };
   }
@@ -78,8 +84,11 @@ export class Connections extends Component<AllProps, StateType> {
       fetchConnections,
       fetchConnector,
       createConnection,
+      updateConnection,
       deleteConnection,
+      updateAuthorization,
       user,
+      authorizations,
       match,
     } = this.props;
     const connectorId = parseInt(match.params.connectorId, 10);
@@ -102,9 +111,12 @@ export class Connections extends Component<AllProps, StateType> {
           <ConnectionsComponent
             deleteConnection={deleteConnection}
             createConnection={createConnection}
+            updateConnection={updateConnection}
+            updateAuthorization={updateAuthorization}
             connector={connector}
             accessKeys={accessKeys}
             connections={connections}
+            authorizations={authorizations}
           />
         </Fragment>
       </AsyncComponent>

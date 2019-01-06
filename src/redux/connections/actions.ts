@@ -1,20 +1,24 @@
-import { createAsyncAction } from 'typesafe-actions';
-import { ConnectionModal, ConnectionTypes } from './types';
+import { createStandardAction } from 'typesafe-actions';
+import { ConnectionModal, ConnectionTypes, AuthorizationType } from './types';
 
-export const fetchConnectionsAsyncActions = createAsyncAction(
-  ConnectionTypes.FETCH_CONNECTIONS,
-  ConnectionTypes.FETCH_CONNECTIONS_SUCCESS,
-  ConnectionTypes.FETCH_CONNECTIONS_ERROR
-)<void, ConnectionModal[], string>();
+export const fetchConnectionsSuccess = createStandardAction(
+  ConnectionTypes.FETCH_CONNECTIONS_SUCCESS
+)<ConnectionModal[]>();
 
-export const createConnectionAsyncActions = createAsyncAction(
-  ConnectionTypes.CREATE_CONNECTION,
-  ConnectionTypes.CREATE_CONNECTION_SUCCESS,
-  ConnectionTypes.CREATE_CONNECTION_ERROR
-)<void, ConnectionModal, string>();
+export const createConnectionsSuccess = createStandardAction(
+  ConnectionTypes.CREATE_CONNECTION_SUCCESS
+)<ConnectionModal>();
 
-export const deleteConnectionAsyncActions = createAsyncAction(
-  ConnectionTypes.DELETE_CONNECTION,
-  ConnectionTypes.DELETE_CONNECTION_SUCCESS,
-  ConnectionTypes.DELETE_CONNECTION_ERROR
-)<void, number, string>();
+export const deleteConnectionSuccess = createStandardAction(
+  ConnectionTypes.DELETE_CONNECTION_SUCCESS
+)<number>();
+export const updateConnectionSuccess = createStandardAction(
+  ConnectionTypes.UPDATE_CONNECTION_SUCCESS
+)<ConnectionModal>();
+
+export const fetchAuthorizationSuccess = createStandardAction(ConnectionTypes.FETCH_AUTHORIZATION_SUCCESS)<
+  AuthorizationType
+>();
+export const updateAuthorizationSuccess = createStandardAction(
+  ConnectionTypes.UPDATE_AUTHORIZATION
+)<AuthorizationType>();

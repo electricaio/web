@@ -59,6 +59,7 @@ describe('Connections Table', () => {
   ];
 
   const onRemoveMock = jest.fn();
+  const onEditMock = jest.fn();
   beforeEach(() => {
     this.component = mount(
       <MemoryRouter>
@@ -67,6 +68,7 @@ describe('Connections Table', () => {
           accessKeys={accessKeysData}
           connections={connectionsData}
           onRemove={onRemoveMock}
+          onEdit={onEditMock}
         />
       </MemoryRouter>
     );
@@ -106,6 +108,20 @@ describe('Connections Table', () => {
     const actionButtons = actionButtonColumn.render(entity);
     actionButtons.props.onRemove();
     expect(onRemoveMock).toBeCalled();
+  });
+
+  it('calls onEdit props when edit action button is called', () => {
+    const actionButtonColumn = this.component
+      .find(Table)
+      .prop('columns')
+      .find((col: ColumnProps<ConnectionModal>) => col.key === 'action');
+    const entity = {
+      id: 1,
+      name: 'test',
+    };
+    const actionButtons = actionButtonColumn.render(entity);
+    actionButtons.props.onEdit();
+    expect(onEditMock).toBeCalled();
   });
 
   it('renders access key name in access key column', () => {

@@ -1,8 +1,7 @@
 import React from 'react';
 import { mount, ReactWrapper } from 'enzyme';
 import { PropertiesForm } from '../properties-form';
-import { StyledButton } from '../../../modules/ui-kit/button';
-import { Row, Input, Icon } from 'antd';
+import { Row, Input, Icon, Button } from 'antd';
 
 describe('Properties Form', () => {
   const properties = [
@@ -23,13 +22,13 @@ describe('Properties Form', () => {
   });
 
   it('contains add property button', () => {
-    expect(this.component.find(StyledButton)).toHaveLength(1);
+    expect(this.component.find(Button)).toHaveLength(1);
   });
 
   it('clicking button adds new empty property', () => {
     // default value is one empty
     expect(this.component.state().properties).toHaveLength(1);
-    this.component.find(StyledButton).simulate('click');
+    this.component.find(Button).simulate('click');
     const newProperties = this.component.state().properties;
     expect(newProperties).toHaveLength(2);
     expect(newProperties[0]).toEqual({ name: '', value: '' });
@@ -37,7 +36,10 @@ describe('Properties Form', () => {
 
   it('Clicking delete property icon removes inputs', () => {
     expect(this.component.state().properties).toHaveLength(1);
-    this.component.find(Icon).simulate('click');
+    this.component
+      .find(Icon)
+      .at(0)
+      .simulate('click');
     expect(this.component.state().properties).toHaveLength(0);
   });
 

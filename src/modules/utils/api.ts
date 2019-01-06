@@ -82,12 +82,17 @@ export class Api {
   fetchConnections(userId: number, connectorId: number): AxiosPromise {
     return this.apiInstance.get(`/v1/users/${userId}/connections?connectorId=${connectorId}`);
   }
+
   fetchConnection(connectionId: number): AxiosPromise {
     return this.apiInstance.get(`/v1/connections/${connectionId}`);
   }
 
   createConnection(connection: ConnectionModal): AxiosPromise {
     return this.apiInstance.post(`/v1/connections/`, connection);
+  }
+
+  updateConnection(connectionId: number, connection: ConnectionModal): AxiosPromise {
+    return this.apiInstance.put(`/v1/connections/${connectionId}`, connection);
   }
 
   deleteConnection(connectionId: number): AxiosPromise {
@@ -101,6 +106,21 @@ export class Api {
   ): AxiosPromise {
     return this.apiInstance.post(
       `/v1/connections/${connection.id}/authorizations/${authorizationTypeName.toLowerCase()}`,
+      authorizationType
+    );
+  }
+
+  fetchAuthorization(id: number, authorizationTypeName: string): AxiosPromise {
+    return this.apiInstance.get(`/v1/authorizations/${id}/${authorizationTypeName.toLowerCase()}`);
+  }
+
+  updateAuthorization(
+    id: number,
+    authorizationTypeName: string,
+    authorizationType: AuthorizationType
+  ): AxiosPromise {
+    return this.apiInstance.put(
+      `/v1/authorizations/${id}/${authorizationTypeName.toLowerCase()}`,
       authorizationType
     );
   }

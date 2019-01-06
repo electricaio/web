@@ -4,7 +4,7 @@ import { Icon, Popconfirm, Tooltip } from 'antd';
 import { ButtonActionModal } from '../../modules/ui-kit/modal-button-action/modal-button-action';
 export type ActionButtonsProps = {
   onRemove: () => void;
-  onEdit?: () => void;
+  onEdit?: (formValues: any) => void;
   editForm?: ReactElement<any>;
   name: string;
   typeName: string;

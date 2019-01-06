@@ -2,21 +2,29 @@ import React, { Fragment, Component } from 'react';
 import isEmpty from 'lodash/isEmpty';
 import { Header } from '../../ui-kit/header';
 import { ConnectionsTable } from './table/table';
-import { ConnectionModal } from '../../../redux/connections/types';
+import { ConnectionModal, AuthorizationType } from '../../../redux/connections/types';
 import { ApiKeyModal } from '../../../redux/api-keys/types';
 import { Tooltip } from 'antd';
 import { ConnectorModal } from '../../../redux/connector-hub/types';
 import { ButtonActionModal } from '../../ui-kit/modal-button-action/modal-button-action';
 import { ConnectionForm } from './connection-form/connection-form';
-import { createConnection, deleteConnection } from '../../../redux/connections/async';
+import {
+  createConnection,
+  deleteConnection,
+  updateConnection,
+  updateAuthorization,
+} from '../../../redux/connections/async';
 import { StyledButton } from '../../ui-kit/button';
 import { Properties } from '../../../components/properties-form/properties-form';
 
 interface PropsFromState {
   connections: ConnectionModal[];
+  authorizations: AuthorizationType[];
   connector: ConnectorModal;
   accessKeys: ApiKeyModal[];
   createConnection: typeof createConnection;
+  updateConnection: typeof updateConnection;
+  updateAuthorization: typeof updateAuthorization;
   deleteConnection: typeof deleteConnection;
 }
 
@@ -26,23 +34,49 @@ export class ConnectionsComponent extends Component<PropsFromState> {
     deleteConnection(connectionId);
   };
 
-  handleCommit = (formValues: any) => {
-    const { connector, createConnection } = this.props;
+  buildConnection = (formValues: any): ConnectionModal => {
+    const { connector } = this.props;
+
     const properties = formValues.properties.reduce(
       (result: any, item: Properties) => ({ ...result, [item.name]: item.value }),
       {}
     );
-    const connection: ConnectionModal = {
+    return {
       properties,
       connectorId: connector.id,
       name: formValues.connectionName,
       accessKeyId: formValues.accessKeyId,
     };
+  };
+
+  handleCommit = (formValues: any) => {
+    const { connector, createConnection } = this.props;
     createConnection(
-      connection,
+      this.buildConnection(formValues),
       connector,
       this.getAuthType(connector.authorizationType, formValues)
     );
+  };
+
+  handleEdit = async (id: number, formValues: any) => {
+    const {
+      updateConnection,
+      updateAuthorization,
+      connections,
+      connector,
+      authorizations,
+    } = this.props;
+    const connection = connections.find((c: ConnectionModal) => c.id === id);
+
+    const authorization = authorizations.find(
+      (auth: AuthorizationType) => auth.id === connection.authorizationId
+    );
+
+    await updateConnection(id, { ...connection, ...this.buildConnection(formValues) });
+    await updateAuthorization(id, connector.authorizationType, {
+      ...authorization,
+      ...this.getAuthType(connector.authorizationType, formValues),
+    });
   };
 
   getAuthType = (authorizationType: string, formValues: any): any => {
@@ -70,6 +104,7 @@ export class ConnectionsComponent extends Component<PropsFromState> {
           {connector.name} uses {connector.authorizationType} Authorization
         </Header>
         <ConnectionsTable
+          onEdit={this.handleEdit}
           onRemove={this.handleDelete}
           accessKeys={accessKeys}
           connections={connections}

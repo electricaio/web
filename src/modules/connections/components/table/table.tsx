@@ -8,8 +8,8 @@ import { ActionButtons } from '../../../../components/action-buttons/action-butt
 import { SelectValue } from 'antd/lib/select';
 import { DateComponent } from '../../../ui-kit/date';
 import { Link } from 'react-router-dom';
-import { ConnectionForm, DefaultFormValues } from '../connection-form/connection-form';
 import { ConnectorModal } from '../../../../redux/connector-hub/types';
+import { ConnectionFormContainer } from '../../containers/connection-form.container';
 
 const Option = Select.Option;
 
@@ -18,6 +18,7 @@ export type TableProps = {
   connector: ConnectorModal;
   accessKeys: ApiKeyModal[];
   onRemove: (id: number) => void;
+  onEdit: (id: number, values: any) => void;
 };
 
 export class ConnectionsTable extends Component<TableProps> {
@@ -31,7 +32,9 @@ export class ConnectionsTable extends Component<TableProps> {
     );
   };
 
-  handleEdit = (id: number) => () => {};
+  handleEdit = (id: number) => (formValues: any) => {
+    this.props.onEdit(id, formValues);
+  };
 
   getColumns(): ColumnProps<ConnectionModal>[] {
     return [
@@ -92,24 +95,14 @@ export class ConnectionsTable extends Component<TableProps> {
         title: 'Action',
         key: 'action',
         render: (entity: ConnectionModal) => {
-          const properties = Object.keys(entity.properties || {}).map(name => ({
-            name,
-            value: entity.properties[name],
-          }));
-
-          const defaultValues: DefaultFormValues = {
-            properties,
-            connectionName: entity.name,
-            accessKeyId: entity.accessKeyId,
-          };
           return (
             <ActionButtons
-              onEdit={this.handleRemove(entity.id)}
+              onEdit={this.handleEdit(entity.id)}
               editForm={
-                <ConnectionForm
+                <ConnectionFormContainer
+                  connection={entity}
                   accessKeys={this.props.accessKeys}
                   connector={this.props.connector}
-                  defaultFormValues={defaultValues}
                 />
               }
               typeName="Connection"

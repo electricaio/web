@@ -4,26 +4,27 @@ import { AxiosResponse } from 'axios';
 import { Api } from '../../modules/utils/api';
 import { withAuth } from '../util';
 import {
-  createConnectionAsyncActions,
-  fetchConnectionsAsyncActions,
-  deleteConnectionAsyncActions,
+  fetchAuthorizationSuccess,
+  updateAuthorizationSuccess,
+  fetchConnectionsSuccess,
+  createConnectionsSuccess,
+  deleteConnectionSuccess,
+  updateConnectionSuccess,
 } from './actions';
 import { ConnectorModal } from '../connector-hub/types';
 
 export const fetchConnections = (userId: number, connectorId: number) => (dispatch: Dispatch) => {
-  dispatch(fetchConnectionsAsyncActions.request());
   return withAuth(dispatch, (api: Api) => {
     return api.fetchConnections(userId, connectorId).then((result: AxiosResponse) => {
-      dispatch(fetchConnectionsAsyncActions.success(result.data));
+      dispatch(fetchConnectionsSuccess(result.data));
     });
   });
 };
 
 export const fetchConnection = (connectionId: number) => (dispatch: Dispatch) => {
-  dispatch(fetchConnectionsAsyncActions.request());
   return withAuth(dispatch, (api: Api) => {
     return api.fetchConnection(connectionId).then((result: AxiosResponse) => {
-      dispatch(fetchConnectionsAsyncActions.success([result.data]));
+      dispatch(fetchConnectionsSuccess([result.data]));
     });
   });
 };
@@ -31,8 +32,20 @@ export const fetchConnection = (connectionId: number) => (dispatch: Dispatch) =>
 export const deleteConnection = (connectionId: number) => (dispatch: Dispatch) => {
   return withAuth(dispatch, (api: Api) => {
     return api.deleteConnection(connectionId).then(() => {
-      dispatch(deleteConnectionAsyncActions.success(connectionId));
+      dispatch(deleteConnectionSuccess(connectionId));
     });
+  });
+};
+
+export const fetchAuthorization = (authorizationId: number, authorizationTypeName: string) => (
+  dispatch: Dispatch
+) => {
+  return withAuth(dispatch, (api: Api) => {
+    return api
+      .fetchAuthorization(authorizationId, authorizationTypeName)
+      .then((result: AxiosResponse) => {
+        dispatch(fetchAuthorizationSuccess(result.data));
+      });
   });
 };
 
@@ -41,15 +54,38 @@ export const createConnection = (
   connector: ConnectorModal,
   authorizationType: AuthorizationType
 ) => (dispatch: Dispatch) => {
-  dispatch(createConnectionAsyncActions.request());
   withAuth(dispatch, (api: Api) => {
     return api.createConnection(connection).then((result: AxiosResponse<ConnectionModal>) => {
-      dispatch(createConnectionAsyncActions.success(result.data));
-      return api.createConnectionAuthorization(
-        result.data,
-        connector.authorizationType,
-        authorizationType
-      );
+      dispatch(createConnectionsSuccess(result.data));
+      return api
+        .createConnectionAuthorization(result.data, connector.authorizationType, authorizationType)
+        .then((result: AxiosResponse<AuthorizationType>) => {
+          dispatch(fetchAuthorizationSuccess(result.data));
+        });
     });
   });
+};
+
+export const updateConnection = (id: number, connection: ConnectionModal) => (
+  dispatch: Dispatch
+) => {
+  return withAuth(dispatch, (api: Api) =>
+    api.updateConnection(id, connection).then(() => {
+      dispatch(updateConnectionSuccess(connection));
+    })
+  );
+};
+
+export const updateAuthorization = (
+  id: number,
+  authorizationTypeName: string,
+  authorizationType: AuthorizationType
+) => (dispatch: Dispatch) => {
+  return withAuth(dispatch, (api: Api) =>
+    api
+      .updateAuthorization(id, authorizationTypeName, authorizationType)
+      .then((result: AxiosResponse<AuthorizationType>) => {
+        dispatch(updateAuthorizationSuccess(result.data));
+      })
+  );
 };
