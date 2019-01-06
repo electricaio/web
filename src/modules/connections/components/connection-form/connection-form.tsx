@@ -55,7 +55,7 @@ class ConnectionFormComponent extends Component<ConnectionComponentProps> {
       accessKeyId: undefined,
       properties: [],
       authorization: {
-        id: undefined,
+        id: 0,
         password: '',
         username: '',
         token: '',
@@ -87,7 +87,7 @@ class ConnectionFormComponent extends Component<ConnectionComponentProps> {
           <Fragment>
             <FormItem>
               {getFieldDecorator('username', {
-                initialValue: defaultFormValues.authorization.username,
+                initialValue: defaultFormValues.authorization,
                 rules: [{ required: true, message: 'Please input username' }],
               })(<StyledInput placeholder="User Name" />)}
             </FormItem>
