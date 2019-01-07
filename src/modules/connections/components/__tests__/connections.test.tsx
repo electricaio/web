@@ -55,10 +55,16 @@ describe('connections', () => {
 
   let createConnectionMock: jest.Mock;
   let deleteConnectionMock: jest.Mock;
+  let updateConnectionMock: jest.Mock;
+  let updateAuthorizationMock: jest.Mock;
+
   const createConnectionComponent = (props = {}): ShallowWrapper => {
     return shallow(
       <ConnectionsComponent
+        authorizations={[]}
         deleteConnection={deleteConnectionMock}
+        updateAuthorization={updateAuthorizationMock}
+        updateConnection={updateConnectionMock}
         createConnection={createConnectionMock}
         accessKeys={accessKeys}
         connections={connections}
@@ -70,7 +76,9 @@ describe('connections', () => {
 
   beforeEach(() => {
     createConnectionMock = jest.fn();
+    updateAuthorizationMock = jest.fn();
     deleteConnectionMock = jest.fn();
+    updateConnectionMock = jest.fn();
     this.component = createConnectionComponent();
   });
 
@@ -117,13 +125,15 @@ describe('connections', () => {
       username: 'admin',
     };
 
-    const basicFormValue = {
+    const basicFormValue: any = {
       connectionName,
+      properties: [],
       accessKeyId: 1,
       ...basicCreds,
     };
     const connectionValue: ConnectionModal = {
       accessKeyId: 1,
+      properties: {},
       connectorId: connectorBasic.id,
       name: connectionName,
     };
@@ -139,13 +149,72 @@ describe('connections', () => {
       token: '12345',
     };
 
-    const tokenFormValue = {
+    const tokenFormValue: any = {
       accessKeyId,
       connectionName,
+      properties: [],
       ...tokenCreds,
     };
     const connectionValue: ConnectionModal = {
       accessKeyId,
+      properties: {},
+      connectorId: connectorBasic.id,
+      name: connectionName,
+    };
+
+    (component.instance() as any).handleCommit(tokenFormValue);
+    expect(createConnectionMock).toBeCalledWith(connectionValue, connectorToken, tokenCreds);
+  });
+
+  it('handleEdit calls updateConnection with updated connection', () => {
+    const component = createConnectionComponent({ connector: connectorToken });
+    const accessKeyId = 10;
+
+    const formValues: any = {
+      accessKeyId,
+      connectionName,
+      properties: [],
+    };
+    const connectionValue: ConnectionModal = {
+      ...connections[0],
+      accessKeyId,
+      properties: {},
+      connectorId: connectorBasic.id,
+      name: connectionName,
+    };
+
+    const connectionId = 123;
+    (component.instance() as any).handleEdit(connectionId, formValues);
+    expect(updateConnectionMock).toBeCalledWith(connectionId, connectionValue);
+  });
+
+  it('handleCommit calls createConnection with properties', () => {
+    const component = createConnectionComponent({ connector: connectorToken });
+    const accessKeyId = 10;
+    const tokenCreds = {
+      token: '12345',
+    };
+
+    const properties = {
+      testName: 'value',
+    };
+
+    const formProperties = [
+      {
+        name: 'testName',
+        value: 'value',
+      },
+    ];
+
+    const tokenFormValue = {
+      accessKeyId,
+      connectionName,
+      properties: formProperties,
+      ...tokenCreds,
+    };
+    const connectionValue: ConnectionModal = {
+      accessKeyId,
+      properties,
       connectorId: connectorBasic.id,
       name: connectionName,
     };

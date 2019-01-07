@@ -7,9 +7,27 @@ import { ConnectionModal } from '../../../../../redux/connections/types';
 import { ColumnProps } from 'antd/lib/table';
 import { AccessKeyName } from '../table.css';
 import { MemoryRouter } from 'react-router';
+import { ConnectorModal } from '../../../../../redux/connector-hub/types';
 
 describe('Connections Table', () => {
   const accessKeyName = 'Development';
+  const connectorBasic: ConnectorModal = {
+    typeId: 1,
+    authorizationType: 'Basic',
+    name: 'SalesForce CRM API 2.0',
+    resource: 'customer',
+    version: '2.0',
+    namespace: 'salesforce',
+    properties: {
+      url: 'https://www.salesforce.com',
+      sdk_url: 'url_to_sdk',
+      image_url: 'string',
+      description: 'This connector allows you to connect to SalesForce CRM system.',
+    },
+    id: 4,
+    ern: 'ern://salesforce:customer:2_0',
+    revisionVersion: 0,
+  };
   const connectionsData: ConnectionModal[] = [
     {
       id: 1,
@@ -41,13 +59,16 @@ describe('Connections Table', () => {
   ];
 
   const onRemoveMock = jest.fn();
+  const onEditMock = jest.fn();
   beforeEach(() => {
     this.component = mount(
       <MemoryRouter>
         <ConnectionsTable
+          connector={connectorBasic}
           accessKeys={accessKeysData}
           connections={connectionsData}
           onRemove={onRemoveMock}
+          onEdit={onEditMock}
         />
       </MemoryRouter>
     );
@@ -87,6 +108,20 @@ describe('Connections Table', () => {
     const actionButtons = actionButtonColumn.render(entity);
     actionButtons.props.onRemove();
     expect(onRemoveMock).toBeCalled();
+  });
+
+  it('calls onEdit props when edit action button is called', () => {
+    const actionButtonColumn = this.component
+      .find(Table)
+      .prop('columns')
+      .find((col: ColumnProps<ConnectionModal>) => col.key === 'action');
+    const entity = {
+      id: 1,
+      name: 'test',
+    };
+    const actionButtons = actionButtonColumn.render(entity);
+    actionButtons.props.onEdit();
+    expect(onEditMock).toBeCalled();
   });
 
   it('renders access key name in access key column', () => {

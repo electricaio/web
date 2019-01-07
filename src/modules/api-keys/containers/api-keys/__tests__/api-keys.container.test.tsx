@@ -45,6 +45,7 @@ describe('API Keys Container', () => {
   it('renders api keys module', () => {
     expect(container.find(ApiKeys)).toHaveLength(1);
   });
+
   it('passes crud actions to api keys module', () => {
     const apiKeys = container.find(ApiKeys);
     expect(apiKeys.prop('removeKey')).toEqual(removeKeyMock);

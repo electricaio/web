@@ -7,6 +7,7 @@ export type ConnectionsActionType = ActionType<typeof actions>;
 
 const initialState: ConnectionsState = {
   data: [],
+  authorizations: [],
 };
 
 const reducer: Reducer<ConnectionsState> = (
@@ -14,17 +15,35 @@ const reducer: Reducer<ConnectionsState> = (
   action: ConnectionsActionType
 ): ConnectionsState => {
   switch (action.type) {
-    case getType(actions.createConnectionAsyncActions.success): {
+    case getType(actions.createConnectionsSuccess): {
       return { ...state, data: state.data.concat(action.payload) };
     }
-    case getType(actions.fetchConnectionsAsyncActions.success): {
+    case getType(actions.fetchConnectionsSuccess): {
       return { ...state, data: action.payload };
     }
-    case getType(actions.deleteConnectionAsyncActions.success): {
+    case getType(actions.updateConnectionSuccess): {
+      const stateWithUpdatedConnection = state.data.map(
+        el => (el.id === action.payload.id ? { ...el, ...action.payload } : el)
+      );
+      return { ...state, data: stateWithUpdatedConnection };
+    }
+    case getType(actions.deleteConnectionSuccess): {
       return {
         ...state,
         data: state.data.filter((connection: ConnectionModal) => connection.id !== action.payload),
       };
+    }
+    case getType(actions.fetchAuthorizationSuccess): {
+      return {
+        ...state,
+        authorizations: state.authorizations.concat(action.payload),
+      };
+    }
+    case getType(actions.updateAuthorizationSuccess): {
+      const stateWithUpdatedAuth = state.authorizations.map(
+        el => (el.id === action.payload.id ? { ...el, ...action.payload } : el)
+      );
+      return { ...state, authorizations: stateWithUpdatedAuth };
     }
 
     default: {

@@ -6,6 +6,6 @@ export const Header = styled(Card as any)`
   font-weight: 400;
   font-size: 16px;
   &.ant-card {
-    margin-bottom: 20px;
+    margin: 20px 0;
   }
 `;
