@@ -70,8 +70,8 @@ export const updateConnection = (id: number, connection: ConnectionModal) => (
   dispatch: Dispatch
 ) => {
   return withAuth(dispatch, (api: Api) =>
-    api.updateConnection(id, connection).then(() => {
-      dispatch(updateConnectionSuccess(connection));
+    api.updateConnection(id, connection).then((result: AxiosResponse<ConnectionModal>) => {
+      dispatch(updateConnectionSuccess(result.data));
     })
   );
 };

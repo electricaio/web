@@ -6,7 +6,7 @@ export type ConnectorModal = {
   version: string;
   imageUrl?: string;
   namespace: string;
-  properties: {
+  properties?: {
     url: string;
     sdk_url: string;
     image_url: string;

@@ -21,6 +21,13 @@ describe('Connection Async Actions', () => {
     accessKeyId: 1,
     connectorId: 1,
   };
+
+  const testConnectionResult: ConnectionModal = {
+    id: 1,
+    name: 'Salesforce',
+    accessKeyId: 1,
+    connectorId: 2,
+  };
   const testAuthType: any = {
     password: 'password',
     username: 'username',
@@ -34,21 +41,15 @@ describe('Connection Async Actions', () => {
   };
 
   const testConnector: ConnectorModal = {
+    id: 4,
     typeId: 1,
     authorizationType: 'None',
     name: 'SalesForce CRM API 2.0',
-    resource: 'customer',
     version: '2.0',
     namespace: 'salesforce',
-    properties: {
-      url: 'https://www.salesforce.com',
-      sdk_url: 'url_to_sdk',
-      image_url: 'string',
-      description: 'This connector allows you to connect to SalesForce CRM system.',
-    },
-    id: 4,
     ern: 'ern://salesforce:customer:2_0',
     revisionVersion: 0,
+    resource: '',
   };
 
   let dispatchMock: jest.Mock;
@@ -56,11 +57,11 @@ describe('Connection Async Actions', () => {
 
   beforeEach(() => {
     mockApi = {
-      createConnection: jest.fn(() => Promise.resolve({ data: testConnection })),
-      fetchConnections: jest.fn(() => Promise.resolve({ data: [testConnection] })),
-      fetchConnection: jest.fn(() => Promise.resolve({ data: testConnection })),
+      createConnection: jest.fn(() => Promise.resolve({ data: testConnectionResult })),
+      fetchConnections: jest.fn(() => Promise.resolve({ data: [testConnectionResult] })),
+      fetchConnection: jest.fn(() => Promise.resolve({ data: testConnectionResult })),
       deleteConnection: jest.fn(() => Promise.resolve()),
-      updateConnection: jest.fn(() => Promise.resolve({ data: testConnection })),
+      updateConnection: jest.fn(() => Promise.resolve({ data: testConnectionResult })),
       updateAuthorization: jest.fn(() => Promise.resolve({ data: testAuth })),
       fetchAuthorization: jest.fn(() => Promise.resolve({ data: testAuth })),
       createConnectionAuthorization: jest.fn(() => Promise.resolve()),
@@ -81,19 +82,19 @@ describe('Connection Async Actions', () => {
     it('dispatch response payload to reducers', async () => {
       await createConnection(testConnection, testConnector, testAuthType)(dispatchMock);
       const successDispatchCall = dispatchMock.mock.calls[0][0];
-      expect(successDispatchCall.payload).toEqual(testConnection);
+      expect(successDispatchCall.payload).toEqual(testConnectionResult);
     });
 
     it('calls createConnectionAuthorization with the result of the createConnection', async () => {
       await createConnection(testConnection, testConnector, testAuthType)(dispatchMock);
       expect(mockApi.createConnectionAuthorization).toBeCalledWith(
-        testConnection,
+        testConnectionResult,
         testConnector.authorizationType,
         testAuthType
       );
       const successDispatchCall = dispatchMock.mock.calls[0][0];
 
-      expect(successDispatchCall.payload).toEqual(testConnection);
+      expect(successDispatchCall.payload).toEqual(testConnectionResult);
     });
   });
 
@@ -116,7 +117,7 @@ describe('Connection Async Actions', () => {
     it('dispatches the collection of connections to reducer', async () => {
       await fetchConnections(1, 1)(dispatchMock);
       const firstDispatchCall = dispatchMock.mock.calls[0][0];
-      expect(firstDispatchCall.payload).toEqual([testConnection]);
+      expect(firstDispatchCall.payload).toEqual([testConnectionResult]);
     });
 
     it('dispatch FETCH_CONNECTIONS_SUCCESS action', async () => {
@@ -137,7 +138,7 @@ describe('Connection Async Actions', () => {
     it('dispatches connection as an array to the reducer', async () => {
       await fetchConnection(1)(dispatchMock);
       const firstDispatchCall = dispatchMock.mock.calls[0][0];
-      expect(firstDispatchCall.payload).toEqual([testConnection]);
+      expect(firstDispatchCall.payload).toEqual([testConnectionResult]);
     });
 
     it('dispatch FETCH_CONNECTORS_SUCCESS action', async () => {
@@ -163,7 +164,7 @@ describe('Connection Async Actions', () => {
     it('dispatches updated connection as an array to the reducer', async () => {
       await updateConnection(1, testConnection)(dispatchMock);
       const firstDispatchCall = dispatchMock.mock.calls[0][0];
-      expect(firstDispatchCall.payload).toEqual(testConnection);
+      expect(firstDispatchCall.payload).toEqual(testConnectionResult);
     });
 
     it('call api with connectionId', async () => {
