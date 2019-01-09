@@ -11,8 +11,12 @@ import { ConnectionForm } from '../connection-form/connection-form';
 import { StyledButton } from '../../../ui-kit/button';
 
 describe('connections', () => {
+  const authorizationId = 2;
+  const connectionId = 2123;
   const connections: ConnectionModal[] = [
     {
+      authorizationId,
+      id: connectionId,
       name: 'Uber',
       accessKeyId: 1,
       connectorId: 1,
@@ -49,6 +53,11 @@ describe('connections', () => {
   const connectorToken: ConnectorModal = {
     ...connectorBasic,
     authorizationType: 'Token',
+  };
+
+  const noAuthorization: ConnectorModal = {
+    ...connectorBasic,
+    authorizationType: 'None',
   };
 
   const connectionName = 'Test Connection';
@@ -166,7 +175,7 @@ describe('connections', () => {
     expect(createConnectionMock).toBeCalledWith(connectionValue, connectorToken, tokenCreds);
   });
 
-  it('handleEdit calls updateConnection with updated connection', () => {
+  it('handleEdit calls updateConnection with updated connection', async () => {
     const component = createConnectionComponent({ connector: connectorToken });
     const accessKeyId = 10;
 
@@ -183,9 +192,51 @@ describe('connections', () => {
       name: connectionName,
     };
 
-    const connectionId = 123;
-    (component.instance() as any).handleEdit(connectionId, formValues);
+    await (component.instance() as any).handleEdit(connectionId, formValues);
     expect(updateConnectionMock).toBeCalledWith(connectionId, connectionValue);
+  });
+
+  it('handleEdit calls updateAuthorization', async () => {
+    const component = createConnectionComponent({ connector: connectorToken });
+    const accessKeyId = 10;
+
+    const formValues: any = {
+      accessKeyId,
+      connectionName,
+      properties: [],
+    };
+
+    await (component.instance() as any).handleEdit(connectionId, formValues).then;
+    expect(updateAuthorizationMock).toBeCalled();
+  });
+
+  it('handleEdit does not call updateAuthorization if there is no authorization', async () => {
+    const component = createConnectionComponent({ connector: noAuthorization });
+    const accessKeyId = 10;
+
+    const formValues: any = {
+      accessKeyId,
+      connectionName,
+      properties: [],
+    };
+
+    await (component.instance() as any).handleEdit(connectionId, formValues);
+    expect(updateAuthorizationMock).not.toBeCalled();
+  });
+
+  it('handleEdit uses access key property from connection if the form value is undefined', async () => {
+    const component = createConnectionComponent({ connector: noAuthorization });
+
+    const formValues: any = {
+      connectionName,
+      accessKeyId: undefined,
+      properties: [],
+    };
+
+    await (component.instance() as any).handleEdit(connectionId, formValues);
+    expect(updateConnectionMock ).toBeCalledWith(connectionId, expect.objectContaining({
+      accessKeyId: connections[0].accessKeyId,
+    }));
   });
 
   it('handleCommit calls createConnection with properties', () => {

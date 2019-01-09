@@ -3,6 +3,7 @@ import { ConnectionModal, AuthorizationType } from './types';
 import { AxiosResponse } from 'axios';
 import { Api } from '../../modules/utils/api';
 import { withAuth } from '../util';
+
 import {
   fetchAuthorizationSuccess,
   updateAuthorizationSuccess,
@@ -12,6 +13,7 @@ import {
   updateConnectionSuccess,
 } from './actions';
 import { ConnectorModal } from '../connector-hub/types';
+import { hasNoAuthorizationType } from '../../utils';
 
 export const fetchConnections = (userId: number, connectorId: number) => (dispatch: Dispatch) => {
   return withAuth(dispatch, (api: Api) => {
@@ -40,6 +42,9 @@ export const deleteConnection = (connectionId: number) => (dispatch: Dispatch) =
 export const fetchAuthorization = (authorizationId: number, authorizationTypeName: string) => (
   dispatch: Dispatch
 ) => {
+  if(hasNoAuthorizationType(authorizationTypeName)){
+    return;
+  }
   return withAuth(dispatch, (api: Api) => {
     return api
       .fetchAuthorization(authorizationId, authorizationTypeName)
@@ -57,11 +62,17 @@ export const createConnection = (
   withAuth(dispatch, (api: Api) => {
     return api.createConnection(connection).then((result: AxiosResponse<ConnectionModal>) => {
       dispatch(createConnectionsSuccess(result.data));
-      return api
-        .createConnectionAuthorization(result.data, connector.authorizationType, authorizationType)
-        .then((result: AxiosResponse<AuthorizationType>) => {
-          dispatch(fetchAuthorizationSuccess(result.data));
-        });
+      if (!hasNoAuthorizationType(connector.authorizationType)) {
+        return api
+          .createConnectionAuthorization(
+            result.data,
+            connector.authorizationType,
+            authorizationType
+          )
+          .then((result: AxiosResponse<AuthorizationType>) => {
+            dispatch(fetchAuthorizationSuccess(result.data));
+          });
+      }
     });
   });
 };

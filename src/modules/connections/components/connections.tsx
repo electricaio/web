@@ -16,6 +16,11 @@ import {
 } from '../../../redux/connections/async';
 import { StyledButton } from '../../ui-kit/button';
 import { Properties } from '../../../components/properties-form/properties-form';
+import {
+  hasNoAuthorizationType,
+  isBasicAuthorizationType,
+  isTokenAuthorizationType,
+} from '../../../utils';
 
 interface PropsFromState {
   connections: ConnectionModal[];
@@ -45,7 +50,7 @@ export class ConnectionsComponent extends Component<PropsFromState> {
       properties,
       connectorId: connector.id,
       name: formValues.connectionName,
-      accessKeyId: formValues.accessKeyId,
+      ...(formValues.accessKeyId && {accessKeyId: formValues.accessKeyId}),
     };
   };
 
@@ -72,25 +77,33 @@ export class ConnectionsComponent extends Component<PropsFromState> {
       (auth: AuthorizationType) => auth.id === connection.authorizationId
     );
 
-    await updateConnection(id, { ...connection, ...this.buildConnection(formValues) });
-    await updateAuthorization(id, connector.authorizationType, {
-      ...authorization,
-      ...this.getAuthType(connector.authorizationType, formValues),
+    await updateConnection(connection.id, {
+      ...connection,
+      ...this.buildConnection(formValues),
     });
+    if (!hasNoAuthorizationType(connector.authorizationType)) {
+      await updateAuthorization(connection.authorizationId, connector.authorizationType, {
+        ...authorization,
+        ...this.getAuthType(connector.authorizationType, formValues),
+      });
+    }
   };
 
   getAuthType = (authorizationType: string, formValues: any): any => {
-    switch (authorizationType.toLowerCase()) {
-      case 'basic':
-        return {
-          password: formValues.password,
-          username: formValues.username,
-        };
-      case 'token':
-        return {
-          token: formValues.token,
-        };
+    if (isBasicAuthorizationType(authorizationType)) {
+      return {
+        password: formValues.password,
+        username: formValues.username,
+      };
     }
+
+    if (isTokenAuthorizationType(authorizationType)) {
+      return {
+        token: formValues.token,
+      };
+    }
+
+    return {};
   };
 
   render() {
@@ -117,7 +130,7 @@ export class ConnectionsComponent extends Component<PropsFromState> {
           formComponent={<ConnectionForm accessKeys={accessKeys} connector={connector} />}
         >
           <Tooltip placement="top" title={noAccessKeysTooltip}>
-            <StyledButton withTopMargin type="primary" size="large" disabled={isEmpty(accessKeys)}>
+            <StyledButton type="primary" size="large" disabled={isEmpty(accessKeys)}>
               Add Connection
             </StyledButton>
           </Tooltip>

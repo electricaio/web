@@ -27,8 +27,10 @@ export class ButtonActionModal extends Component<TConnectionsProps, TConnections
   };
 
   closeModal = () => {
-    const form = this.formRef.props.form;
-    form.resetFields();
+    if (this.formRef) {
+      const form = this.formRef.props.form;
+      form.resetFields();
+    }
 
     this.setState({
       visible: false,
