@@ -47,6 +47,19 @@ describe('ConnectionForm', () => {
     expect(select).toHaveLength(1);
   });
 
+  describe('editMode', () => {
+    beforeEach(() => {
+      this.editModeConnectionForm = mount(
+        <ConnectionForm accessKeys={accessKeys} connector={connector} inEditMode />
+      );
+    });
+
+    it('does not show access keys component if in edit mode', () => {
+      const accessKeysComponent = this.connectionForm.find('input#accessKeyId');
+      expect(accessKeysComponent).toHaveLength(0);
+    });
+  });
+
   describe('SelectAccessKeys', () => {
     it('render select with options', () => {
       const selectAccessKeysComponent = shallow(<SelectAccessKeys accessKeys={accessKeys} />);

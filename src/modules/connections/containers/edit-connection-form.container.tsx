@@ -45,7 +45,9 @@ export class ConnectionFormComponent extends Component<AllProps> {
       accessKeys,
       wrappedComponentRef,
     } = this.props;
-    const asyncActions = () => [fetchAuthorization(connection.id, connector.authorizationType)];
+    const asyncActions = () => [
+      fetchAuthorization(connection.authorizationId, connector.authorizationType),
+    ];
 
     const authorization = authorizations.find(
       (auth: AuthorizationType) => auth.id === connection.authorizationId
@@ -70,6 +72,7 @@ export class ConnectionFormComponent extends Component<AllProps> {
           defaultFormValues={defaultValues}
           connector={connector}
           accessKeys={accessKeys}
+          inEditMode
         />
       </AsyncComponent>
     );

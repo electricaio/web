@@ -9,7 +9,7 @@ import { SelectValue } from 'antd/lib/select';
 import { DateComponent } from '../../../ui-kit/date';
 import { Link } from 'react-router-dom';
 import { ConnectorModal } from '../../../../redux/connector-hub/types';
-import { ConnectionFormContainer } from '../../containers/connection-form.container';
+import { ConnectionFormContainer } from '../../containers/edit-connection-form.container';
 
 const Option = Select.Option;
 

@@ -8,6 +8,7 @@ import { ConnectorModal } from '../../../../redux/connector-hub/types';
 import { SelectProps } from 'antd/lib/select';
 import { PropertiesForm, Properties } from '../../../../components/properties-form/properties-form';
 import { AuthorizationType } from '../../../../redux/connections/types';
+import { isBasicAuthorizationType, isTokenAuthorizationType } from '../../../../utils';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -15,6 +16,7 @@ const Option = Select.Option;
 interface ConnectionComponentProps extends FormComponentProps {
   connector: ConnectorModal;
   accessKeys: ApiKeyModal[];
+  inEditMode?: boolean;
   defaultFormValues?: DefaultFormValues;
 }
 
@@ -68,7 +70,9 @@ class ConnectionFormComponent extends Component<ConnectionComponentProps> {
       connector,
       defaultFormValues,
       form: { getFieldDecorator },
+      inEditMode = false,
     } = this.props;
+
     return (
       <Form>
         <FormItem>
@@ -77,13 +81,15 @@ class ConnectionFormComponent extends Component<ConnectionComponentProps> {
             rules: [{ required: true, message: 'Please input a name for this connection' }],
           })(<StyledInput placeholder="Connection Name" />)}
         </FormItem>
-        <FormItem>
-          {getFieldDecorator('accessKeyId', {
-            initialValue: defaultFormValues.accessKeyId,
-            rules: [{ required: true, message: 'Please select an access key', type: 'number' }],
-          })(<SelectAccessKeys accessKeys={accessKeys} />)}
-        </FormItem>
-        {connector.authorizationType === 'Basic' && (
+        {!inEditMode && (
+          <FormItem >
+            {getFieldDecorator('accessKeyId', {
+              initialValue: defaultFormValues.accessKeyId,
+              rules: [{ required: true, message: 'Please select an access key', type: 'number' }],
+            })(<SelectAccessKeys accessKeys={accessKeys} />)}
+          </FormItem>
+        )}
+        {isBasicAuthorizationType(connector.authorizationType) && (
           <Fragment>
             <FormItem>
               {getFieldDecorator('username', {
@@ -99,7 +105,7 @@ class ConnectionFormComponent extends Component<ConnectionComponentProps> {
             </FormItem>
           </Fragment>
         )}
-        {connector.authorizationType === 'Token' && (
+        {isTokenAuthorizationType(connector.authorizationType) && (
           <FormItem>
             {getFieldDecorator('token', {
               initialValue: defaultFormValues.authorization.token,

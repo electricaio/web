@@ -43,7 +43,7 @@ describe('Connection Async Actions', () => {
   const testConnector: ConnectorModal = {
     id: 4,
     typeId: 1,
-    authorizationType: 'None',
+    authorizationType: 'Basic',
     name: 'SalesForce CRM API 2.0',
     version: '2.0',
     namespace: 'salesforce',
@@ -95,6 +95,12 @@ describe('Connection Async Actions', () => {
       const successDispatchCall = dispatchMock.mock.calls[0][0];
 
       expect(successDispatchCall.payload).toEqual(testConnectionResult);
+    });
+
+    it('does not call createConnectionAuthorization if there is no authorization', async () => {
+      testConnector.authorizationType = 'None';
+      await createConnection(testConnection, testConnector, testAuthType)(dispatchMock);
+      expect(mockApi.createConnectionAuthorization).not.toBeCalled();
     });
   });
 

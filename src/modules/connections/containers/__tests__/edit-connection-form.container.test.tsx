@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { AsyncComponent } from '../../../../components/async-component/async-component';
-import { ConnectionFormComponent } from '../connection-form.container';
+import { ConnectionFormComponent } from '../edit-connection-form.container';
 import { ConnectionModal } from '../../../../redux/connections/types';
 import { ConnectorModal } from '../../../../redux/connector-hub/types';
 import { ApiKeyModal } from '../../../../redux/api-keys/types';
@@ -74,7 +74,7 @@ describe('Connector Form Container', () => {
       const actions = this.component.find(AsyncComponent).prop('getAsyncActions');
       actions();
       expect(fetchAuthorizationMock).toBeCalledWith(
-        testConnection.id,
+        testConnection.authorizationId,
         testConnector.authorizationType
       );
     });
@@ -88,6 +88,14 @@ describe('Connector Form Container', () => {
           .find(ConnectionForm)
           .prop('connector')
       ).toEqual(testConnector);
+    });
+    it('passes edit mode flag', () => {
+      expect(
+        this.component
+          .find(AsyncComponent)
+          .find(ConnectionForm)
+          .prop('inEditMode')
+      ).toBeTruthy();
     });
 
     it('passes access keys', () => {
