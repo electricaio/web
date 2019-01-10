@@ -82,7 +82,7 @@ class ConnectionFormComponent extends Component<ConnectionComponentProps> {
           })(<StyledInput placeholder="Connection Name" />)}
         </FormItem>
         {!inEditMode && (
-          <FormItem >
+          <FormItem>
             {getFieldDecorator('accessKeyId', {
               initialValue: defaultFormValues.accessKeyId,
               rules: [{ required: true, message: 'Please select an access key', type: 'number' }],

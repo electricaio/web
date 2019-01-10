@@ -5,6 +5,10 @@ export const fetchConnectionsSuccess = createStandardAction(
   ConnectionTypes.FETCH_CONNECTIONS_SUCCESS
 )<ConnectionModal[]>();
 
+export const fetchConnectionSuccess = createStandardAction(
+  ConnectionTypes.FETCH_CONNECTION_SUCCESS
+)<ConnectionModal>();
+
 export const createConnectionsSuccess = createStandardAction(
   ConnectionTypes.CREATE_CONNECTION_SUCCESS
 )<ConnectionModal>();
