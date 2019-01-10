@@ -64,11 +64,11 @@ describe('Connection Async Actions', () => {
       updateConnection: jest.fn(() => Promise.resolve({ data: testConnectionResult })),
       updateAuthorization: jest.fn(() => Promise.resolve({ data: testAuth })),
       fetchAuthorization: jest.fn(() => Promise.resolve({ data: testAuth })),
-      createConnectionAuthorization: jest.fn(() => Promise.resolve()),
+      createConnectionAuthorization: jest.fn(() => Promise.resolve({ data: testAuth })),
     };
     dispatchMock = jest.fn();
     (withAuth as any).mockImplementation((_: any, callback: any) => {
-      callback(mockApi, dispatchMock);
+      return callback(mockApi, dispatchMock);
     });
   });
 
@@ -95,6 +95,11 @@ describe('Connection Async Actions', () => {
       const successDispatchCall = dispatchMock.mock.calls[0][0];
 
       expect(successDispatchCall.payload).toEqual(testConnectionResult);
+    });
+
+    it('calls fetchConnection after creating authorization', async () => {
+      await createConnection(testConnection, testConnector, testAuthType)(dispatchMock);
+      expect(mockApi.fetchConnection).toBeCalledWith(testConnection.id);
     });
 
     it('does not call createConnectionAuthorization if there is no authorization', async () => {
@@ -144,13 +149,13 @@ describe('Connection Async Actions', () => {
     it('dispatches connection as an array to the reducer', async () => {
       await fetchConnection(1)(dispatchMock);
       const firstDispatchCall = dispatchMock.mock.calls[0][0];
-      expect(firstDispatchCall.payload).toEqual([testConnectionResult]);
+      expect(firstDispatchCall.payload).toEqual(testConnectionResult);
     });
 
-    it('dispatch FETCH_CONNECTORS_SUCCESS action', async () => {
+    it('dispatch FETCH_CONNECTION_SUCCESS action', async () => {
       await fetchConnection(1)(dispatchMock);
       const successDispatchCall = dispatchMock.mock.calls[0][0];
-      expect(successDispatchCall.type).toEqual(ConnectionTypes.FETCH_CONNECTIONS_SUCCESS);
+      expect(successDispatchCall.type).toEqual(ConnectionTypes.FETCH_CONNECTION_SUCCESS);
     });
 
     it('call api with connectionId', async () => {

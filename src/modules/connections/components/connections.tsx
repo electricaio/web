@@ -50,7 +50,7 @@ export class ConnectionsComponent extends Component<PropsFromState> {
       properties,
       connectorId: connector.id,
       name: formValues.connectionName,
-      ...(formValues.accessKeyId && {accessKeyId: formValues.accessKeyId}),
+      ...(formValues.accessKeyId && { accessKeyId: formValues.accessKeyId }),
     };
   };
 
@@ -76,7 +76,6 @@ export class ConnectionsComponent extends Component<PropsFromState> {
     const authorization = authorizations.find(
       (auth: AuthorizationType) => auth.id === connection.authorizationId
     );
-
     await updateConnection(connection.id, {
       ...connection,
       ...this.buildConnection(formValues),

@@ -11,6 +11,7 @@ import {
   createConnectionsSuccess,
   deleteConnectionSuccess,
   updateConnectionSuccess,
+  fetchConnectionSuccess,
 } from './actions';
 import { ConnectorModal } from '../connector-hub/types';
 import { hasNoAuthorizationType } from '../../utils';
@@ -26,7 +27,7 @@ export const fetchConnections = (userId: number, connectorId: number) => (dispat
 export const fetchConnection = (connectionId: number) => (dispatch: Dispatch) => {
   return withAuth(dispatch, (api: Api) => {
     return api.fetchConnection(connectionId).then((result: AxiosResponse) => {
-      dispatch(fetchConnectionsSuccess([result.data]));
+      dispatch(fetchConnectionSuccess(result.data));
     });
   });
 };
@@ -42,7 +43,7 @@ export const deleteConnection = (connectionId: number) => (dispatch: Dispatch) =
 export const fetchAuthorization = (authorizationId: number, authorizationTypeName: string) => (
   dispatch: Dispatch
 ) => {
-  if(hasNoAuthorizationType(authorizationTypeName)){
+  if (hasNoAuthorizationType(authorizationTypeName)) {
     return;
   }
   return withAuth(dispatch, (api: Api) => {
@@ -59,21 +60,31 @@ export const createConnection = (
   connector: ConnectorModal,
   authorizationType: AuthorizationType
 ) => (dispatch: Dispatch) => {
-  withAuth(dispatch, (api: Api) => {
-    return api.createConnection(connection).then((result: AxiosResponse<ConnectionModal>) => {
-      dispatch(createConnectionsSuccess(result.data));
-      if (!hasNoAuthorizationType(connector.authorizationType)) {
-        return api
-          .createConnectionAuthorization(
-            result.data,
-            connector.authorizationType,
-            authorizationType
-          )
-          .then((result: AxiosResponse<AuthorizationType>) => {
-            dispatch(fetchAuthorizationSuccess(result.data));
-          });
-      }
-    });
+  return withAuth(dispatch, (api: Api) => {
+    return api
+      .createConnection(connection)
+      .then((connectionResult: AxiosResponse<ConnectionModal>) => {
+        dispatch(createConnectionsSuccess(connectionResult.data));
+        if (!hasNoAuthorizationType(connector.authorizationType)) {
+          return api
+            .createConnectionAuthorization(
+              connectionResult.data,
+              connector.authorizationType,
+              authorizationType
+            )
+            .then((result: AxiosResponse<AuthorizationType>) => {
+              dispatch(fetchAuthorizationSuccess(result.data));
+              const connectionWithAuth: ConnectionModal = {
+                ...connectionResult.data,
+                authorizationId: result.data.id,
+              };
+              dispatch(updateConnectionSuccess(connectionWithAuth));
+              // We need to fetch the connection again because creating an
+              // authorization entity increments the revision version of the connection entity
+              return fetchConnection(connectionResult.data.id)(dispatch);
+            });
+        }
+      });
   });
 };
 

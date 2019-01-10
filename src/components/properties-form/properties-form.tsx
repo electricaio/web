@@ -44,7 +44,9 @@ export class PropertiesForm extends React.Component<PropertiesProps, PropertiesS
   };
 
   handleRemoveProperty = (idx: number) => () => {
-    this.setState({ properties: this.state.properties.filter((_, sidx) => idx !== sidx) });
+    const newProperties = this.state.properties.filter((_, sidx) => idx !== sidx);
+    this.setState({ properties: newProperties });
+    this.props.onChange(newProperties);
   };
 
   render() {

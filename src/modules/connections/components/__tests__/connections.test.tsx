@@ -234,9 +234,12 @@ describe('connections', () => {
     };
 
     await (component.instance() as any).handleEdit(connectionId, formValues);
-    expect(updateConnectionMock ).toBeCalledWith(connectionId, expect.objectContaining({
-      accessKeyId: connections[0].accessKeyId,
-    }));
+    expect(updateConnectionMock).toBeCalledWith(
+      connectionId,
+      expect.objectContaining({
+        accessKeyId: connections[0].accessKeyId,
+      })
+    );
   });
 
   it('handleCommit calls createConnection with properties', () => {

@@ -42,6 +42,14 @@ describe('Properties Form', () => {
       .simulate('click');
     expect(this.component.state().properties).toHaveLength(0);
   });
+  it('Clicking delete property calls onChange prop', () => {
+    expect(this.component.state().properties).toHaveLength(1);
+    this.component
+      .find(Icon)
+      .at(0)
+      .simulate('click');
+    expect(onchangeMock).toBeCalled();
+  });
 
   it('creates inputs for each property', () => {
     this.component.setState({
@@ -58,6 +66,15 @@ describe('Properties Form', () => {
     const firstInput = this.component.find(Input).at(0);
     firstInput.simulate('change', { target: { value: newValue } });
     expect(this.component.state().properties[0].name).toEqual(newValue);
+  });
+
+  it('calls onChange prop when changing value', () => {
+    this.component.setState({
+      properties,
+    });
+    const firstInput = this.component.find(Input).at(0);
+    firstInput.simulate('change', { target: { value: 'value' } });
+    expect(onchangeMock).toBeCalled();
   });
 
   it('creates populates inputs from state', () => {
