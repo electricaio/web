@@ -95,4 +95,15 @@ describe('ConnectorCard', () => {
       expect(imageContainer.find(CompanyImage).prop('src')).toEqual(image);
     });
   });
+
+  describe('card with no properties', () => {
+    it('renders', () => {
+      const connectorCard = mount(
+        <MemoryRouter>
+          <ConnectorCard connector={connector({ properties: undefined })} />
+        </MemoryRouter>
+      );
+      expect(connectorCard.find(StyledMeta)).toHaveLength(1);
+    });
+  });
 });
