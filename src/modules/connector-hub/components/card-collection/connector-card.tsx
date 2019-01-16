@@ -45,6 +45,7 @@ type ConnectorCardProps = {
 export class ConnectorCard extends React.Component<ConnectorCardProps> {
   render() {
     const { connector } = this.props;
+    const { description = '' } = connector.properties || {};
     return (
       <StyledCard
         hoverable
@@ -56,7 +57,7 @@ export class ConnectorCard extends React.Component<ConnectorCardProps> {
           </Tag>
         }
       >
-        <StyledMeta description={connector.properties.description} />
+        <StyledMeta description={description} />
         <Row>
           <ErnCol span={4}>ERN</ErnCol>
           <Col span={8}>
