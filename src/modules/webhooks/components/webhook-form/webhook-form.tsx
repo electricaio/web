@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form } from 'antd';
+import { Form, Checkbox } from 'antd';
 import { FormComponentProps } from 'antd/lib/form/Form';
 
 import { StyledInput } from '../../../ui-kit/input';
@@ -18,6 +18,7 @@ class WebhookFormComponent extends Component<FormComponentProps> {
             rules: [{ required: true, message: 'Please input a name for this webhook' }],
           })(<StyledInput placeholder="Webhook Name" />)}
         </FormItem>
+        <FormItem>{getFieldDecorator('isPublic', {})(<Checkbox>Public Access</Checkbox>)}</FormItem>
       </Form>
     );
   }
