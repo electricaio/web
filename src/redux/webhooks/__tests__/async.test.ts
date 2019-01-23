@@ -8,11 +8,13 @@ jest.mock('../../util');
 describe('Webhook Async Actions', () => {
   const testWebhooks: WebhookModal = {
     name: 'Webhook Test',
+    isPublic: false,
     accessKeyId: 1,
     connectionId: 1,
     createdAt: '2018-11-20T18:42:08.552',
     id: 12,
-    url: 'webhook.com',
+    invokeUrl: 'webhook.private',
+    publicInvokeUrl: 'webhook.public',
   };
 
   let dispatchMock: jest.Mock;

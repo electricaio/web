@@ -1,7 +1,7 @@
 import axios, { AxiosPromise, AxiosInstance } from 'axios';
 import { SignupParamsType, TokenState } from '../../redux/auth/types';
 import { ConnectionModal, AuthorizationType } from '../../redux/connections/types';
-import { WebhookModal } from '../../redux/webhooks/types';
+import { WebhookModalRequest } from '../../redux/webhooks/types';
 
 export const PREFIX = '@e:';
 export const AUTH_TOKENS_STORAGE_KEY = 'auth.tokens';
@@ -129,7 +129,7 @@ export class Api {
     return this.apiInstance.get(`/v1/connections/${connectionId}/webhooks`);
   }
 
-  createWebhook(webhook: WebhookModal): AxiosPromise {
+  createWebhook(webhook: WebhookModalRequest): AxiosPromise {
     return this.apiInstance.post(`/v1/webhooks/connection`, webhook);
   }
 

@@ -5,6 +5,7 @@ import { ActionButtons } from '../../../../components/action-buttons/action-butt
 import { DateComponent } from '../../../ui-kit/date';
 import { WebhookModal } from '../../../../redux/webhooks/types';
 import { Copy } from './copy';
+import { URLContainer } from './table.css';
 
 export type TableProps = {
   webhooks: WebhookModal[];
@@ -29,7 +30,24 @@ export class WebhooksTable extends Component<TableProps> {
         title: 'Url',
         key: 'url',
         render: (entity: WebhookModal) => (
-          <Input size="large" addonAfter={<Copy url={entity.url} />} disabled value={entity.url} />
+          <URLContainer>
+            <Input
+              size="large"
+              addonBefore="Private URL"
+              addonAfter={<Copy url={entity.invokeUrl} />}
+              disabled
+              value={entity.invokeUrl}
+            />
+            {entity.isPublic && (
+              <Input
+                addonBefore="Public URL"
+                size="large"
+                addonAfter={<Copy url={entity.publicInvokeUrl} />}
+                disabled
+                value={entity.publicInvokeUrl}
+              />
+            )}
+          </URLContainer>
         ),
       },
       {

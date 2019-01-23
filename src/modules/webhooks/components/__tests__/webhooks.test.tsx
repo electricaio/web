@@ -13,11 +13,13 @@ describe('webhooks', () => {
   const webhooks: WebhookModal[] = [
     {
       name: 'Webhook Test',
+      isPublic: false,
       connectionId: 1,
       accessKeyId: 1,
       createdAt: '2018-11-20T18:42:08.552',
       id: 12,
-      url: 'webhook.com',
+      invokeUrl: 'webhook.com',
+      publicInvokeUrl: null,
     },
   ];
 

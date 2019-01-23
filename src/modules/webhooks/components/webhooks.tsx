@@ -5,7 +5,7 @@ import { StyledButton } from '../../ui-kit/button';
 import { createWebhook, deleteWebhook } from '../../../redux/webhooks/async';
 import { WebhookForm } from './webhook-form/webhook-form';
 import { WebhooksTable } from './table/table';
-import { WebhookModal } from '../../../redux/webhooks/types';
+import { WebhookModal, WebhookModalRequest } from '../../../redux/webhooks/types';
 import { ConnectionModal } from '../../../redux/connections/types';
 
 interface PropsFromState {
@@ -23,7 +23,8 @@ export class WebhookComponent extends Component<PropsFromState> {
 
   handleCommit = (formValues: any) => {
     const { connection, createWebhook } = this.props;
-    const newWebhook: WebhookModal = {
+    const newWebhook: WebhookModalRequest = {
+      isPublic: formValues.isPublic,
       connectionId: connection.id,
       name: formValues.name,
       accessKeyId: connection.accessKeyId,

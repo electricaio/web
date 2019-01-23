@@ -10,3 +10,7 @@ export const FilterDropdown = styled.div`
 export const AccessKeyName = styled.span`
   font-weight: bold;
 `;
+
+export const URLContainer = styled.div`
+  line-height: 60px;
+`;
