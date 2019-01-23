@@ -1,10 +1,19 @@
+export type WebhookModalRequest = {
+  accessKeyId: number;
+  connectionId: number;
+  isPublic: boolean;
+  name: string;
+};
+
 export type WebhookModal = {
   accessKeyId: number;
   connectionId: number;
   createdAt?: string;
+  isPublic: boolean;
   id?: number;
   name: string;
-  url?: string;
+  invokeUrl: string;
+  publicInvokeUrl: string;
 };
 
 export const enum WebhookTypes {

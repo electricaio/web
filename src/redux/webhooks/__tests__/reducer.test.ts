@@ -11,11 +11,13 @@ describe('webhooks reducer', () => {
       const fetchedData: WebhookModal[] = [
         {
           name: 'Webhook Test',
+          isPublic: false,
           connectionId: 1,
           accessKeyId: 1,
           createdAt: '2018-11-20T18:42:08.552',
           id: 12,
-          url: 'webhook.com',
+          invokeUrl: 'webhook.private',
+          publicInvokeUrl: 'webhook.public',
         },
       ];
 
@@ -35,10 +37,12 @@ describe('webhooks reducer', () => {
     const newWebHooks: WebhookModal = {
       name: 'New Webhook Test',
       connectionId: 1,
+      isPublic: false,
       accessKeyId: 1,
       createdAt: '2018-11-20T18:42:08.552',
       id: 12,
-      url: 'i am new.com',
+      invokeUrl: 'webhook.private',
+      publicInvokeUrl: 'webhook.public',
     };
     it('concats webhooks to the data state', () => {
       expect(
@@ -59,11 +63,13 @@ describe('webhooks reducer', () => {
         data: [
           {
             name: 'Delete Webhook',
+            isPublic: false,
             connectionId: 1,
             accessKeyId: 1,
             createdAt: '2018-11-20T18:42:08.552',
             id: webhookId,
-            url: 'goingtobedelete.com',
+            invokeUrl: 'webhook.private',
+            publicInvokeUrl: 'webhook.public',
           },
         ],
       };

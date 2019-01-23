@@ -1,5 +1,5 @@
 import { Dispatch } from 'redux';
-import { WebhookModal } from './types';
+import { WebhookModal, WebhookModalRequest } from './types';
 import { AxiosResponse } from 'axios';
 import { Api } from '../../modules/utils/api';
 import { withAuth } from '../util';
@@ -26,7 +26,7 @@ export const deleteWebhook = (webhookId: number) => (dispatch: Dispatch) => {
   });
 };
 
-export const createWebhook = (webhook: WebhookModal) => (dispatch: Dispatch) => {
+export const createWebhook = (webhook: WebhookModalRequest) => (dispatch: Dispatch) => {
   dispatch(createWebhookAsyncActions.request());
   withAuth(dispatch, (api: Api) => {
     return api.createWebhook(webhook).then((result: AxiosResponse<WebhookModal>) => {

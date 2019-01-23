@@ -43,19 +43,23 @@ describe('Webhooks Container', () => {
   const webhooksData: WebhookModal[] = [
     {
       connectionId,
+      isPublic: false,
       name: 'Webhook Test',
       accessKeyId: 1,
       createdAt: '2018-11-20T18:42:08.552',
       id: 12,
-      url: 'webhook.com',
+      invokeUrl: 'slack.com',
+      publicInvokeUrl: null,
     },
     {
       connectionId,
+      isPublic: false,
       name: 'Slack Message',
       accessKeyId: 1,
       createdAt: '2018-11-20T18:42:08.552',
       id: 12,
-      url: 'slack.com',
+      invokeUrl: 'webhook.private',
+      publicInvokeUrl: null,
     },
   ];
 

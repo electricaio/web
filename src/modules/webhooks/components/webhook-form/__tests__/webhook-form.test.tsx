@@ -11,4 +11,9 @@ describe('WebhookForm', () => {
     const name = this.webhookForm.find('input#name');
     expect(name).toHaveLength(1);
   });
+
+  it('should have a checkbox for select public access', () => {
+    const name = this.webhookForm.find('input#isPublic');
+    expect(name).toHaveLength(1);
+  });
 });
