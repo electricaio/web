@@ -24,7 +24,7 @@ export class WebhookComponent extends Component<PropsFromState> {
   handleCommit = (formValues: any) => {
     const { connection, createWebhook } = this.props;
     const newWebhook: WebhookModalRequest = {
-      isPublic: formValues.isPublic,
+      isPublic: !!formValues.isPublic,
       connectionId: connection.id,
       name: formValues.name,
       accessKeyId: connection.accessKeyId,
