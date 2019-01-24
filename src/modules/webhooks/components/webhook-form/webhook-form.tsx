@@ -18,7 +18,7 @@ class WebhookFormComponent extends Component<FormComponentProps> {
             rules: [{ required: true, message: 'Please input a name for this webhook' }],
           })(<StyledInput placeholder="Webhook Name" />)}
         </FormItem>
-        <FormItem>{getFieldDecorator('isPublic', {})(<Checkbox>Public Access</Checkbox>)}</FormItem>
+        <FormItem>{getFieldDecorator('isPublic')(<Checkbox>Public Access</Checkbox>)}</FormItem>
       </Form>
     );
   }

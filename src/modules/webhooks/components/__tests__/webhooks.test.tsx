@@ -82,9 +82,44 @@ describe('webhooks', () => {
     expect(buttonModal.prop('onCommit')).toEqual(this.component.instance().handleCommit);
   });
 
+  it('handleCommit calls createWebhook with isPublic defaulted to false', () => {
+   
+    const formValues = {
+      name: 'test',
+    };
+    const webhook = {
+      name: formValues.name,
+      isPublic: false,
+      connectionId: connection.id,
+      accessKeyId: connection.accessKeyId,
+    };
+
+    (this.component.instance() as any).handleCommit(formValues);
+    expect(createWebhookMock).toBeCalledWith(webhook);
+  });
+
+  it('handleCommit calls createWebhook with public webhook', () => {
+   
+    const formValues = {
+      name: 'test',
+      isPublic: true,
+    };
+    const webhook = {
+      name: formValues.name,
+      isPublic: true,
+      connectionId: connection.id,
+      accessKeyId: connection.accessKeyId,
+    };
+
+    (this.component.instance() as any).handleCommit(formValues);
+    expect(createWebhookMock).toBeCalledWith(webhook);
+  });
+
   it('handleDelete calls deleteWebhooks with webhook id', () => {
     const connectionId = 100;
     (this.component.instance() as any).handleDelete(connectionId);
     expect(deleteWebhookMock).toBeCalledWith(connectionId);
   });
+
+
 });
