@@ -16,11 +16,8 @@ import {
 } from '../../../redux/connections/async';
 import { StyledButton } from '../../ui-kit/button';
 import { Properties } from '../../../components/properties-form/properties-form';
-import {
-  hasNoAuthorizationType,
-  isBasicAuthorizationType,
-  isTokenAuthorizationType,
-} from '../../../utils';
+import { NO_AUTH } from './connection-form/authorizations/auth_types';
+import { getAuthPayload } from './connection-form/authorizations/payload-builder';
 
 interface PropsFromState {
   connections: ConnectionModal[];
@@ -59,7 +56,7 @@ export class ConnectionsComponent extends Component<PropsFromState> {
     createConnection(
       this.buildConnection(formValues),
       connector,
-      this.getAuthType(connector.authorizationType, formValues)
+      getAuthPayload(connector.authorizationType, formValues)
     );
   };
 
@@ -80,29 +77,12 @@ export class ConnectionsComponent extends Component<PropsFromState> {
       ...connection,
       ...this.buildConnection(formValues),
     });
-    if (!hasNoAuthorizationType(connector.authorizationType)) {
+    if (connector.authorizationType.toLowerCase() !== NO_AUTH) {
       await updateAuthorization(connection.authorizationId, connector.authorizationType, {
         ...authorization,
-        ...this.getAuthType(connector.authorizationType, formValues),
+        ...getAuthPayload(connector.authorizationType, formValues),
       });
     }
-  };
-
-  getAuthType = (authorizationType: string, formValues: any): any => {
-    if (isBasicAuthorizationType(authorizationType)) {
-      return {
-        password: formValues.password,
-        username: formValues.username,
-      };
-    }
-
-    if (isTokenAuthorizationType(authorizationType)) {
-      return {
-        token: formValues.token,
-      };
-    }
-
-    return {};
   };
 
   render() {

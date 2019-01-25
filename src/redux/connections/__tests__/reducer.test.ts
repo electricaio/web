@@ -12,6 +12,8 @@ const testAuth = {
   token: 'test',
   username: 'username',
   password: 'password',
+  clientId: '',
+  integrationId: '',
 };
 
 describe('connections reducer', () => {

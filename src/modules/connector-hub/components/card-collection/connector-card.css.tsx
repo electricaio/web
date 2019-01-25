@@ -19,7 +19,9 @@ export const ImageContainer = styled.div`
 `;
 
 export const CompanyImage = styled.img`
-  max-width: 95%;
+  height: 100%;
+  width: auto;
+  max-width: 100%;
   max-height: 15em;
   width: auto !important;
 `;

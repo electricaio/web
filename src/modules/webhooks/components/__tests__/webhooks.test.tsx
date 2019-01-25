@@ -83,7 +83,6 @@ describe('webhooks', () => {
   });
 
   it('handleCommit calls createWebhook with isPublic defaulted to false', () => {
-   
     const formValues = {
       name: 'test',
     };
@@ -99,7 +98,6 @@ describe('webhooks', () => {
   });
 
   it('handleCommit calls createWebhook with public webhook', () => {
-   
     const formValues = {
       name: 'test',
       isPublic: true,
@@ -120,6 +118,4 @@ describe('webhooks', () => {
     (this.component.instance() as any).handleDelete(connectionId);
     expect(deleteWebhookMock).toBeCalledWith(connectionId);
   });
-
-
 });
