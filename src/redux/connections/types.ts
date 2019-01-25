@@ -20,7 +20,14 @@ export type AuthorizationTokenType = {
   token: string;
 };
 
-export type AuthorizationType = AuthorizationBasicType & AuthorizationTokenType;
+export type AuthorizationIbmType = {
+  clientId: string;
+  integrationId: string;
+};
+
+export type AuthorizationType = AuthorizationBasicType &
+  AuthorizationTokenType &
+  AuthorizationIbmType;
 
 export const enum ConnectionTypes {
   FETCH_CONNECTIONS_SUCCESS = '@@hub/FETCH_CONNECTIONS_SUCCESS',

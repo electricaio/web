@@ -38,6 +38,8 @@ describe('Connection Async Actions', () => {
     username: 'username',
     token: '',
     id: 1,
+    clientId: '',
+    integrationId: '',
   };
 
   const testConnector: ConnectorModal = {
@@ -215,6 +217,11 @@ describe('Connection Async Actions', () => {
       await fetchAuthorization(authId, authName)(dispatchMock);
       const firstDispatchCall = dispatchMock.mock.calls[0][0];
       expect(firstDispatchCall.type).toEqual(ConnectionTypes.FETCH_AUTHORIZATION_SUCCESS);
+    });
+
+    it('does not call api if auth name is None', async () => {
+      await fetchAuthorization(authId, 'None')(dispatchMock);
+      expect(mockApi.fetchAuthorization).not.toBeCalledWith(authId, authName);
     });
 
     it('dispatches updated connection as an array to the reducer', async () => {

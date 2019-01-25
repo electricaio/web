@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { Form, Select } from 'antd';
 import { FormComponentProps } from 'antd/lib/form/Form';
 
@@ -8,7 +8,7 @@ import { ConnectorModal } from '../../../../redux/connector-hub/types';
 import { SelectProps } from 'antd/lib/select';
 import { PropertiesForm, Properties } from '../../../../components/properties-form/properties-form';
 import { AuthorizationType } from '../../../../redux/connections/types';
-import { isBasicAuthorizationType, isTokenAuthorizationType } from '../../../../utils';
+import { AuthFormFactory } from './authorizations/components/factory';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -61,6 +61,8 @@ class ConnectionFormComponent extends Component<ConnectionComponentProps> {
         password: '',
         username: '',
         token: '',
+        clientId: '',
+        integrationId: '',
       },
     },
   };
@@ -89,30 +91,12 @@ class ConnectionFormComponent extends Component<ConnectionComponentProps> {
             })(<SelectAccessKeys accessKeys={accessKeys} />)}
           </FormItem>
         )}
-        {isBasicAuthorizationType(connector.authorizationType) && (
-          <Fragment>
-            <FormItem>
-              {getFieldDecorator('username', {
-                initialValue: defaultFormValues.authorization,
-                rules: [{ required: true, message: 'Please input username' }],
-              })(<StyledInput placeholder="User Name" />)}
-            </FormItem>
-            <FormItem>
-              {getFieldDecorator('password', {
-                initialValue: defaultFormValues.authorization.password,
-                rules: [{ required: true, message: 'Please input password' }],
-              })(<StyledInput placeholder="Password" />)}
-            </FormItem>
-          </Fragment>
-        )}
-        {isTokenAuthorizationType(connector.authorizationType) && (
-          <FormItem>
-            {getFieldDecorator('token', {
-              initialValue: defaultFormValues.authorization.token,
-              rules: [{ required: true, message: `Please input your ${connector.name} token` }],
-            })(<StyledInput placeholder="Token" />)}
-          </FormItem>
-        )}
+        <AuthFormFactory
+          defaultFormValues={defaultFormValues}
+          authType={connector.authorizationType}
+          getFieldDecorator={getFieldDecorator}
+          connector={connector}
+        />
         <FormItem>
           {getFieldDecorator('properties', {
             initialValue: defaultFormValues.properties,

@@ -14,7 +14,7 @@ import {
   fetchConnectionSuccess,
 } from './actions';
 import { ConnectorModal } from '../connector-hub/types';
-import { hasNoAuthorizationType } from '../../utils';
+import { NO_AUTH } from '../../modules/connections/components/connection-form/authorizations/auth_types';
 
 export const fetchConnections = (userId: number, connectorId: number) => (dispatch: Dispatch) => {
   return withAuth(dispatch, (api: Api) => {
@@ -43,7 +43,8 @@ export const deleteConnection = (connectionId: number) => (dispatch: Dispatch) =
 export const fetchAuthorization = (authorizationId: number, authorizationTypeName: string) => (
   dispatch: Dispatch
 ) => {
-  if (hasNoAuthorizationType(authorizationTypeName)) {
+  debugger;
+  if (authorizationTypeName.toLowerCase() === NO_AUTH) {
     return;
   }
   return withAuth(dispatch, (api: Api) => {
@@ -65,7 +66,7 @@ export const createConnection = (
       .createConnection(connection)
       .then((connectionResult: AxiosResponse<ConnectionModal>) => {
         dispatch(createConnectionsSuccess(connectionResult.data));
-        if (!hasNoAuthorizationType(connector.authorizationType)) {
+        if (connector.authorizationType.toLowerCase() !== NO_AUTH) {
           return api
             .createConnectionAuthorization(
               connectionResult.data,
