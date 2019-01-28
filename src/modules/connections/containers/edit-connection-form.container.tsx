@@ -7,7 +7,7 @@ import { fetchAuthorization } from '../../../redux/connections/async';
 import { AsyncComponent } from '../../../components/async-component/async-component';
 import { ConnectionForm, DefaultFormValues } from '../components/connection-form/connection-form';
 import { ConnectorModal } from '../../../redux/api-hub/types';
-import { ApiKeyModal } from '../../../redux/api-keys/types';
+import { AccessKeyModal } from '../../../redux/access-keys/types';
 
 const mapStateToProps = ({ connections }: ApplicationState) => ({
   authorizations: connections.authorizations,
@@ -24,7 +24,7 @@ interface PropsFromState {
 interface Props {
   connector: ConnectorModal;
   connection: ConnectionModal;
-  accessKeys: ApiKeyModal[];
+  accessKeys: AccessKeyModal[];
   defaultFormValues?: DefaultFormValues;
   wrappedComponentRef?: any;
 }

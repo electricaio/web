@@ -2,7 +2,7 @@ import React from 'react';
 import { mount, shallow } from 'enzyme';
 import { ConnectionForm, SelectAccessKeys } from '../connection-form';
 import { ConnectorModal } from '../../../../../redux/api-hub/types';
-import { ApiKeyModal } from '../../../../../redux/api-keys/types';
+import { AccessKeyModal } from '../../../../../redux/access-keys/types';
 import { Select } from 'antd';
 
 describe('ConnectionForm', () => {
@@ -24,7 +24,7 @@ describe('ConnectionForm', () => {
     revisionVersion: 0,
   };
 
-  const accessKeys: ApiKeyModal[] = [
+  const accessKeys: AccessKeyModal[] = [
     {
       id: 1,
       name: 'access keys',

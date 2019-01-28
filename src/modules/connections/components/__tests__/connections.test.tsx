@@ -3,7 +3,7 @@ import { shallow, ShallowWrapper } from 'enzyme';
 import { ConnectionsComponent } from '../connections';
 import { Header } from '../../../ui-kit/header';
 import { ConnectionsTable } from '../table/table';
-import { ApiKeyModal } from '../../../../redux/api-keys/types';
+import { AccessKeyModal } from '../../../../redux/access-keys/types';
 import { ConnectionModal } from '../../../../redux/connections/types';
 import { ConnectorModal } from '../../../../redux/api-hub/types';
 import { ButtonActionModal } from '../../../ui-kit/modal-button-action/modal-button-action';
@@ -23,7 +23,7 @@ describe('connections', () => {
     },
   ];
 
-  const accessKeys: ApiKeyModal[] = [
+  const accessKeys: AccessKeyModal[] = [
     {
       id: 1,
       name: 'Development',

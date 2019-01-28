@@ -2,7 +2,7 @@ import React, { SFC } from 'react';
 import { shallow, ReactWrapper } from 'enzyme';
 import { Route, Redirect } from 'react-router-dom';
 import { PrivateDashboard, PrivateRoute } from '../dashboard';
-import { ApiKeysContainer } from '../../modules/api-keys/containers/api-keys/api-keys.container';
+import { AccessKeysContainer } from '../../modules/access-keys/containers/access-keys/access-keys.container';
 import { APIHubContainer } from '../../modules/api-hub/containers/api-hub.container';
 import { ConnectionsContainer } from '../../modules/connections/containers/connections.container';
 import { HomeContainer } from '../../modules/home/containers/home.container';
@@ -32,8 +32,8 @@ describe('Dashboard', () => {
     expect(homeRoute.prop('exact')).toBeTruthy();
   });
 
-  it('routes /api-keys to ApiKeysContainer', () => {
-    expect(routeComponent('/api-keys')).toBe(ApiKeysContainer);
+  it('routes /access-keys to AccessKeysContainer', () => {
+    expect(routeComponent('/access-keys')).toBe(AccessKeysContainer);
   });
 
   it('routes /api-hub to APIHubContainer', () => {

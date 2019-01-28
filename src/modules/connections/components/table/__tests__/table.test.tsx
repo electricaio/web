@@ -2,7 +2,7 @@ import { mount, ReactWrapper } from 'enzyme';
 import React from 'react';
 import { ConnectionsTable } from '../table';
 import { Table, Select } from 'antd';
-import { ApiKeyModal } from '../../../../../redux/api-keys/types';
+import { AccessKeyModal } from '../../../../../redux/access-keys/types';
 import { ConnectionModal } from '../../../../../redux/connections/types';
 import { ColumnProps } from 'antd/lib/table';
 import { AccessKeyName } from '../table.css';
@@ -49,7 +49,7 @@ describe('Connections Table', () => {
     },
   ];
 
-  const accessKeysData: ApiKeyModal[] = [
+  const accessKeysData: AccessKeyModal[] = [
     {
       id: 1,
       name: accessKeyName,

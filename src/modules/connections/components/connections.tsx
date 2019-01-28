@@ -3,7 +3,7 @@ import isEmpty from 'lodash/isEmpty';
 import { Header } from '../../ui-kit/header';
 import { ConnectionsTable } from './table/table';
 import { ConnectionModal, AuthorizationType } from '../../../redux/connections/types';
-import { ApiKeyModal } from '../../../redux/api-keys/types';
+import { AccessKeyModal } from '../../../redux/access-keys/types';
 import { Tooltip } from 'antd';
 import { ConnectorModal } from '../../../redux/api-hub/types';
 import { ButtonActionModal } from '../../ui-kit/modal-button-action/modal-button-action';
@@ -23,7 +23,7 @@ interface PropsFromState {
   connections: ConnectionModal[];
   authorizations: AuthorizationType[];
   connector: ConnectorModal;
-  accessKeys: ApiKeyModal[];
+  accessKeys: AccessKeyModal[];
   createConnection: typeof createConnection;
   updateConnection: typeof updateConnection;
   updateAuthorization: typeof updateAuthorization;

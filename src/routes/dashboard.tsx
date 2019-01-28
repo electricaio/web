@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Route, Switch, RouteProps, Redirect } from 'react-router-dom';
 import { MainLayoutContainer } from '../components/layouts/main-layout/main-layout';
-import { ApiKeysContainer } from '../modules/api-keys/containers/api-keys/api-keys.container';
+import { AccessKeysContainer } from '../modules/access-keys/containers/access-keys/access-keys.container';
 import { APIHubContainer } from '../modules/api-hub/containers/api-hub.container';
 import { ConnectionsContainer } from '../modules/connections/containers/connections.container';
 import { ApplicationState } from '../redux/store';
@@ -41,8 +41,8 @@ export const PrivateDashboard: React.SFC<PropsFromDispatch> = ({ isAuthenticated
         <PrivateRoute isAuthenticated={isAuthenticated} path="/" exact component={HomeContainer} />
         <PrivateRoute
           isAuthenticated={isAuthenticated}
-          path="/api-keys"
-          component={ApiKeysContainer}
+          path="/access-keys"
+          component={AccessKeysContainer}
         />
         <PrivateRoute
           exact

@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import { Connections, PropsFromDispatch } from '../connections.container';
 import { BreadcrumbComponent } from '../../../../components/breadcrumb/breadcrumb';
 import { ConnectionModal } from '../../../../redux/connections/types';
-import { ApiKeyModal } from '../../../../redux/api-keys/types';
+import { AccessKeyModal } from '../../../../redux/access-keys/types';
 import { ConnectorModal } from '../../../../redux/api-hub/types';
 import { UserDto } from '../../../../redux/auth/types';
 import { ConnectionsComponent } from '../../components/connections';
@@ -29,7 +29,7 @@ describe('Connections Container', () => {
     },
   ];
 
-  const accessKeys: ApiKeyModal[] = [
+  const accessKeys: AccessKeyModal[] = [
     {
       id: 1,
       name: 'Development',

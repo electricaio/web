@@ -3,7 +3,7 @@ import { Table, Select } from 'antd';
 import { FilterDropdown, AccessKeyName } from './table.css';
 import { ColumnProps } from 'antd/lib/table';
 import { ConnectionModal } from '../../../../redux/connections/types';
-import { ApiKeyModal } from '../../../../redux/api-keys/types';
+import { AccessKeyModal } from '../../../../redux/access-keys/types';
 import { ActionButtons } from '../../../../components/action-buttons/action-buttons';
 import { SelectValue } from 'antd/lib/select';
 import { DateComponent } from '../../../ui-kit/date';
@@ -16,7 +16,7 @@ const Option = Select.Option;
 export type TableProps = {
   connections: ConnectionModal[];
   connector: ConnectorModal;
-  accessKeys: ApiKeyModal[];
+  accessKeys: AccessKeyModal[];
   onRemove: (id: number) => void;
   onEdit: (id: number, values: any) => void;
 };
@@ -26,9 +26,9 @@ export class ConnectionsTable extends Component<TableProps> {
     this.props.onRemove(id);
   };
 
-  getAccessKey = (entity: ConnectionModal): ApiKeyModal => {
+  getAccessKey = (entity: ConnectionModal): AccessKeyModal => {
     return this.props.accessKeys.find(
-      (accessKey: ApiKeyModal) => accessKey.id === entity.accessKeyId
+      (accessKey: AccessKeyModal) => accessKey.id === entity.accessKeyId
     );
   };
 
@@ -64,7 +64,7 @@ export class ConnectionsTable extends Component<TableProps> {
                 placeholder="Filter by Access key"
                 optionFilterProp="children"
               >
-                {this.props.accessKeys.map((accessKey: ApiKeyModal) => (
+                {this.props.accessKeys.map((accessKey: AccessKeyModal) => (
                   <Option key={accessKey.id.toString()} value={accessKey.name}>
                     {accessKey.name}
                   </Option>

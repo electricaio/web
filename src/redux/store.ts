@@ -2,10 +2,10 @@ import { combineReducers, Dispatch, Action, AnyAction } from 'redux';
 
 import { authReducer } from './auth/reducer';
 import { AuthState } from './auth/types';
-import { ApiKeysState } from './api-keys/types';
+import { AccessKeysState } from './access-keys/types';
 import { ConnectorHubState } from './api-hub/types';
 import { connectorHubReducer } from './api-hub/reducer';
-import { apiKeysReducer } from './api-keys/reducer';
+import { accessKeysReducer } from './access-keys/reducer';
 import { ConnectionsState } from './connections/types';
 import { connectionsReducer } from './connections/reducer';
 import { errorReducer } from './error/reducer';
@@ -19,7 +19,7 @@ import { WebhooksState } from './webhooks/types';
 // The top-level state object
 export interface ApplicationState {
   auth: AuthState;
-  apiKeys: ApiKeysState;
+  accessKeys: AccessKeysState;
   connectors: ConnectorHubState;
   connections: ConnectionsState;
   webhooks: WebhooksState;
@@ -42,7 +42,7 @@ const authPersistConfig = {
 export const rootReducer = combineReducers<ApplicationState>({
   auth: persistReducer(authPersistConfig, authReducer),
   connectors: connectorHubReducer,
-  apiKeys: apiKeysReducer,
+  accessKeys: accessKeysReducer,
   connections: connectionsReducer,
   webhooks: webhooksReducer,
   error: errorReducer,

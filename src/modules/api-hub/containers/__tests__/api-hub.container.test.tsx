@@ -27,8 +27,6 @@ describe('API Hub Container', () => {
   });
 
   it('passes login action to login component', () => {
-    expect(this.container.find(APIHubComponent).prop('connectors')).toEqual(
-      CONNECTOR_HUB_DATA
-    );
+    expect(this.container.find(APIHubComponent).prop('connectors')).toEqual(CONNECTOR_HUB_DATA);
   });
 });
