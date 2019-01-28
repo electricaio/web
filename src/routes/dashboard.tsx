@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Route, Switch, RouteProps, Redirect } from 'react-router-dom';
 import { MainLayoutContainer } from '../components/layouts/main-layout/main-layout';
-import { ApiKeysContainer } from '../modules/api-keys/containers/api-keys/api-keys.container';
-import { ConntectorHubContainer } from '../modules/connector-hub/containers/connector-hub.container';
+import { AccessKeysContainer } from '../modules/access-keys/containers/access-keys/access-keys.container';
+import { APIHubContainer } from '../modules/api-hub/containers/api-hub.container';
 import { ConnectionsContainer } from '../modules/connections/containers/connections.container';
 import { ApplicationState } from '../redux/store';
 import { HomeContainer } from '../modules/home/containers/home.container';
@@ -41,25 +41,25 @@ export const PrivateDashboard: React.SFC<PropsFromDispatch> = ({ isAuthenticated
         <PrivateRoute isAuthenticated={isAuthenticated} path="/" exact component={HomeContainer} />
         <PrivateRoute
           isAuthenticated={isAuthenticated}
-          path="/api-keys"
-          component={ApiKeysContainer}
+          path="/access-keys"
+          component={AccessKeysContainer}
         />
         <PrivateRoute
           exact
           isAuthenticated={isAuthenticated}
-          path="/connector-hub"
-          component={ConntectorHubContainer}
+          path="/api-hub"
+          component={APIHubContainer}
         />
         <PrivateRoute
           isAuthenticated={isAuthenticated}
           exact
-          path="/connector-hub/:connectorId"
+          path="/api-hub/:connectorId"
           component={ConnectionsContainer}
         />
         <PrivateRoute
           isAuthenticated={isAuthenticated}
           exact
-          path="/connector-hub/:connectorId/connections/:connectionId"
+          path="/api-hub/:connectorId/connections/:connectionId"
           component={WebhooksContainer}
         />
       </Switch>

@@ -5,10 +5,10 @@ import { ApplicationState } from '../../../redux/store';
 import { ConnectionsComponent } from '../components/connections';
 import { BreadcrumbComponent } from '../../../components/breadcrumb/breadcrumb';
 import { ConnectionModal, AuthorizationType } from '../../../redux/connections/types';
-import { ApiKeyModal } from '../../../redux/api-keys/types';
-import { ConnectorModal } from '../../../redux/connector-hub/types';
+import { AccessKeyModal } from '../../../redux/access-keys/types';
+import { ConnectorModal } from '../../../redux/api-hub/types';
 import { RouteComponentProps } from 'react-router';
-import { fetchKeys } from '../../../redux/api-keys/async';
+import { fetchKeys } from '../../../redux/access-keys/async';
 import {
   fetchConnections,
   createConnection,
@@ -17,13 +17,13 @@ import {
   updateAuthorization,
 } from '../../../redux/connections/async';
 import { UserDto } from '../../../redux/auth/types';
-import { fetchConnector } from '../../../redux/connector-hub/async';
+import { fetchConnector } from '../../../redux/api-hub/async';
 import { AsyncComponent } from '../../../components/async-component/async-component';
 
-const mapStateToProps = ({ connections, apiKeys, connectors, auth }: ApplicationState) => ({
+const mapStateToProps = ({ connections, accessKeys, connectors, auth }: ApplicationState) => ({
   connections: connections.data,
   authorizations: connections.authorizations,
-  accessKeys: apiKeys.data,
+  accessKeys: accessKeys.data,
   connectors: connectors.data,
   user: auth.user,
 });
@@ -41,7 +41,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 interface PropsFromState {
   connections: ConnectionModal[];
   authorizations: AuthorizationType[];
-  accessKeys: ApiKeyModal[];
+  accessKeys: AccessKeyModal[];
   connectors: ConnectorModal[];
   user: UserDto;
 }
@@ -99,8 +99,8 @@ export class Connections extends Component<AllProps, StateType> {
       fetchConnector(connectorId),
     ];
     const breadcrumbNameMap = {
-      '/connector-hub': 'Connector Hub',
-      [`/connector-hub/${match.params.connectorId}`]: `${connector && connector.name} Connections`,
+      '/api-hub': 'API Hub',
+      [`/api-hub/${match.params.connectorId}`]: `${connector && connector.name} Connections`,
     };
 
     return (

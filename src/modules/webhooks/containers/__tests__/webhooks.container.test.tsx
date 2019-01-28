@@ -5,7 +5,7 @@ import { WebhookModal } from '../../../../redux/webhooks/types';
 import { WebhookComponent } from '../../components/webhooks';
 import { ConnectionModal } from '../../../../redux/connections/types';
 import { AsyncComponent } from '../../../../components/async-component/async-component';
-import { ConnectorModal } from '../../../../redux/connector-hub/types';
+import { ConnectorModal } from '../../../../redux/api-hub/types';
 import { BreadcrumbComponent } from '../../../../components/breadcrumb/breadcrumb';
 
 describe('Webhooks Container', () => {
@@ -98,9 +98,9 @@ describe('Webhooks Container', () => {
 
   it('passes in the breadcrumb map with connection id and name', () => {
     const breadcrumbMap = this.component.find(BreadcrumbComponent).prop('breadcrumbNameMap');
-    expect(breadcrumbMap).toHaveProperty('/connector-hub');
-    expect(breadcrumbMap).toHaveProperty('/connector-hub/1');
-    expect(breadcrumbMap).toHaveProperty('/connector-hub/1/connections');
+    expect(breadcrumbMap).toHaveProperty('/api-hub');
+    expect(breadcrumbMap).toHaveProperty('/api-hub/1');
+    expect(breadcrumbMap).toHaveProperty('/api-hub/1/connections');
     const crumbProperties = Object.keys(breadcrumbMap);
     expect(breadcrumbMap[crumbProperties[1]]).toEqual(connectors[0].name);
     expect(breadcrumbMap[crumbProperties[2]]).toEqual(`${connections[0].name} Connections`);

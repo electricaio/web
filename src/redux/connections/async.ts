@@ -13,7 +13,7 @@ import {
   updateConnectionSuccess,
   fetchConnectionSuccess,
 } from './actions';
-import { ConnectorModal } from '../connector-hub/types';
+import { ConnectorModal } from '../api-hub/types';
 import { NO_AUTH } from '../../modules/connections/components/connection-form/authorizations/auth_types';
 
 export const fetchConnections = (userId: number, connectorId: number) => (dispatch: Dispatch) => {

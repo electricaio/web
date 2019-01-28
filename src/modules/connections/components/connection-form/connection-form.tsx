@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { Form, Select } from 'antd';
 import { FormComponentProps } from 'antd/lib/form/Form';
 
-import { ApiKeyModal } from '../../../../redux/api-keys/types';
+import { AccessKeyModal } from '../../../../redux/access-keys/types';
 import { StyledInput } from '../../../ui-kit/input';
-import { ConnectorModal } from '../../../../redux/connector-hub/types';
+import { ConnectorModal } from '../../../../redux/api-hub/types';
 import { SelectProps } from 'antd/lib/select';
 import { PropertiesForm, Properties } from '../../../../components/properties-form/properties-form';
 import { AuthorizationType } from '../../../../redux/connections/types';
@@ -15,7 +15,7 @@ const Option = Select.Option;
 
 interface ConnectionComponentProps extends FormComponentProps {
   connector: ConnectorModal;
-  accessKeys: ApiKeyModal[];
+  accessKeys: AccessKeyModal[];
   inEditMode?: boolean;
   defaultFormValues?: DefaultFormValues;
 }
@@ -28,7 +28,7 @@ export type DefaultFormValues = {
 };
 
 interface SelectAccessKeysProps extends SelectProps {
-  accessKeys: ApiKeyModal[];
+  accessKeys: AccessKeyModal[];
 }
 
 interface DefaultProps {
@@ -40,7 +40,7 @@ export class SelectAccessKeys extends Component<SelectAccessKeysProps> {
     const { accessKeys, onChange, value } = this.props;
     return (
       <Select size="large" onChange={onChange} value={value} placeholder="Select an Access Key">
-        {accessKeys.map((eachKey: ApiKeyModal) => (
+        {accessKeys.map((eachKey: AccessKeyModal) => (
           <Option key={eachKey.id.toString()} value={eachKey.id}>
             {eachKey.name}
           </Option>

@@ -1,5 +1,5 @@
 import React, { SFC } from 'react';
-import { ConnectorModal } from '../../../../../../redux/connector-hub/types';
+import { ConnectorModal } from '../../../../../../redux/api-hub/types';
 import { DefaultFormValues } from '../../connection-form';
 import { TokenForm } from './token';
 import { BasicForm } from './basic';

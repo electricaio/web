@@ -2,10 +2,10 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { ApplicationState } from '../../../redux/store';
-import { ApiKeyModal } from '../../../redux/api-keys/types';
-import { ConnectorModal } from '../../../redux/connector-hub/types';
-import { fetchKeys } from '../../../redux/api-keys/async';
-import { fetchConnectors } from '../../../redux/connector-hub/async';
+import { AccessKeyModal } from '../../../redux/access-keys/types';
+import { ConnectorModal } from '../../../redux/api-hub/types';
+import { fetchKeys } from '../../../redux/access-keys/async';
+import { fetchConnectors } from '../../../redux/api-hub/async';
 import { UserDto } from '../../../redux/auth/types';
 import { AsyncComponent } from '../../../components/async-component/async-component';
 import { Row, Col } from 'antd';
@@ -15,8 +15,8 @@ import pluralize from 'pluralize';
 import { Header } from '../../ui-kit/header';
 import { WelcomeIcon } from './home.container.css';
 
-const mapStateToProps = ({ apiKeys, connectors, auth }: ApplicationState) => ({
-  apiKeys: apiKeys.data,
+const mapStateToProps = ({ accessKeys, connectors, auth }: ApplicationState) => ({
+  accessKeys: accessKeys.data,
   connectors: connectors.data,
   user: auth.user,
 });
@@ -28,7 +28,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 interface Props {
   connectors: ConnectorModal[];
-  apiKeys: ApiKeyModal[];
+  accessKeys: AccessKeyModal[];
   user: UserDto;
 }
 
@@ -41,7 +41,7 @@ type AllProps = PropsFromDispatch & Props;
 
 export class Home extends Component<AllProps> {
   render() {
-    const { apiKeys, connectors, user, fetchConnectors, fetchKeys } = this.props;
+    const { accessKeys, connectors, user, fetchConnectors, fetchKeys } = this.props;
     const asyncActions = () => [fetchConnectors(), fetchKeys(user.id)];
 
     return (
@@ -55,18 +55,18 @@ export class Home extends Component<AllProps> {
           <Row gutter={40}>
             <Col span={8}>
               <DashboardCard
-                linkTo="api-keys"
-                stat={apiKeys.length}
-                text={`API ${pluralize('Key', apiKeys.length)} configured`}
+                linkTo="access-keys"
+                stat={accessKeys.length}
+                text={`Access ${pluralize('Key', accessKeys.length)} configured`}
                 iconType="api"
                 color="#347AB7"
               />
             </Col>
             <Col span={8}>
               <DashboardCard
-                linkTo="connector-hub"
+                linkTo="api-hub"
                 stat={connectors.length}
-                text="Connectors to use"
+                text="APIs to use"
                 iconType="cloud"
                 color="#5CB75A"
               />

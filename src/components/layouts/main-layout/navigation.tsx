@@ -19,10 +19,10 @@ export class Navigation extends Component<TNavProps> {
         action: <StyledLink to="/">home</StyledLink>,
       },
       {
-        action: <StyledLink to="/api-keys">api keys</StyledLink>,
+        action: <StyledLink to="/access-keys">access keys</StyledLink>,
       },
       {
-        action: <StyledLink to="/connector-hub">connector hub</StyledLink>,
+        action: <StyledLink to="/api-hub">api hub</StyledLink>,
       },
     ];
   }

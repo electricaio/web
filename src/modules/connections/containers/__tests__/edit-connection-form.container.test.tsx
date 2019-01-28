@@ -3,8 +3,8 @@ import { shallow } from 'enzyme';
 import { AsyncComponent } from '../../../../components/async-component/async-component';
 import { ConnectionFormComponent } from '../edit-connection-form.container';
 import { ConnectionModal } from '../../../../redux/connections/types';
-import { ConnectorModal } from '../../../../redux/connector-hub/types';
-import { ApiKeyModal } from '../../../../redux/api-keys/types';
+import { ConnectorModal } from '../../../../redux/api-hub/types';
+import { AccessKeyModal } from '../../../../redux/access-keys/types';
 import {
   ConnectionForm,
   DefaultFormValues,
@@ -51,7 +51,7 @@ describe('Connector Form Container', () => {
     revisionVersion: 0,
   };
 
-  const accessKeys: ApiKeyModal[] = [];
+  const accessKeys: AccessKeyModal[] = [];
   beforeEach(() => {
     fetchAuthorizationMock = jest.fn();
     this.component = shallow(
