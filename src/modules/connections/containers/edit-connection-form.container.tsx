@@ -6,7 +6,7 @@ import { AuthorizationType, ConnectionModal } from '../../../redux/connections/t
 import { fetchAuthorization } from '../../../redux/connections/async';
 import { AsyncComponent } from '../../../components/async-component/async-component';
 import { ConnectionForm, DefaultFormValues } from '../components/connection-form/connection-form';
-import { ConnectorModal } from '../../../redux/connector-hub/types';
+import { ConnectorModal } from '../../../redux/api-hub/types';
 import { ApiKeyModal } from '../../../redux/api-keys/types';
 
 const mapStateToProps = ({ connections }: ApplicationState) => ({

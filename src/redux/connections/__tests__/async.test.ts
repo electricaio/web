@@ -9,7 +9,7 @@ import {
   updateAuthorization,
   fetchAuthorization,
 } from '../async';
-import { ConnectorModal } from '../../connector-hub/types';
+import { ConnectorModal } from '../../api-hub/types';
 
 jest.mock('../../../modules/utils/api');
 jest.mock('../../util');

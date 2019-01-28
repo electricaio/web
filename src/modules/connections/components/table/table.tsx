@@ -8,7 +8,7 @@ import { ActionButtons } from '../../../../components/action-buttons/action-butt
 import { SelectValue } from 'antd/lib/select';
 import { DateComponent } from '../../../ui-kit/date';
 import { Link } from 'react-router-dom';
-import { ConnectorModal } from '../../../../redux/connector-hub/types';
+import { ConnectorModal } from '../../../../redux/api-hub/types';
 import { ConnectionFormContainer } from '../../containers/edit-connection-form.container';
 
 const Option = Select.Option;
@@ -87,7 +87,7 @@ export class ConnectionsTable extends Component<TableProps> {
         title: 'Webhooks',
         key: 'webhooks',
         render: (entity: ConnectionModal) => {
-          const webhookLink = `/connector-hub/${entity.connectorId}/connections/${entity.id}`;
+          const webhookLink = `/api-hub/${entity.connectorId}/connections/${entity.id}`;
           return <Link to={webhookLink}>Configure Webhook</Link>;
         },
       },

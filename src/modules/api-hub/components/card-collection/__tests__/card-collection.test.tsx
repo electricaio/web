@@ -3,7 +3,7 @@ import React from 'react';
 import times from 'lodash/times';
 import { CardCollection } from '../card-collection';
 import { ConnectorCard } from '../connector-card';
-import { ConnectorModal } from '../../../../../redux/connector-hub/types';
+import { ConnectorModal } from '../../../../../redux/api-hub/types';
 import { MemoryRouter } from 'react-router';
 
 describe('CardCollection', () => {

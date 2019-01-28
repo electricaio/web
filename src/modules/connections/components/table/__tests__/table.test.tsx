@@ -7,7 +7,7 @@ import { ConnectionModal } from '../../../../../redux/connections/types';
 import { ColumnProps } from 'antd/lib/table';
 import { AccessKeyName } from '../table.css';
 import { MemoryRouter } from 'react-router';
-import { ConnectorModal } from '../../../../../redux/connector-hub/types';
+import { ConnectorModal } from '../../../../../redux/api-hub/types';
 
 describe('Connections Table', () => {
   const accessKeyName = 'Development';

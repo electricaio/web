@@ -4,7 +4,7 @@ import { Connections, PropsFromDispatch } from '../connections.container';
 import { BreadcrumbComponent } from '../../../../components/breadcrumb/breadcrumb';
 import { ConnectionModal } from '../../../../redux/connections/types';
 import { ApiKeyModal } from '../../../../redux/api-keys/types';
-import { ConnectorModal } from '../../../../redux/connector-hub/types';
+import { ConnectorModal } from '../../../../redux/api-hub/types';
 import { UserDto } from '../../../../redux/auth/types';
 import { ConnectionsComponent } from '../../components/connections';
 
@@ -97,8 +97,8 @@ describe('Connections Container', () => {
 
   it('passes in the breadcrumb map with connector id and name', () => {
     const breadcrumbMap = this.component.find(BreadcrumbComponent).prop('breadcrumbNameMap');
-    expect(breadcrumbMap).toHaveProperty('/connector-hub');
-    expect(breadcrumbMap).toHaveProperty(`/connector-hub/${connectorId}`);
+    expect(breadcrumbMap).toHaveProperty('/api-hub');
+    expect(breadcrumbMap).toHaveProperty(`/api-hub/${connectorId}`);
   });
 
   it('renders connections component', () => {

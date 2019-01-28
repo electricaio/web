@@ -11,8 +11,8 @@ import { WebhookComponent } from '../components/webhooks';
 import { fetchConnection } from '../../../redux/connections/async';
 import { WebhookModal } from '../../../redux/webhooks/types';
 import { BreadcrumbComponent } from '../../../components/breadcrumb/breadcrumb';
-import { fetchConnector } from '../../../redux/connector-hub/async';
-import { ConnectorModal } from '../../../redux/connector-hub/types';
+import { fetchConnector } from '../../../redux/api-hub/async';
+import { ConnectorModal } from '../../../redux/api-hub/types';
 
 const mapStateToProps = ({ connections, webhooks, connectors }: ApplicationState) => ({
   webhooks: webhooks.data,
@@ -76,9 +76,9 @@ export class Webhooks extends Component<AllProps> {
     const connection = connections.find(connection => connection.id === connectionId);
     const connector = connectors.find(connector => connector.id === connectorId);
     const breadcrumbNameMap = {
-      '/connector-hub': 'Connector Hub',
-      [`/connector-hub/${match.params.connectorId}`]: connector && connector.name,
-      [`/connector-hub/${match.params.connectorId}/connections`]: `${connection &&
+      '/api-hub': 'API Hub',
+      [`/api-hub/${match.params.connectorId}`]: connector && connector.name,
+      [`/api-hub/${match.params.connectorId}/connections`]: `${connection &&
         connection.name} Connections`,
     };
 

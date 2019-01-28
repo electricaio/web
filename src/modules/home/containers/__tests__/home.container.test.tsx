@@ -4,7 +4,7 @@ import { Home } from '../home.container';
 import { Header } from '../../../ui-kit/header';
 import { DashboardCard } from '../../components/home/dashboard-card';
 import { AsyncComponent } from '../../../../components/async-component/async-component';
-import { ConnectorModal } from '../../../../redux/connector-hub/types';
+import { ConnectorModal } from '../../../../redux/api-hub/types';
 import { ApiKeyModal } from '../../../../redux/api-keys/types';
 import { UserDto } from '../../../../redux/auth/types';
 
@@ -75,7 +75,7 @@ describe('Home Container', () => {
       expect(connectorsCard.props()).toEqual(
         expect.objectContaining({
           iconType: 'cloud',
-          linkTo: 'connector-hub',
+          linkTo: 'api-hub',
           stat: connectors.length,
         })
       );

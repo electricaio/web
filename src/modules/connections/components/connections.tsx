@@ -5,7 +5,7 @@ import { ConnectionsTable } from './table/table';
 import { ConnectionModal, AuthorizationType } from '../../../redux/connections/types';
 import { ApiKeyModal } from '../../../redux/api-keys/types';
 import { Tooltip } from 'antd';
-import { ConnectorModal } from '../../../redux/connector-hub/types';
+import { ConnectorModal } from '../../../redux/api-hub/types';
 import { ButtonActionModal } from '../../ui-kit/modal-button-action/modal-button-action';
 import { ConnectionForm } from './connection-form/connection-form';
 import {

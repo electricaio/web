@@ -1,4 +1,4 @@
-import { ConnectorModal } from '../redux/connector-hub/types';
+import { ConnectorModal } from '../redux/api-hub/types';
 
 export const CONNECTOR_HUB_DATA: ConnectorModal[] = [
   {

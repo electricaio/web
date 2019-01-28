@@ -4,7 +4,7 @@ import { FormComponentProps } from 'antd/lib/form/Form';
 
 import { ApiKeyModal } from '../../../../redux/api-keys/types';
 import { StyledInput } from '../../../ui-kit/input';
-import { ConnectorModal } from '../../../../redux/connector-hub/types';
+import { ConnectorModal } from '../../../../redux/api-hub/types';
 import { SelectProps } from 'antd/lib/select';
 import { PropertiesForm, Properties } from '../../../../components/properties-form/properties-form';
 import { AuthorizationType } from '../../../../redux/connections/types';

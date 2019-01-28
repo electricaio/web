@@ -12,7 +12,7 @@ import {
   ImageContainer,
 } from './connector-card.css';
 
-import { ConnectorModal } from '../../../../redux/connector-hub/types';
+import { ConnectorModal } from '../../../../redux/api-hub/types';
 
 interface CompanyImageComponentProps {
   image: string;
@@ -66,7 +66,7 @@ export class ConnectorCard extends React.Component<ConnectorCardProps> {
         </Row>
         <ButtonContainer>
           <Button type="primary" size="large">
-            <Link to={`/connector-hub/${connector.id}`}>Configure</Link>
+            <Link to={`/api-hub/${connector.id}`}>Configure</Link>
           </Button>
         </ButtonContainer>
       </StyledCard>

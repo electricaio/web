@@ -1,13 +1,13 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { ConnectorHubComponent } from '../connector-hub';
+import { APIHubComponent } from '../api-hub';
 import { Header } from '../../header/header';
 import { CardCollection } from '../../card-collection/card-collection';
-import { CONNECTOR_HUB_DATA } from '../../../../../fixtures/connector-hub-data';
+import { CONNECTOR_HUB_DATA } from '../../../../../fixtures/api-hub-data';
 
-describe('Connector Hub component', () => {
+describe('API Hub component', () => {
   beforeEach(() => {
-    this.container = shallow(<ConnectorHubComponent connectors={CONNECTOR_HUB_DATA} />);
+    this.container = shallow(<APIHubComponent connectors={CONNECTOR_HUB_DATA} />);
   });
 
   it('renders Header', () => {

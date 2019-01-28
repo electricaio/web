@@ -3,7 +3,7 @@ import React from 'react';
 import { ConnectorCard, CompanyImageComponent } from '../connector-card';
 import { StyledCard, StyledMeta, CompanyImage } from '../connector-card.css';
 import { Row, Col, Tag, Card, Button } from 'antd';
-import { ConnectorModal } from '../../../../../redux/connector-hub/types';
+import { ConnectorModal } from '../../../../../redux/api-hub/types';
 import { MemoryRouter } from 'react-router';
 import { Link } from 'react-router-dom';
 
@@ -85,7 +85,7 @@ describe('ConnectorCard', () => {
 
   it('renders a Link in the button for routing to the connections page', () => {
     const configureButton = this.connectorCard.find(Button);
-    expect(configureButton.find(Link).prop('to')).toEqual(`/connector-hub/${connectorId}`);
+    expect(configureButton.find(Link).prop('to')).toEqual(`/api-hub/${connectorId}`);
   });
 
   describe('CompanyImageComponent', () => {

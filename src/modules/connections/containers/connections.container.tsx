@@ -6,7 +6,7 @@ import { ConnectionsComponent } from '../components/connections';
 import { BreadcrumbComponent } from '../../../components/breadcrumb/breadcrumb';
 import { ConnectionModal, AuthorizationType } from '../../../redux/connections/types';
 import { ApiKeyModal } from '../../../redux/api-keys/types';
-import { ConnectorModal } from '../../../redux/connector-hub/types';
+import { ConnectorModal } from '../../../redux/api-hub/types';
 import { RouteComponentProps } from 'react-router';
 import { fetchKeys } from '../../../redux/api-keys/async';
 import {
@@ -17,7 +17,7 @@ import {
   updateAuthorization,
 } from '../../../redux/connections/async';
 import { UserDto } from '../../../redux/auth/types';
-import { fetchConnector } from '../../../redux/connector-hub/async';
+import { fetchConnector } from '../../../redux/api-hub/async';
 import { AsyncComponent } from '../../../components/async-component/async-component';
 
 const mapStateToProps = ({ connections, apiKeys, connectors, auth }: ApplicationState) => ({
@@ -99,8 +99,8 @@ export class Connections extends Component<AllProps, StateType> {
       fetchConnector(connectorId),
     ];
     const breadcrumbNameMap = {
-      '/connector-hub': 'Connector Hub',
-      [`/connector-hub/${match.params.connectorId}`]: `${connector && connector.name} Connections`,
+      '/api-hub': 'API Hub',
+      [`/api-hub/${match.params.connectorId}`]: `${connector && connector.name} Connections`,
     };
 
     return (

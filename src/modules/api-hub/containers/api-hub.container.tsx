@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
-import { ConnectorHubComponent } from '../components/connector-hub/connector-hub';
+import { APIHubComponent } from '../components/api-hub/api-hub';
 import { ApplicationState } from '../../../redux/store';
-import { ConnectorModal } from '../../../redux/connector-hub/types';
-import { fetchConnectors } from '../../../redux/connector-hub/async';
+import { ConnectorModal } from '../../../redux/api-hub/types';
+import { fetchConnectors } from '../../../redux/api-hub/async';
 import { AsyncComponent } from '../../../components/async-component/async-component';
 
 const mapStateToProps = ({ connectors }: ApplicationState) => ({
@@ -25,18 +25,18 @@ interface PropsFromDispatch {
 
 type AllProps = PropsFromState & PropsFromDispatch;
 
-export class ConnectorHub extends Component<AllProps> {
+export class APIHub extends Component<AllProps> {
   render() {
     const { connectors, fetchConnectors } = this.props;
     return (
-      <AsyncComponent getAsyncActions={() => [fetchConnectors()]} message="Fetching Connectors">
-        <ConnectorHubComponent connectors={connectors} />
+      <AsyncComponent getAsyncActions={() => [fetchConnectors()]} message="Fetching APIs">
+        <APIHubComponent connectors={connectors} />
       </AsyncComponent>
     );
   }
 }
 
-export const ConntectorHubContainer = connect(
+export const APIHubContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(ConnectorHub);
+)(APIHub);

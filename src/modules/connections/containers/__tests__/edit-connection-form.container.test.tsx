@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import { AsyncComponent } from '../../../../components/async-component/async-component';
 import { ConnectionFormComponent } from '../edit-connection-form.container';
 import { ConnectionModal } from '../../../../redux/connections/types';
-import { ConnectorModal } from '../../../../redux/connector-hub/types';
+import { ConnectorModal } from '../../../../redux/api-hub/types';
 import { ApiKeyModal } from '../../../../redux/api-keys/types';
 import {
   ConnectionForm,

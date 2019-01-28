@@ -1,16 +1,16 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { ConnectorHub } from '../connector-hub.container';
-import { ConnectorHubComponent } from '../../components/connector-hub/connector-hub';
-import { CONNECTOR_HUB_DATA } from '../../../../fixtures/connector-hub-data';
+import { APIHub } from '../api-hub.container';
+import { APIHubComponent } from '../../components/api-hub/api-hub';
+import { CONNECTOR_HUB_DATA } from '../../../../fixtures/api-hub-data';
 import { AsyncComponent } from '../../../../components/async-component/async-component';
 
-describe('Connector Hub Container', () => {
+describe('API Hub Container', () => {
   const fetchConnectorsMock = jest.fn();
 
   beforeEach(() => {
     this.container = shallow(
-      <ConnectorHub connectors={CONNECTOR_HUB_DATA} fetchConnectors={fetchConnectorsMock} />
+      <APIHub connectors={CONNECTOR_HUB_DATA} fetchConnectors={fetchConnectorsMock} />
     );
   });
 
@@ -27,7 +27,7 @@ describe('Connector Hub Container', () => {
   });
 
   it('passes login action to login component', () => {
-    expect(this.container.find(ConnectorHubComponent).prop('connectors')).toEqual(
+    expect(this.container.find(APIHubComponent).prop('connectors')).toEqual(
       CONNECTOR_HUB_DATA
     );
   });

@@ -3,7 +3,7 @@ import { shallow, ReactWrapper } from 'enzyme';
 import { Route, Redirect } from 'react-router-dom';
 import { PrivateDashboard, PrivateRoute } from '../dashboard';
 import { ApiKeysContainer } from '../../modules/api-keys/containers/api-keys/api-keys.container';
-import { ConntectorHubContainer } from '../../modules/connector-hub/containers/connector-hub.container';
+import { APIHubContainer } from '../../modules/api-hub/containers/api-hub.container';
 import { ConnectionsContainer } from '../../modules/connections/containers/connections.container';
 import { HomeContainer } from '../../modules/home/containers/home.container';
 
@@ -36,12 +36,12 @@ describe('Dashboard', () => {
     expect(routeComponent('/api-keys')).toBe(ApiKeysContainer);
   });
 
-  it('routes /connector-hub to ConntectorHubContainer', () => {
-    expect(routeComponent('/connector-hub')).toBe(ConntectorHubContainer);
+  it('routes /api-hub to APIHubContainer', () => {
+    expect(routeComponent('/api-hub')).toBe(APIHubContainer);
   });
 
-  it('routes /connector-hub/:connectorId to ConnectionsContainer', () => {
-    expect(routeComponent('/connector-hub/:connectorId')).toBe(ConnectionsContainer);
+  it('routes /api-hub/:connectorId to ConnectionsContainer', () => {
+    expect(routeComponent('/api-hub/:connectorId')).toBe(ConnectionsContainer);
   });
 
   describe('PrivateRoute', () => {

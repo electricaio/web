@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { ApplicationState } from '../../../redux/store';
 import { ApiKeyModal } from '../../../redux/api-keys/types';
-import { ConnectorModal } from '../../../redux/connector-hub/types';
+import { ConnectorModal } from '../../../redux/api-hub/types';
 import { fetchKeys } from '../../../redux/api-keys/async';
-import { fetchConnectors } from '../../../redux/connector-hub/async';
+import { fetchConnectors } from '../../../redux/api-hub/async';
 import { UserDto } from '../../../redux/auth/types';
 import { AsyncComponent } from '../../../components/async-component/async-component';
 import { Row, Col } from 'antd';
@@ -64,7 +64,7 @@ export class Home extends Component<AllProps> {
             </Col>
             <Col span={8}>
               <DashboardCard
-                linkTo="connector-hub"
+                linkTo="api-hub"
                 stat={connectors.length}
                 text="Connectors to use"
                 iconType="cloud"

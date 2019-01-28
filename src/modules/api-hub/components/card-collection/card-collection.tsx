@@ -4,7 +4,7 @@ import { Col, Row } from 'antd';
 import chunk from 'lodash/chunk';
 
 import { ConnectorCard } from './connector-card';
-import { ConnectorModal } from '../../../../redux/connector-hub/types';
+import { ConnectorModal } from '../../../../redux/api-hub/types';
 
 export const COLUMN_CHUNK_COUNT = 3;
 

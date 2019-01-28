@@ -8,14 +8,14 @@ import * as H from 'history';
 
 describe('Breadcrumb', () => {
   const breadcrumbMap = {
-    '/connector-hub': 'Breadcrumb Test',
+    '/api-hub': 'Breadcrumb Test',
   };
   beforeEach(() => {
     const mock: any = jest.fn();
     const location: H.Location = {
       hash: '',
       key: '',
-      pathname: '/connector-hub',
+      pathname: '/api-hub',
       search: '',
       state: {},
     };
@@ -44,6 +44,6 @@ describe('Breadcrumb', () => {
     const secondBreadcrumb = this.component.find(Breadcrumb.Item).at(1);
     const breadcrumbLink = secondBreadcrumb.find(Link);
     expect(breadcrumbLink.text()).toEqual('Breadcrumb Test');
-    expect(breadcrumbLink.prop('to')).toEqual('/connector-hub');
+    expect(breadcrumbLink.prop('to')).toEqual('/api-hub');
   });
 });

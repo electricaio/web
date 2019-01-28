@@ -1,7 +1,6 @@
 import * as React from 'react';
-import { Menu, Switch, Icon, Checkbox, Form } from 'antd';
+import { Switch, Icon, Form } from 'antd';
 import { ButtonContainer, Container } from './filters.css';
-import { DropdownComponent } from '../../../ui-kit/dropdown';
 import { StyledButton } from '../../../ui-kit/button';
 
 const FormItem = Form.Item;
@@ -13,27 +12,17 @@ export class ConnectorFilters extends React.Component<TFilterProps, any> {
     return (
       <Container>
         <Form layout="inline">
-          <FormItem label=" Only show active connectors">
+          <FormItem label="Active APIs">
             <Switch
               checkedChildren={<Icon type="check" />}
               unCheckedChildren={<Icon type="close" />}
               defaultChecked
             />
           </FormItem>
-          <FormItem>
-            <DropdownComponent label="Filter by Connector Type" keepMenuOpen>
-              <Menu.Item key="1">
-                <Checkbox>Talent</Checkbox>
-              </Menu.Item>
-              <Menu.Item key="2">
-                <Checkbox>Foundation</Checkbox>
-              </Menu.Item>
-            </DropdownComponent>
-          </FormItem>
         </Form>
         <ButtonContainer>
           <StyledButton type="primary" icon="plus">
-            Create Connector
+            Create SDK
           </StyledButton>
         </ButtonContainer>
       </Container>
