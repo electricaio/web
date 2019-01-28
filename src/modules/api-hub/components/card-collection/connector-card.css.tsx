@@ -26,6 +26,11 @@ export const CompanyImage = styled.img`
   width: auto !important;
 `;
 
+export const LanguageImage = styled.img`
+  height: 40px;
+  width: auto;
+`;
+
 export const StyledMeta = styled(Meta)`
   text-align: center;
   margin-bottom: 20px !important;
