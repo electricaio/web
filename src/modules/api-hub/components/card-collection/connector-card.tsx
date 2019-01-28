@@ -60,6 +60,7 @@ export class ConnectorCard extends React.Component<ConnectorCardProps> {
             {TYPE_NAMES_DATA.find(myObj => myObj.id === connector.typeId).name}
           </Tag>
         }
+        bodyStyle={{ paddingTop: '0px' }}
       >
         <StyledMeta description={description} />
         <Row type="flex" justify="start" align="middle">
@@ -68,16 +69,16 @@ export class ConnectorCard extends React.Component<ConnectorCardProps> {
             <ErnValue>{connector.ern}</ErnValue>
           </Col>
         </Row>
-        <Row style={{marginTop: '20px'}} type="flex" justify="start" align="middle">
+        <Row style={{ marginTop: '20px' }} type="flex" justify="start" align="middle">
           <ErnCol span={8}>Languages</ErnCol>
           <Col span={3}>
-            <LanguageImage src={java}/>
+            <LanguageImage src={java} />
           </Col>
           <Col span={4}>
-            <LanguageImage src={javascript}/>
+            <LanguageImage src={javascript} />
           </Col>
           <Col span={4}>
-            <LanguageImage src={ruby}/>
+            <LanguageImage src={ruby} />
           </Col>
         </Row>
         <ButtonContainer>

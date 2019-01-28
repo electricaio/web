@@ -2,7 +2,7 @@ import { mount } from 'enzyme';
 import React from 'react';
 import { ConnectorCard, CompanyImageComponent } from '../connector-card';
 import { StyledCard, StyledMeta, CompanyImage } from '../connector-card.css';
-import { Row, Col, Tag, Card, Button } from 'antd';
+import { Tag, Card, Button } from 'antd';
 import { ConnectorModal } from '../../../../../redux/api-hub/types';
 import { MemoryRouter } from 'react-router';
 import { Link } from 'react-router-dom';
@@ -59,14 +59,6 @@ describe('ConnectorCard', () => {
         .find(StyledMeta)
         .prop('description')
     ).toEqual(connector().properties.description);
-  });
-
-  it('renders a two column grid with ern details', () => {
-    const columns = this.connectorCard.find(Col);
-    expect(this.connectorCard.find(Row)).toHaveLength(1);
-    expect(columns).toHaveLength(2);
-    expect(columns.at(0).text()).toEqual('ERN');
-    expect(columns.at(1).text()).toEqual(connector().ern);
   });
 
   it('renders a tag with typeId', () => {
